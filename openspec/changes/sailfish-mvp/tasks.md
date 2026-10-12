@@ -25,8 +25,8 @@
 
 ## 5. Impostazioni (break-cycle, D6)
 
-- [ ] 5.1 Implementare `SettingsPage.qml` e il `ConfigurationGroup` per le durate (1–120 min, 5–300 s, predefinite 20/20); verificare i valori predefiniti, la persistenza dopo il riavvio dell'app e che una modifica durante una fase valga solo dalla fase successiva
-- [ ] 5.2 Aggiornare `docs/sailfish.md` con l'elenco delle chiavi dconf e verificare che `dconf reset -f /apps/harbour-202020/` riporti ai valori predefiniti
+- [x] 5.1 Implementare `SettingsPage.qml` e il `ConfigurationGroup` per le durate (1–120 min, 5–300 s, predefinite 20/20); verificare i valori predefiniti, la persistenza dopo il riavvio dell'app e che una modifica durante una fase valga solo dalla fase successiva
+- [x] 5.2 Aggiornare `docs/sailfish.md` con l'elenco delle chiavi dconf e verificare che `dconf reset -f /apps/harbour-202020/` riporti ai valori predefiniti
 
 ## 6. Avvisi (break-alerts, D5)
 

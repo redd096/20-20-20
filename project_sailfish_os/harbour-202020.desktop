@@ -1,0 +1,11 @@
+[Desktop Entry]
+Type=Application
+X-Nemo-Application-Type=silica-qt5
+Icon=harbour-202020
+Exec=harbour-202020
+Name=20-20-20
+
+[X-Sailjail]
+OrganizationName=org.redd096
+ApplicationName=harbour-202020
+Permissions=
