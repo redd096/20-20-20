@@ -58,3 +58,30 @@ Tested by the user with the normal profile, the silent profile and do not distur
 
 - An "Alarm volume" slider in the settings (`Audio.volume`), since the alarm stream is fixed at full volume.
 - Only for an OpenRepos build without sandbox: read `clock.alert.volume` from profiled.
+
+## Follow-up: system alarm through ngfd (task 6.4, 13 October 2026)
+
+Goal: use the real system alarm (the user's alarm tone, at the alarm volume set in SpeakerGain) instead of imitating it with `PULSE_PROP`, while staying inside Harbour. Spike app version 0.0.5.
+
+How `ngfd` must be called:
+
+- Service `com.nokia.NonGraphicFeedback1.Backend`, path `/com/nokia/NonGraphicFeedback1`, but interface **`com.nokia.NonGraphicFeedback1`** and signature **`Play(s event, a{sv} properties) -> u id`**, `Stop(u id)`. The introspection data (interface `...Backend`, `sa(sv)`) is wrong: both combinations are rejected, and `gdbus` cannot be used because it forces the introspected signature.
+- `ngfd` tracks the D-Bus client of each event: when the client disconnects, its events are cancelled, and only the same client can stop them (`Access denied` otherwise). So a one-shot `busctl call` from a terminal plays nothing; the call has to come from a long-lived connection, such as the app's own.
+- The `clock` event (`/usr/share/ngfd/events.d/clock.ini`) uses `clock.alert.tone`, the `x-clock-alert-volume` stream and the `alarm` vibration, repeats by itself until stopped and fades in over 20 s.
+
+Results from the app, with `Nemo.DBus 2.0` (`DBusInterface` on the system bus):
+
+| Test | Result |
+| --- | --- |
+| `clock` with `call()` and with `typedCall()` | user's alarm tone, vibration, loops until `Stop` |
+| `clock` with the silent profile | **rings** |
+| alarm volume changed in SpeakerGain | followed |
+| `clock` after 10 s, app minimized, screen off | rings; the screen stays off |
+| `sms` | a single vibration, no sound: not useful |
+| `sfdk check` with `Nemo.DBus 2.0` | passes |
+
+Decisions:
+
+- **"Alarm" alert**: the `ngfd` `clock` event, started and stopped by the app. It replaces `QtMultimedia` with `PULSE_PROP` and the app's own alarm volume setting, which are no longer needed.
+- The critical notification without sound stays, to turn the screen on.
+- **"Notification" alert**: unchanged (critical notification with a system sound).

@@ -26,6 +26,6 @@ Fuori scope: app Android, comandi da notifica o dalla cover, statistiche, snooze
 ## Impact
 
 - Nuovo codice in `project_sailfish_os/` (QML Silica + launcher C++ `sailfishapp`, packaging RPM `.spec`), costruito con `~/SailfishOS/bin/sfdk` sul target aarch64 già usato per `keyboard_jolla`.
-- Dipendenze runtime solo di sistema, da confermare con lo spike: `Sailfish.Silica`, `Nemo.KeepAlive`, `Nemo.Notifications`, `QtMultimedia`, `Nemo.Configuration`.
+- Dipendenze runtime solo di sistema, da confermare con lo spike: `Sailfish.Silica`, `Nemo.KeepAlive`, `Nemo.Notifications`, `Nemo.DBus` (per la sveglia di sistema via `ngfd`), `Nemo.Configuration`.
 - Pubblicazione: OpenRepos sempre; Jolla Store solo se lo spike conferma che le API usate sono ammesse in Harbour.
 - Nessuna installazione aggiuntiva sul PC.

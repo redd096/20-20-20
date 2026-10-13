@@ -56,15 +56,15 @@ Le build escono in `build/sailfish/`, ignorata da git.
 ### D5. Suono: due percorsi, verificati con lo spike
 Esiti completi in `docs/sailfish-spike.md`.
 - «Notifica»: una `Notification` (`Nemo.Notifications`) con urgenza critica e `sound` su un suono di sistema. La riproduce il sistema (lipstick), sul volume Suoneria, rispettando silenzioso e «non disturbare». Accende lo schermo e lascia una sola voce negli Eventi, sostituita dall'avviso successivo. Come per tutte le app, la voce resta finché l'utente non la toglie. Toccarla non apre l'app: servirebbe un'azione D-Bus, rimandata insieme ai comandi da notifica.
-- «Sveglia»: la stessa notifica critica, ma senza suono (accende lo schermo e mostra il messaggio), più un `Audio` di `QtMultimedia`. Il launcher C++ imposta `PULSE_PROP=media.role=alarm` (e `PULSE_PROP_OVERRIDE`) prima di avviare l'app, così gli stream audio del processo passano allo stream sveglia, che suona anche col silenzioso e col «non disturbare». La proprietà QML `audioRole` in Qt 5.6 viene ignorata. Le notifiche le suona un altro processo, quindi non risentono di questa impostazione.
-- La vibrazione usa `HapticsEffect` (`QtFeedback 5.0`) in entrambi i modi.
-- Il loop è un `Timer` che riproduce di nuovo il suono (o ripubblica la notifica) finché lo stato è «finito» e la ripetizione è «In loop».
-- I suoni sono i file di sistema in `/usr/share/sounds/jolla-ringtones/stereo/` (`jolla-alarm.ogg`), senza file audio nel pacchetto.
-- *Alternative scartate*: `Nemo.Ngf`, non ammesso in Harbour; hint `x-nemo-feedback`, che non si può impostare da QML (`setHintValue()` non esiste); `module-stream-restore.id=x-clock-alert-volume`, che non fa seguire al suono il volume della sveglia di sistema.
-- *Limite noto*: la «Sveglia» suona sempre a volume massimo.
+- «Sveglia»: la stessa notifica critica, ma senza suono (accende lo schermo e mostra il messaggio), più l'evento `clock` del demone `ngfd`, chiamato via D-Bus di sistema con `Nemo.DBus 2.0` (`Play(s, a{sv})` sull'interfaccia `com.nokia.NonGraphicFeedback1`, poi `Stop(u)`). È la sveglia di sistema: suoneria e volume della sveglia dell'utente, vibrazione «alarm», suona anche col silenzioso e col «non disturbare». `ngfd` annulla gli eventi di un client che si disconnette e lascia fermarli solo a chi li ha avviati: la connessione è quella dell'app, aperta finché l'app gira.
+- L'evento `clock` sale di volume in 20 s e si ripete da solo. In loop l'app lo lascia suonare fino alla conferma; con «Una volta» lo ferma dopo `alarmOnceSeconds` (5–60 s, predefinito 30). `ngfd` non lascia cambiare ripetizione e fade-in (solo le chiavi elencate in `50-transform.ini`).
+- La vibrazione della «Notifica» usa `HapticsEffect` (`QtFeedback 5.0`); la «Sveglia» usa quella dell'evento `ngfd`.
+- Il loop della «Notifica» è un `Timer` che ripubblica la notifica finché lo stato è «finito» e la ripetizione è «In loop».
+- I suoni della «Notifica» sono file di sistema in `/usr/share/sounds/jolla-ringtones/stereo/`, senza file audio nel pacchetto.
+- *Alternative scartate*: `Nemo.Ngf`, non ammesso in Harbour; hint `x-nemo-feedback`, che non si può impostare da QML (`setHintValue()` non esiste); `Audio` di `QtMultimedia` con `PULSE_PROP=media.role=alarm` nel launcher, usato fino alla release 12, che suona col silenzioso ma sempre a volume massimo e con un suono fisso.
 
 ### D6. Impostazioni con `Nemo.Configuration`
-`ConfigurationGroup` in `/apps/harbour-202020` con chiavi `workMinutes`, `breakSeconds`, `alertRepeat` (`once`|`loop`) e `alertType` (`notification`|`alarm`). È ammesso in Harbour e si cancella con un comando solo: `dconf reset -f /apps/harbour-202020/`.
+`ConfigurationGroup` in `/apps/harbour-202020` con chiavi `workMinutes`, `breakSeconds`, `alertRepeat` (`once`|`loop`), `alertType` (`notification`|`alarm`) e `alarmOnceSeconds`. È ammesso in Harbour e si cancella con un comando solo: `dconf reset -f /apps/harbour-202020/`.
 
 ### D7. Lingue
 Le stringhe passano da `qsTr()`. Si distribuiscono italiano e inglese (inglese come lingua di base dei sorgenti, come d'uso in Harbour).
@@ -78,8 +78,7 @@ GPLv3 (come `reddo-keyboard`, accettata da OpenRepos e F-Droid). Nome pacchetto 
 ## Risks / Trade-offs
 
 - [Harbour non ammette il suono «Sveglia» col silenzioso] → risolto dallo spike: tutte le API usate superano `sfdk check`, quindi si mira al Jolla Store e a OpenRepos.
-- [La «Sveglia» è sempre a volume massimo] → accettato per l'MVP (la spec chiede solo che sia udibile). Il volume della sveglia di sistema (`clock.alert.volume` di profiled) non è leggibile da un'app con sandbox, quindi non è possibile in Harbour. Per questo l'app ha un proprio volume della sveglia (impostazione `alarmVolume`, 5–100%), applicato a `Audio.volume` con una curva quadratica, più vicina alla percezione del volume di una scala lineare.
-- [`PULSE_PROP` è una variabile d'ambiente non documentata da Jolla] → se un aggiornamento di sistema la ignorasse, «Sveglia» seguirebbe il profilo come «Notifica». Va ricontrollato nella checklist di accettazione a ogni versione di Sailfish.
+- [L'interfaccia D-Bus di `ngfd` non è documentata per le app, e la sua introspezione è sbagliata] → se un aggiornamento la cambiasse, la «Sveglia» non suonerebbe (resterebbe solo la notifica senza suono). Va ricontrollato nella checklist di accettazione a ogni versione di Sailfish.
 - [`KeepAlive` consuma batteria durante i 20 minuti] → misurato nello spike: circa l'1% ogni 20 minuti, accettabile. È attivo solo durante le fasi e il loop.
 - [Target di build 5.1 e telefono 5.2] → è la stessa combinazione già funzionante per `reddo-keyboard`.
 - [Il loop resta acceso se l'utente si allontana] → è il comportamento voluto; «Stop» e il pulsante principale lo fermano subito.

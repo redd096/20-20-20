@@ -20,7 +20,7 @@ Quando lo stato diventa «Lavoro finito» o «Pausa finita» (vedi `break-cycle`
 
 ### Requirement: Ripetizione dell'avviso
 
-L'utente SHALL poter scegliere la ripetizione dell'avviso tra «Una volta» (predefinita) e «In loop». Con «Una volta» il suono SHALL essere riprodotto una sola volta. Con «In loop» il suono SHALL ripetersi finché l'utente preme il pulsante principale o «Stop». In entrambi i casi lo stato resta in attesa della conferma. La scelta SHALL restare salvata anche dopo la chiusura dell'app.
+L'utente SHALL poter scegliere la ripetizione dell'avviso tra «Una volta» (predefinita) e «In loop». Con «Una volta» il suono SHALL essere riprodotto una sola volta (con «Sveglia», per la durata impostata: vedi «Durata della sveglia»). Con «In loop» il suono SHALL ripetersi finché l'utente preme il pulsante principale o «Stop». In entrambi i casi lo stato resta in attesa della conferma. La scelta SHALL restare salvata anche dopo la chiusura dell'app.
 
 #### Scenario: Una volta
 - **WHEN** la ripetizione è «Una volta» e il lavoro finisce
@@ -32,7 +32,7 @@ L'utente SHALL poter scegliere la ripetizione dell'avviso tra «Una volta» (pre
 
 ### Requirement: Tipo di avviso
 
-L'utente SHALL poter scegliere il tipo di avviso tra «Notifica» (predefinito) e «Sveglia». Con «Notifica» l'avviso SHALL rispettare il profilo audio del dispositivo: col profilo silenzioso non emette suono. Con «Sveglia» l'avviso SHALL essere udibile anche col profilo silenzioso, come la sveglia di sistema. La scelta SHALL restare salvata anche dopo la chiusura dell'app.
+L'utente SHALL poter scegliere il tipo di avviso tra «Notifica» (predefinito) e «Sveglia». Con «Notifica» l'avviso SHALL rispettare il profilo audio del dispositivo: col profilo silenzioso non emette suono. Con «Sveglia» l'avviso SHALL usare la sveglia di sistema, con la suoneria e il volume della sveglia scelti dall'utente, e SHALL essere udibile anche col profilo silenzioso. La scelta SHALL restare salvata anche dopo la chiusura dell'app.
 
 #### Scenario: Notifica col profilo silenzioso
 - **WHEN** il tipo è «Notifica», il telefono è nel profilo silenzioso e il lavoro finisce
@@ -42,17 +42,21 @@ L'utente SHALL poter scegliere il tipo di avviso tra «Notifica» (predefinito) 
 - **WHEN** il tipo è «Sveglia», il telefono è nel profilo silenzioso e il lavoro finisce
 - **THEN** l'avviso è udibile
 
-### Requirement: Volume della sveglia
+#### Scenario: Volume della sveglia di sistema
+- **WHEN** il tipo è «Sveglia», l'utente abbassa il volume della sveglia nelle impostazioni di sistema e il lavoro finisce
+- **THEN** l'avviso suona con la suoneria della sveglia, al volume più basso
 
-Con il tipo «Sveglia» l'utente SHALL poter impostare il volume dell'avviso dall'app, in percentuale da 5% a 100% a passi di 5 (predefinito 100%), perché il sistema non permette a un'app con sandbox di seguire il volume della sveglia di sistema. Il volume SHALL valere anche col profilo silenzioso e SHALL restare salvato dopo la chiusura dell'app. Con il tipo «Notifica» il volume resta quello della suoneria di sistema.
+### Requirement: Durata della sveglia
 
-#### Scenario: Volume ridotto
-- **WHEN** il tipo è «Sveglia», il volume è impostato al 30% e il lavoro finisce
-- **THEN** la sveglia suona a volume chiaramente più basso che al 100%
+La sveglia di sistema si ripete finché non viene fermata e sale di volume nei primi 20 secondi. Con il tipo «Sveglia» e la ripetizione «Una volta», l'utente SHALL poter impostare per quanti secondi suona, da 5 a 60 a passi di 5 (predefinito 30); allo scadere il suono SHALL fermarsi mentre lo stato resta in attesa della conferma. La scelta SHALL restare salvata dopo la chiusura dell'app.
 
-#### Scenario: Volume conservato
-- **WHEN** l'utente imposta il volume della sveglia al 50%, chiude l'app e la riapre
-- **THEN** il volume della sveglia è 50%
+#### Scenario: Sveglia una volta
+- **WHEN** il tipo è «Sveglia», la ripetizione è «Una volta», la durata è 30 secondi e il lavoro finisce
+- **THEN** la sveglia suona per circa 30 secondi e poi tace, e lo stato resta «Lavoro finito»
+
+#### Scenario: Durata conservata
+- **WHEN** l'utente imposta la durata della sveglia a 15 secondi, chiude l'app e la riapre
+- **THEN** la durata della sveglia è 15 secondi
 
 ### Requirement: Fine dell'avviso
 

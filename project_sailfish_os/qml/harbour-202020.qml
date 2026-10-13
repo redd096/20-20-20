@@ -16,14 +16,14 @@ ApplicationWindow {
         property int breakSeconds: 20
         property string alertRepeat: "once"         // "once" | "loop"
         property string alertType: "notification"   // "notification" | "alarm"
-        property int alarmVolume: 100               // percent, 5-100
+        property int alarmOnceSeconds: 30           // seconds, 5-60
     }
 
     AlertPlayer {
         id: alertPlayer
         type: appSettings.alertType === "alarm" ? "alarm" : "notification"
         repeat: appSettings.alertRepeat === "loop" ? "loop" : "once"
-        alarmVolume: Math.max(5, Math.min(100, appSettings.alarmVolume))
+        alarmOnceSeconds: Math.max(5, Math.min(60, appSettings.alarmOnceSeconds))
     }
 
     CycleController {
@@ -36,7 +36,7 @@ ApplicationWindow {
         onPhaseChanged: if (phase !== "workDone" && phase !== "breakDone") alertPlayer.stop()
     }
 
-    initialPage: Component { MainPage { cycle: cycleController; settings: appSettings; alert: alertPlayer } }
+    initialPage: Component { MainPage { cycle: cycleController; settings: appSettings } }
     cover: Component { CoverPage { cycle: cycleController } }
     allowedOrientations: defaultAllowedOrientations
 }

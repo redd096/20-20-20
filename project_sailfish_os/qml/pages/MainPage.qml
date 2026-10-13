@@ -6,10 +6,9 @@ import Sailfish.Silica 1.0
 Page {
     id: page
 
-    // CycleController, ConfigurationGroup and AlertPlayer, passed by the window.
+    // CycleController and ConfigurationGroup, passed by the window.
     property var cycle
     property var settings
-    property var alert
 
     allowedOrientations: Orientation.All
 
@@ -40,7 +39,7 @@ Page {
         PullDownMenu {
             MenuItem {
                 text: qsTr("Settings")
-                onClicked: pageStack.push(Qt.resolvedUrl("SettingsPage.qml"), { settings: page.settings, alert: page.alert })
+                onClicked: pageStack.push(Qt.resolvedUrl("SettingsPage.qml"), { settings: page.settings })
             }
         }
 

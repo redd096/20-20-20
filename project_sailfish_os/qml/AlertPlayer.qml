@@ -1,27 +1,29 @@
 import QtQuick 2.0
+import Nemo.DBus 2.0
 import Nemo.KeepAlive 1.2
 import Nemo.Notifications 1.0
-import QtMultimedia 5.6
 import QtFeedback 5.0
 
 // End-of-phase alert (spec "break-alerts"). Two alert types:
 //
 // - "notification": a critical notification with a sound. The system plays
 //   it on the ringtone volume, so it respects silent mode and do not disturb.
-// - "alarm": the app plays the sound itself. The launcher (src/harbour-202020.cpp)
-//   routes every audio stream of this process to the PulseAudio "alarm" role,
-//   so it rings even in silent mode. A silent notification is published as
-//   well, to show the message and turn the screen on.
+// - "alarm": the system alarm, played by the feedback daemon ngfd (event
+//   "clock"): the user's alarm tone, at the alarm volume, with the alarm
+//   vibration, even in silent mode. It fades in over 20 s and repeats until
+//   the app stops it. A silent notification is published as well, to show
+//   the message and turn the screen on.
 //
-// Both types vibrate once when the alert starts. The mechanisms were chosen
-// with a device spike, see docs/sailfish-spike.md.
+// The "notification" type vibrates once when the alert starts; the "alarm"
+// type uses the vibration of the ngfd event. The mechanisms were chosen with
+// device spikes, see docs/sailfish-spike.md.
 Item {
     id: alert
 
     property string type: "notification"   // "notification" | "alarm"
     property string repeat: "once"          // "once" | "loop"
-    // Volume of the "alarm" type, in percent.
-    property int alarmVolume: 100
+    // How long the "alarm" type rings with the "once" repeat, in seconds.
+    property int alarmOnceSeconds: 30
 
     // True while an alert is waiting for the user's confirmation.
     readonly property bool active: _phase !== ""
@@ -30,26 +32,30 @@ Item {
 
     // Phase that triggered the alert ("workDone" or "breakDone"), empty when idle.
     property string _phase: ""
+    // Id that ngfd returned for the alarm being played, 0 when none.
+    property var _alarmId: 0
+    // Increased at every start() and stop(), so that a late answer to Play
+    // can tell whether its alarm is still wanted.
+    property int _alarmRequest: 0
 
     // Starts the alert for the phase that has just finished.
     function start(phase) {
         stop()
         _phase = phase
-        vibra.start()
         // Start from a fresh notification: remove the previous one and forget
         // its id. Reusing the id of a notification the user has already
         // dismissed shows the banner but no new entry in Events.
         notification.close()
         notification.replacesId = 0
         if (type === "alarm") {
-            // The sound comes from Audio; the notification is only visual.
+            // The sound comes from ngfd; the notification is only visual.
             notification.sound = ""
             publishNotification(true)
-            previewStop.stop()
-            alarmSound.volume = toAudioVolume(alarmVolume)
-            alarmSound.loops = repeat === "loop" ? Audio.Infinite : 1
-            alarmSound.play()
+            playAlarm()
+            if (repeat === "once")
+                alarmOnceStop.restart()
         } else {
+            vibra.start()
             notification.sound = notificationSoundFile
             publishNotification(true)
             if (repeat === "loop")
@@ -66,31 +72,38 @@ Item {
         notification.publish()
     }
 
-    // Plays the alarm sound for two seconds at the given volume, so the
-    // user can hear a new volume setting. Ignored while an alert is active.
-    function preview(volumePercent) {
-        if (active)
-            return
-        alarmSound.stop()
-        alarmSound.volume = toAudioVolume(volumePercent)
-        alarmSound.loops = 1
-        alarmSound.play()
-        previewStop.restart()
+    // Asks ngfd to play the system alarm. The answer arrives later: if the
+    // alert was stopped (or restarted) in the meantime, stop that alarm at once.
+    function playAlarm() {
+        var request = ++_alarmRequest
+        ngfd.call("Play", ["clock", {}], function (id) {
+            if (request === alert._alarmRequest)
+                alert._alarmId = id
+            else
+                alert.stopAlarm(id)
+        }, function (error) {
+            console.warn("ngfd Play failed:", error)
+        })
     }
 
-    // Audio.volume is linear; squaring the percentage gives steps that sound
-    // more even to the ear.
-    function toAudioVolume(percent) {
-        var v = percent / 100
-        return v * v
+    // Stops one ngfd event. Only the D-Bus connection that started it may stop it.
+    function stopAlarm(id) {
+        ngfd.typedCall("Stop", [{ "type": "u", "value": id }], undefined, function (error) {
+            console.warn("ngfd Stop failed:", error)
+        })
     }
 
     // Stops any sound. The notification stays in the Events view, like for
     // every other app, until the user removes it or the next alert replaces it.
     function stop() {
         _phase = ""
+        _alarmRequest++
+        if (_alarmId !== 0) {
+            stopAlarm(_alarmId)
+            _alarmId = 0
+        }
+        alarmOnceStop.stop()
         notificationLoop.stop()
-        alarmSound.stop()
         vibra.stop()
     }
 
@@ -116,17 +129,30 @@ Item {
         onTriggered: alert.publishNotification(false)
     }
 
-    // Sound for the "alarm" type (8.4 s long), on the alarm stream.
-    Audio {
-        id: alarmSound
-        source: "/usr/share/sounds/jolla-ringtones/stereo/jolla-alarm.ogg"
+    // The ngfd alarm always repeats: with the "once" repeat it is stopped
+    // after alarmOnceSeconds. The alert stays active until the user confirms.
+    Timer {
+        id: alarmOnceStop
+        interval: alert.alarmOnceSeconds * 1000
+        onTriggered: {
+            if (alert._alarmId !== 0) {
+                alert.stopAlarm(alert._alarmId)
+                alert._alarmId = 0
+            }
+        }
     }
 
-    // Ends a volume preview.
-    Timer {
-        id: previewStop
-        interval: 2000
-        onTriggered: if (!alert.active) alarmSound.stop()
+    // The feedback daemon on the system bus. Its introspection data names the
+    // interface "...Backend" with the signature sa(sv), but the daemon really
+    // answers on this interface with Play(s, a{sv}). ngfd cancels the events
+    // of a client that disconnects, so the app's connection must stay open
+    // while the alarm rings, which it does as long as the app runs.
+    DBusInterface {
+        id: ngfd
+        bus: DBus.SystemBus
+        service: "com.nokia.NonGraphicFeedback1.Backend"
+        path: "/com/nokia/NonGraphicFeedback1"
+        iface: "com.nokia.NonGraphicFeedback1"
     }
 
     HapticsEffect {
@@ -135,9 +161,10 @@ Item {
         duration: 800
     }
 
-    // Without KeepAlive the device would suspend and the loop would stop
-    // while the screen is off.
+    // Without KeepAlive the device would suspend while the screen is off:
+    // the notification loop would stop, and the timer that ends a "once"
+    // alarm would fire late.
     KeepAlive {
-        enabled: alert.looping
+        enabled: alert.looping || alarmOnceStop.running
     }
 }

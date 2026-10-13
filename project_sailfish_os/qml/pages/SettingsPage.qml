@@ -7,8 +7,6 @@ Page {
 
     // The app ConfigurationGroup: every change is saved to dconf right away.
     property var settings
-    // AlertPlayer, used to preview the alarm volume.
-    property var alert
 
     allowedOrientations: Orientation.All
 
@@ -55,6 +53,7 @@ Page {
 
             // Like the sliders: read once, saved when the user picks an entry.
             ComboBox {
+                id: repeatBox
                 label: qsTr("Repeat")
                 Component.onCompleted: currentIndex = page.settings.alertRepeat === "loop" ? 1 : 0
                 menu: ContextMenu {
@@ -73,7 +72,7 @@ Page {
                 id: typeBox
                 label: qsTr("Type")
                 description: currentIndex === 1
-                             ? qsTr("Rings like the alarm clock, even in silent mode and do not disturb, at full volume.")
+                             ? qsTr("Uses your alarm tone and alarm volume, even in silent mode and do not disturb.")
                              : qsTr("Follows the ringtone volume, silent mode and do not disturb.")
                 Component.onCompleted: currentIndex = page.settings.alertType === "alarm" ? 1 : 0
                 menu: ContextMenu {
@@ -88,21 +87,17 @@ Page {
                 }
             }
 
-            // The alarm stream ignores the system alarm volume (see
-            // docs/sailfish-spike.md), so the app has its own volume.
+            // The system alarm repeats until it is stopped, so "Once" needs a
+            // length. It fades in over the first 20 seconds.
             StepSlider {
-                visible: typeBox.currentIndex === 1
+                visible: typeBox.currentIndex === 1 && repeatBox.currentIndex === 0
                 minimumValue: 5
-                maximumValue: 100
+                maximumValue: 60
                 stepSize: 5
-                initialValue: page.settings.alarmVolume
-                unit: "%"
-                label: qsTr("Alarm volume")
-                onEdited: {
-                    page.settings.alarmVolume = newValue
-                    // Let the user hear the new volume right away.
-                    page.alert.preview(newValue)
-                }
+                initialValue: page.settings.alarmOnceSeconds
+                unit: qsTr("s")
+                label: qsTr("Alarm length")
+                onEdited: page.settings.alarmOnceSeconds = newValue
             }
         }
         VerticalScrollDecorator {}
