@@ -18,3 +18,8 @@ DISTFILES += qml/harbour-202020.qml \
     harbour-202020.desktop
 
 SAILFISHAPP_ICONS = 86x86 108x108 128x128 172x172
+
+# Translations: the build runs lupdate on the QML files, then lrelease.
+# English is the source language (harbour-202020.ts); Italian is -it.
+CONFIG += sailfishapp_i18n
+TRANSLATIONS += translations/harbour-202020-it.ts
