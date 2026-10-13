@@ -1,16 +1,16 @@
-# 20-20-20 per Sailfish OS: build, installazione e rimozione
+# 20-20-20 for Sailfish OS: build, install and removal
 
-Sorgenti in `project_sailfish_os/`, pacchetto `harbour-202020`. Gli output di build vanno in `build/sailfish/`, esclusa da git.
+Sources are in `project_sailfish_os/`, package `harbour-202020`. Build output goes to `build/sailfish/`, which is ignored by git.
 
-## Requisiti
+## Requirements
 
-- Sailfish SDK in `~/SailfishOS/` con il target `SailfishOS-5.1.0.11-aarch64` (lo stesso di `keyboard_jolla`).
-- Docker, avviato solo per la build.
-- Accesso ssh al telefono con la configurazione di `keyboard_jolla`: `../keyboard_jolla/ssh/jolla.conf`. Non va copiata in questo repository.
+- Sailfish SDK in `~/SailfishOS/` with the `SailfishOS-5.1.0.11-aarch64` target.
+- Docker, started only for the build.
+- SSH access to the phone. The commands below use an ssh config file with a host called `jolla`; replace `-F ../keyboard_jolla/ssh/jolla.conf jolla` with your own host. Keep that config out of this repository.
 
 ## Build
 
-Dalla radice del progetto:
+From the project root:
 
 ```sh
 sudo systemctl start docker
@@ -21,52 +21,55 @@ cd ../..
 sudo systemctl stop docker
 ```
 
-- `systemctl start/stop docker` accende Docker solo per la durata della build e poi lo spegne.
-- `sg docker -c "…"` esegue il comando col gruppo `docker`, che serve a `sfdk`.
-- `-c target=…` sceglie il target, `-c no-fix-version` usa la versione scritta nel `.spec` invece di ricavarla dai tag git.
-- `sfdk build` compila in `build/sailfish/` e crea l'RPM in `build/sailfish/RPMS/`.
-- `sfdk check` esegue la validazione del Jolla Store (Harbour). Deve terminare con `Validation succeeded`.
+- `systemctl start/stop docker` runs Docker only for the build and stops it afterwards.
+- `sg docker -c "…"` runs the command with the `docker` group, which `sfdk` needs.
+- `-c target=…` selects the build target; `-c no-fix-version` uses the version written in the `.spec` file instead of deriving it from git tags.
+- `sfdk build` compiles into `build/sailfish/` and writes the RPM to `build/sailfish/RPMS/`.
+- `sfdk check` runs the Jolla Store (Harbour) validation. It must end with `Validation succeeded`.
 
-## Installazione
+## Install
 
 ```sh
 scp -F ../keyboard_jolla/ssh/jolla.conf build/sailfish/RPMS/harbour-202020-[0-9]*.aarch64.rpm jolla:/home/defaultuser/
 ssh -t -F ../keyboard_jolla/ssh/jolla.conf jolla "devel-su rpm -Uvh /home/defaultuser/harbour-202020-[0-9]*.aarch64.rpm"
 ```
 
-- `scp` copia l'RPM nella home del telefono.
-- `ssh -t` apre un terminale interattivo, perché `devel-su` chiede la password di root del telefono.
-- `rpm -Uvh` installa il pacchetto o aggiorna quello già presente.
+- `scp` copies the RPM to the phone's home directory.
+- `ssh -t` opens an interactive terminal, because `devel-su` asks for the phone's root password.
+- `rpm -Uvh` installs the package, or upgrades the installed one.
 
-L'app «20-20-20» compare nel launcher.
+The "20-20-20" app appears in the launcher.
 
-## Impostazioni salvate
+## Stored settings
 
-L'app salva le impostazioni in dconf, sotto `/apps/harbour-202020/`. Una chiave assente vale come il suo valore predefinito.
+The app stores its settings in dconf under `/apps/harbour-202020/`. A missing key means its default value.
 
-| Chiave | Valori | Predefinito |
+| Key | Values | Default |
 | --- | --- | --- |
-| `workMinutes` | durata del lavoro, minuti interi da 1 a 120 | 20 |
-| `breakSeconds` | durata della pausa, secondi interi da 5 a 300 | 20 |
+| `workMinutes` | work duration, whole minutes from 1 to 120 | 20 |
+| `breakSeconds` | break duration, whole seconds from 5 to 300 | 20 |
+| `alertRepeat` | `once`, or `loop` (until confirmed) | `once` |
+| `alertType` | `notification` (follows ringtone volume, silent mode and do not disturb), or `alarm` (always rings, at the app's own volume) | `notification` |
+| `alarmVolume` | volume of the `alarm` type, percent from 5 to 100 | 100 |
 
-Per leggerle o riportarle ai valori predefiniti, senza root:
+To read them, or reset them to the defaults, without root:
 
 ```sh
 ssh -F ../keyboard_jolla/ssh/jolla.conf jolla "dconf dump /apps/harbour-202020/"
 ssh -F ../keyboard_jolla/ssh/jolla.conf jolla "dconf reset -f /apps/harbour-202020/"
 ```
 
-- `dconf dump` mostra tutte le chiavi salvate dall'app.
-- `dconf reset -f` le cancella tutte: alla riapertura l'app riparte coi valori predefiniti.
+- `dconf dump` prints every key stored by the app.
+- `dconf reset -f` deletes them all: on its next start the app uses the defaults.
 
-## Rimozione
+## Removal
 
 ```sh
 ssh -t -F ../keyboard_jolla/ssh/jolla.conf jolla "devel-su rpm -e harbour-202020; rm -f /home/defaultuser/harbour-202020-[0-9]*.rpm; dconf reset -f /apps/harbour-202020/"
 ```
 
-- `rpm -e` disinstalla il pacchetto: programma, QML, icone e voce del launcher.
-- `rm -f` cancella l'RPM copiato in precedenza.
-- `dconf reset -f` cancella le impostazioni salvate dall'app.
+- `rpm -e` uninstalls the package: program, QML files, icons and launcher entry.
+- `rm -f` deletes the RPM copied earlier.
+- `dconf reset -f` deletes the settings stored by the app.
 
-Dopo questi comandi sul telefono non resta niente dell'app. L'app non installa servizi né avvii automatici.
+After these commands nothing of the app is left on the phone. The app installs no services and nothing that starts automatically. A notification may remain in the Events view until you dismiss it, as with any app.

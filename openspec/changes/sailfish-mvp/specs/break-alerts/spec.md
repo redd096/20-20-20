@@ -42,6 +42,18 @@ L'utente SHALL poter scegliere il tipo di avviso tra «Notifica» (predefinito) 
 - **WHEN** il tipo è «Sveglia», il telefono è nel profilo silenzioso e il lavoro finisce
 - **THEN** l'avviso è udibile
 
+### Requirement: Volume della sveglia
+
+Con il tipo «Sveglia» l'utente SHALL poter impostare il volume dell'avviso dall'app, in percentuale da 5% a 100% a passi di 5 (predefinito 100%), perché il sistema non permette a un'app con sandbox di seguire il volume della sveglia di sistema. Il volume SHALL valere anche col profilo silenzioso e SHALL restare salvato dopo la chiusura dell'app. Con il tipo «Notifica» il volume resta quello della suoneria di sistema.
+
+#### Scenario: Volume ridotto
+- **WHEN** il tipo è «Sveglia», il volume è impostato al 30% e il lavoro finisce
+- **THEN** la sveglia suona a volume chiaramente più basso che al 100%
+
+#### Scenario: Volume conservato
+- **WHEN** l'utente imposta il volume della sveglia al 50%, chiude l'app e la riapre
+- **THEN** il volume della sveglia è 50%
+
 ### Requirement: Fine dell'avviso
 
 Ogni avviso in corso SHALL interrompersi quando l'utente preme il pulsante principale o «Stop». Un avviso MUST NOT continuare dopo che lo stato è cambiato.

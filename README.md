@@ -1,18 +1,18 @@
 # 20-20-20
 
-App minimale per la regola 20-20-20: ogni 20 minuti davanti allo schermo, 20 secondi a guardare un oggetto a circa 20 piedi (6 metri). Un pulsante avvia il lavoro; allo scadere l'app avvisa, si conferma per iniziare la pausa, e alla fine della pausa si conferma per ripartire. Le durate e il tipo di avviso sono configurabili.
+A minimal app for the 20-20-20 rule: every 20 minutes in front of a screen, look at something about 20 feet (6 meters) away for 20 seconds. One button starts the work timer; when it ends the app alerts you and you confirm to start the break; when the break ends you confirm to start working again. Durations and alert type are configurable.
 
-## Stato
+## Status
 
-- **Sailfish OS** (`project_sailfish_os/`, pacchetto `harbour-202020`): in sviluppo, change OpenSpec [`sailfish-mvp`](openspec/changes/sailfish-mvp/proposal.md).
-- **Android** (`project_android/`, per F-Droid): previsto in un change successivo, sulla stessa spec di comportamento.
+- **Sailfish OS** (`project_sailfish_os/`, package `harbour-202020`): in development, OpenSpec change [`sailfish-mvp`](openspec/changes/sailfish-mvp/proposal.md).
+- **Android** (`project_android/`, for F-Droid): planned in a later change, on the same behavior spec.
 
-## Struttura
+## Layout
 
-- `openspec/`: specifiche di comportamento comuni alle due app e change in corso.
-- `docs/`: documentazione di build, installazione e prove ([indice](docs/README.md)).
-- `project_sailfish_os/`: sorgenti dell'app Sailfish OS.
+- `openspec/`: behavior specs shared by both apps and changes in progress (in Italian).
+- `docs/`: build, install and test documentation ([index](docs/README.md)).
+- `project_sailfish_os/`: Sailfish OS app sources.
 
-## Licenza
+## License
 
-GPLv3, vedi [LICENSE](LICENSE).
+GPLv3, see [LICENSE](LICENSE).

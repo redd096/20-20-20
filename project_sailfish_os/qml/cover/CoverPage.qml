@@ -1,10 +1,11 @@
 import QtQuick 2.0
 import Sailfish.Silica 1.0
 
-// Cover passiva: solo stato e tempo rimanente, nessuna azione.
+// Passive cover: shows the remaining time or the finished phase, no actions.
 CoverBackground {
     id: cover
 
+    // CycleController, passed by the window.
     property var cycle
 
     Column {

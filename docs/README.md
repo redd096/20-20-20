@@ -1,5 +1,5 @@
-# Documentazione
+# Documentation
 
-- [`sailfish.md`](sailfish.md): build, installazione e rimozione dell'app Sailfish OS.
-- [`sailfish-spike.md`](sailfish-spike.md): esiti dello spike su timer a schermo spento e suoni in Harbour.
-- `acceptance-checklist.md`: prove di accettazione sul telefono (attività 8.1).
+- [`sailfish.md`](sailfish.md): building, installing and removing the Sailfish OS app.
+- [`sailfish-spike.md`](sailfish-spike.md): results of the device spike on timers with the screen off and alert sounds within Harbour rules.
+- `acceptance-checklist.md`: on-device acceptance tests (to be written).

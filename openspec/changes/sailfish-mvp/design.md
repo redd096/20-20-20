@@ -55,8 +55,8 @@ Le build escono in `build/sailfish/`, ignorata da git.
 
 ### D5. Suono: due percorsi, verificati con lo spike
 Esiti completi in `docs/sailfish-spike.md`.
-- «Notifica»: una `Notification` (`Nemo.Notifications`) con urgenza critica e `sound` su un suono di sistema. La riproduce il sistema (lipstick), sul volume Suoneria, rispettando silenzioso e «non disturbare». Accende lo schermo e lascia una sola voce negli Eventi, che l'app chiude (`close()`) alla conferma o allo Stop.
-- «Sveglia»: un `Audio` di `QtMultimedia`. Il launcher C++ imposta `PULSE_PROP=media.role=alarm` (e `PULSE_PROP_OVERRIDE`) prima di avviare l'app, così gli stream audio del processo passano allo stream sveglia, che suona anche col silenzioso e col «non disturbare». La proprietà QML `audioRole` in Qt 5.6 viene ignorata. Le notifiche le suona un altro processo, quindi non risentono di questa impostazione.
+- «Notifica»: una `Notification` (`Nemo.Notifications`) con urgenza critica e `sound` su un suono di sistema. La riproduce il sistema (lipstick), sul volume Suoneria, rispettando silenzioso e «non disturbare». Accende lo schermo e lascia una sola voce negli Eventi, sostituita dall'avviso successivo. Come per tutte le app, la voce resta finché l'utente non la toglie. Toccarla non apre l'app: servirebbe un'azione D-Bus, rimandata insieme ai comandi da notifica.
+- «Sveglia»: la stessa notifica critica, ma senza suono (accende lo schermo e mostra il messaggio), più un `Audio` di `QtMultimedia`. Il launcher C++ imposta `PULSE_PROP=media.role=alarm` (e `PULSE_PROP_OVERRIDE`) prima di avviare l'app, così gli stream audio del processo passano allo stream sveglia, che suona anche col silenzioso e col «non disturbare». La proprietà QML `audioRole` in Qt 5.6 viene ignorata. Le notifiche le suona un altro processo, quindi non risentono di questa impostazione.
 - La vibrazione usa `HapticsEffect` (`QtFeedback 5.0`) in entrambi i modi.
 - Il loop è un `Timer` che riproduce di nuovo il suono (o ripubblica la notifica) finché lo stato è «finito» e la ripetizione è «In loop».
 - I suoni sono i file di sistema in `/usr/share/sounds/jolla-ringtones/stereo/` (`jolla-alarm.ogg`), senza file audio nel pacchetto.
@@ -78,7 +78,7 @@ GPLv3 (come `reddo-keyboard`, accettata da OpenRepos e F-Droid). Nome pacchetto 
 ## Risks / Trade-offs
 
 - [Harbour non ammette il suono «Sveglia» col silenzioso] → risolto dallo spike: tutte le API usate superano `sfdk check`, quindi si mira al Jolla Store e a OpenRepos.
-- [La «Sveglia» è sempre a volume massimo] → accettato per l'MVP (la spec chiede solo che sia udibile). Il volume della sveglia di sistema (`clock.alert.volume` di profiled) non è leggibile da un'app con sandbox, quindi non è possibile in Harbour. Un cursore di volume nell'app è un'idea per dopo.
+- [La «Sveglia» è sempre a volume massimo] → accettato per l'MVP (la spec chiede solo che sia udibile). Il volume della sveglia di sistema (`clock.alert.volume` di profiled) non è leggibile da un'app con sandbox, quindi non è possibile in Harbour. Per questo l'app ha un proprio volume della sveglia (impostazione `alarmVolume`, 5–100%), applicato a `Audio.volume` con una curva quadratica, più vicina alla percezione del volume di una scala lineare.
 - [`PULSE_PROP` è una variabile d'ambiente non documentata da Jolla] → se un aggiornamento di sistema la ignorasse, «Sveglia» seguirebbe il profilo come «Notifica». Va ricontrollato nella checklist di accettazione a ogni versione di Sailfish.
 - [`KeepAlive` consuma batteria durante i 20 minuti] → misurato nello spike: circa l'1% ogni 20 minuti, accettabile. È attivo solo durante le fasi e il loop.
 - [Target di build 5.1 e telefono 5.2] → è la stessa combinazione già funzionante per `reddo-keyboard`.

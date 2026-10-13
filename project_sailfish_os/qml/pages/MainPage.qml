@@ -1,14 +1,19 @@
 import QtQuick 2.0
 import Sailfish.Silica 1.0
 
+// Main page: current phase, remaining time, the main button and Stop.
+// A pull-down menu opens the settings.
 Page {
     id: page
 
+    // CycleController, ConfigurationGroup and AlertPlayer, passed by the window.
     property var cycle
     property var settings
+    property var alert
 
     allowedOrientations: Orientation.All
 
+    // Human-readable name of a phase.
     function phaseText(phase) {
         switch (phase) {
         case "working": return qsTr("Working")
@@ -19,6 +24,7 @@ Page {
         }
     }
 
+    // Label of the main button: what pressing it will do.
     function buttonText(phase) {
         switch (phase) {
         case "workDone": return qsTr("Start break")
@@ -34,7 +40,7 @@ Page {
         PullDownMenu {
             MenuItem {
                 text: qsTr("Settings")
-                onClicked: pageStack.push(Qt.resolvedUrl("SettingsPage.qml"), { settings: page.settings })
+                onClicked: pageStack.push(Qt.resolvedUrl("SettingsPage.qml"), { settings: page.settings, alert: page.alert })
             }
         }
 
@@ -55,6 +61,7 @@ Page {
                 font.pixelSize: Theme.fontSizeLarge
             }
 
+            // Remaining time, only while a countdown is running.
             Label {
                 anchors.horizontalCenter: parent.horizontalCenter
                 visible: page.cycle.counting
@@ -64,6 +71,7 @@ Page {
 
             Item { width: 1; height: Theme.paddingLarge }
 
+            // Main button, hidden during a countdown (spec "break-cycle").
             Button {
                 anchors.horizontalCenter: parent.horizontalCenter
                 visible: !page.cycle.counting
@@ -72,6 +80,7 @@ Page {
                 onClicked: page.cycle.confirm()
             }
 
+            // Stop is available in every phase except "idle".
             Button {
                 anchors.horizontalCenter: parent.horizontalCenter
                 visible: page.cycle.phase !== "idle"
