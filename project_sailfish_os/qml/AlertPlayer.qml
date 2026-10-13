@@ -50,25 +50,26 @@ Item {
         if (type === "alarm") {
             // The sound comes from ngfd; the notification is only visual.
             notification.sound = ""
-            publishNotification(true)
+            publishNotification()
             playAlarm()
             if (repeat === "once")
                 alarmOnceStop.restart()
         } else {
             vibra.start()
             notification.sound = notificationSoundFile
-            publishNotification(true)
+            publishNotification()
             if (repeat === "loop")
                 notificationLoop.start()
         }
     }
 
     // Publishes (or re-publishes) the notification. The banner at the top of
-    // the screen uses the preview texts: leaving them empty on repeats should
-    // replay only the sound, without showing the banner again.
-    function publishNotification(withBanner) {
-        notification.previewSummary = withBanner ? notification.summary : ""
-        notification.previewBody = withBanner ? notification.body : ""
+    // the screen uses the preview texts. Every publish shows the banner and
+    // plays the sound: empty preview texts, tried to replay only the sound,
+    // drew an empty white banner instead.
+    function publishNotification() {
+        notification.previewSummary = notification.summary
+        notification.previewBody = notification.body
         notification.publish()
     }
 
@@ -121,12 +122,13 @@ Item {
     }
 
     // Loop for the "notification" type: publishing the same notification
-    // again replaces it and plays its sound again. The ringtone lasts 3.2 s.
+    // again replaces it, shows the banner and plays its sound again.
+    // The ringtone lasts 3.2 s.
     Timer {
         id: notificationLoop
         interval: 4000
         repeat: true
-        onTriggered: alert.publishNotification(false)
+        onTriggered: alert.publishNotification()
     }
 
     // The ngfd alarm always repeats: with the "once" repeat it is stopped
