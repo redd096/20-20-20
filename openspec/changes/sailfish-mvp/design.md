@@ -64,7 +64,7 @@ Esiti completi in `docs/sailfish-spike.md`.
 - *Alternative scartate*: `Nemo.Ngf`, non ammesso in Harbour; hint `x-nemo-feedback`, che non si può impostare da QML (`setHintValue()` non esiste); `Audio` di `QtMultimedia` con `PULSE_PROP=media.role=alarm` nel launcher, usato fino alla release 12, che suona col silenzioso ma sempre a volume massimo e con un suono fisso.
 
 ### D6. Impostazioni con `Nemo.Configuration`
-`ConfigurationGroup` in `/apps/harbour-202020` con chiavi `workMinutes`, `breakSeconds`, `alertRepeat` (`once`|`loop`), `alertType` (`notification`|`alarm`) e `alarmOnceSeconds`. È ammesso in Harbour e si cancella con un comando solo: `dconf reset -f /apps/harbour-202020/`.
+`ConfigurationGroup` in `/apps/harbour-202020` con chiavi `workMinutes`, `breakSeconds`, `alertRepeat` (`once`|`loop`), `alertType` (`notification`|`alarm`) e `alarmOnceSeconds`, più `testWorkSeconds`, solo per le prove e senza interfaccia, che accorcia il lavoro a pochi secondi. È ammesso in Harbour e si cancella con un comando solo: `dconf reset -f /apps/harbour-202020/`.
 
 ### D7. Lingue
 Le stringhe passano da `qsTr()`. Si distribuiscono italiano e inglese (inglese come lingua di base dei sorgenti, come d'uso in Harbour).

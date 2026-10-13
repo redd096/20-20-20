@@ -51,12 +51,20 @@ The app stores its settings in dconf under `/apps/harbour-202020/`. A missing ke
 | `alertRepeat` | `once`, or `loop` (until confirmed) | `once` |
 | `alertType` | `notification` (follows ringtone volume, silent mode and do not disturb), or `alarm` (the system alarm: your alarm tone and volume, rings even in silent mode) | `notification` |
 | `alarmOnceSeconds` | how long the `alarm` type rings with the `once` repeat, seconds from 5 to 60 | 30 |
+| `testWorkSeconds` | testing only, not in the UI: when above 0, the work phase lasts this many seconds | not set |
 
 To read them, or reset them to the defaults, without root:
 
 ```sh
 ssh -F ../keyboard_jolla/ssh/jolla.conf jolla "dconf dump /apps/harbour-202020/"
 ssh -F ../keyboard_jolla/ssh/jolla.conf jolla "dconf reset -f /apps/harbour-202020/"
+```
+
+For quick tests on the device, the work phase can be shortened to a few seconds, and restored afterwards:
+
+```sh
+ssh -F ../keyboard_jolla/ssh/jolla.conf jolla "dconf write /apps/harbour-202020/testWorkSeconds 5"
+ssh -F ../keyboard_jolla/ssh/jolla.conf jolla "dconf reset /apps/harbour-202020/testWorkSeconds"
 ```
 
 - `dconf dump` prints every key stored by the app.

@@ -17,6 +17,9 @@ ApplicationWindow {
         property string alertRepeat: "once"         // "once" | "loop"
         property string alertType: "notification"   // "notification" | "alarm"
         property int alarmOnceSeconds: 30           // seconds, 5-60
+        // Testing only, not shown in the UI: when above 0, the work phase
+        // lasts this many seconds instead of workMinutes. See docs/sailfish.md.
+        property int testWorkSeconds: 0
     }
 
     AlertPlayer {
@@ -29,7 +32,9 @@ ApplicationWindow {
     CycleController {
         id: cycleController
         // Clamp the stored values, in case dconf was edited by hand.
-        workSeconds: Math.max(1, Math.min(120, appSettings.workMinutes)) * 60
+        workSeconds: appSettings.testWorkSeconds > 0
+                     ? appSettings.testWorkSeconds
+                     : Math.max(1, Math.min(120, appSettings.workMinutes)) * 60
         breakSeconds: Math.max(5, Math.min(300, appSettings.breakSeconds))
         onPhaseFinished: alertPlayer.start(phase)
         // Confirm or Stop: the alert must not outlive the phase that started it.
