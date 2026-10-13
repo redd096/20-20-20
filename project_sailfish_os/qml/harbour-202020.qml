@@ -7,6 +7,17 @@ import "cover"
 // Application window: owns the settings, the cycle and the alert, and passes
 // them to the pages.
 ApplicationWindow {
+    id: app
+
+    // Brings the app to the foreground on the main page, so the phase and the
+    // main button are visible as soon as the alert starts. With the device
+    // locked, the app is shown right after unlocking.
+    function showMainPage() {
+        if (pageStack.depth > 1)
+            pageStack.pop(null, PageStackAction.Immediate)
+        activate()
+    }
+
     // Settings stored in dconf under /apps/harbour-202020.
     // Remove them with: dconf reset -f /apps/harbour-202020/
     ConfigurationGroup {
@@ -36,7 +47,10 @@ ApplicationWindow {
                      ? appSettings.testWorkSeconds
                      : Math.max(1, Math.min(120, appSettings.workMinutes)) * 60
         breakSeconds: Math.max(5, Math.min(300, appSettings.breakSeconds))
-        onPhaseFinished: alertPlayer.start(phase)
+        onPhaseFinished: {
+            alertPlayer.start(phase)
+            app.showMainPage()
+        }
         // Confirm or Stop: the alert must not outlive the phase that started it.
         onPhaseChanged: if (phase !== "workDone" && phase !== "breakDone") alertPlayer.stop()
     }
