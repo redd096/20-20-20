@@ -60,4 +60,6 @@ Stato al 13 ottobre 2026 (release `0.1.0-13`). 6.1–6.5 provati dall'utente sul
 - [x] 9.1 Scrivere `docs/acceptance-checklist.md` con tutti gli scenari di `break-cycle` e `break-alerts`, più la prova dell'app con la lingua di sistema in inglese, ed eseguirla sul telefono con le durate predefinite (almeno un ciclo completo da 20 min a schermo spento), annotando gli esiti
 
   Esito (14 ottobre 2026, release 21): tutti i 31 scenari OK, annotati in `docs/acceptance-checklist.md`. Unica correzione: «Restart work» in italiano diventa «Riavvia lavoro» (era «Riprendi lavoro», ma il timer riparte da capo), nella release 22
-- [ ] 9.2 Eseguire `sfdk check` sull'RPM finale e annotare in `docs/sailfish.md` se è pubblicabile nel Jolla Store, su OpenRepos o su entrambi; impostare la versione 0.1.0 e il tag `sailfish-v0.1.0`
+- [x] 9.2 Eseguire `sfdk check` sull'RPM finale e annotare in `docs/sailfish.md` se è pubblicabile nel Jolla Store, su OpenRepos o su entrambi; impostare la versione 0.1.0 e il tag `sailfish-v0.1.0`
+
+  Esito (14 ottobre 2026, release 22): `Validation succeeded`, pubblicabile sia nel Jolla Store sia su OpenRepos (dettagli e 3 avvisi non bloccanti in `docs/sailfish.md`). «Riavvia lavoro» verificato sul telefono. Versione 0.1.0, tag `sailfish-v0.1.0`
