@@ -50,9 +50,11 @@ Stato al 13 ottobre 2026 (release `0.1.0-13`). 6.1–6.5 provati dall'utente sul
 
 ## 8. Lingue (D7)
 
-- [ ] 8.1 Generare e compilare le traduzioni italiano e inglese; verificare sul telefono con la lingua di sistema in italiano e in inglese che non restino stringhe non tradotte. Da rigenerare dopo il gruppo 7, perché le stringhe cambiano: la verifica sul telefono si fa una volta sola
+- [x] 8.1 Generare e compilare le traduzioni italiano e inglese; verificare sul telefono con la lingua di sistema in italiano e in inglese che non restino stringhe non tradotte. Da rigenerare dopo il gruppo 7, perché le stringhe cambiano: la verifica sul telefono si fa una volta sola
+
+  Esito (14 ottobre 2026, release 20): italiano verificato sul telefono. L'inglese, lingua dei sorgenti e fallback per le lingue senza traduzione, è controllato sul codice (tutte le stringhe passano da `qsTr()`, tranne il nome «20-20-20»); la prova sul telefono in inglese, che richiede un riavvio, passa nella checklist 9.1
 
 ## 9. Verifica finale e pacchetto
 
-- [ ] 9.1 Scrivere `docs/acceptance-checklist.md` con tutti gli scenari di `break-cycle` e `break-alerts` ed eseguirla sul telefono con le durate predefinite (almeno un ciclo completo da 20 min a schermo spento), annotando gli esiti
+- [ ] 9.1 Scrivere `docs/acceptance-checklist.md` con tutti gli scenari di `break-cycle` e `break-alerts`, più la prova dell'app con la lingua di sistema in inglese, ed eseguirla sul telefono con le durate predefinite (almeno un ciclo completo da 20 min a schermo spento), annotando gli esiti
 - [ ] 9.2 Eseguire `sfdk check` sull'RPM finale e annotare in `docs/sailfish.md` se è pubblicabile nel Jolla Store, su OpenRepos o su entrambi; impostare la versione 0.1.0 e il tag `sailfish-v0.1.0`

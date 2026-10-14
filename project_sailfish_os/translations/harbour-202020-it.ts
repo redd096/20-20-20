@@ -39,7 +39,7 @@
     <message>
         <location filename="../qml/cover/CoverPage.qml" line="17"/>
         <source>Waiting for break</source>
-        <translation type="unfinished"></translation>
+        <translation>In attesa della pausa</translation>
     </message>
 </context>
 <context>
@@ -62,27 +62,27 @@
     <message>
         <location filename="../qml/pages/MainPage.qml" line="21"/>
         <source>Work</source>
-        <translation type="unfinished">Lavoro</translation>
+        <translation>Lavoro</translation>
     </message>
     <message>
         <location filename="../qml/pages/MainPage.qml" line="22"/>
         <source>Waiting for break</source>
-        <translation type="unfinished"></translation>
+        <translation>In attesa della pausa</translation>
     </message>
     <message>
         <location filename="../qml/pages/MainPage.qml" line="24"/>
         <source>Break</source>
-        <translation type="unfinished">Pausa</translation>
+        <translation>Pausa</translation>
     </message>
     <message>
         <location filename="../qml/pages/MainPage.qml" line="25"/>
         <source>Waiting for work</source>
-        <translation type="unfinished"></translation>
+        <translation>In attesa del lavoro</translation>
     </message>
     <message>
         <location filename="../qml/pages/MainPage.qml" line="94"/>
         <source>Restart work</source>
-        <translation type="unfinished"></translation>
+        <translation>Riprendi lavoro</translation>
     </message>
     <message>
         <location filename="../qml/pages/MainPage.qml" line="104"/>
@@ -146,7 +146,7 @@
     <message>
         <location filename="../qml/pages/SettingsPage.qml" line="65"/>
         <source>Loop until stopped</source>
-        <translation type="unfinished"></translation>
+        <translation>In loop fino allo Stop</translation>
     </message>
     <message>
         <location filename="../qml/pages/SettingsPage.qml" line="73"/>
