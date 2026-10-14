@@ -40,13 +40,19 @@ Stato al 13 ottobre 2026 (release `0.1.0-13`). 6.1–6.5 provati dall'utente sul
 - [x] 6.5 Se 6.4 riesce: sostituire in `AlertPlayer.qml` il suono «Sveglia» con l'evento `ngfd` `clock` (eventualmente anche «Notifica» con un evento che segue il profilo), togliere `PULSE_PROP` dal launcher e lo slider del volume (aggiornando spec `break-alerts`, D5 e 6.3), e aggiornare `docs/`; verificare di nuovo gli scenari di `break-alerts`
 - [x] 6.6 Loop del modo «Notifica»: tornare al banner che si ripete a ogni suono (scelta «A» dell'utente), togliendo il trucco di `previewSummary`/`previewBody` vuoti che disegna un banner bianco; verificare in loop che non compaia il banner bianco
 - [x] 6.7 All'avviso portare l'app in primo piano (`activate()` della finestra) con lo stato e il pulsante principale ben visibili; verificare a telefono sbloccato e dopo lo sblocco
-- [x] 6.8 Notifiche che non restano negli Eventi: dal 12 ottobre il sistema scarta le notifiche con `appName` «20-20-20», anche quelle inviate a mano via D-Bus, mentre accetta gli altri nomi. Con la release 9 funzionavano. Dopo 6.4, con il consenso dell'utente, riavviare la home (`systemctl --user restart lipstick`) e verificare se tornano; se no, indagare (per esempio `appName` uguale al nome del file `.desktop`). Esito: con la release 16 le notifiche sono tornate negli Eventi senza riavviare la home; causa non chiarita (forse la rilettura del `.desktop` all'aggiornamento, dopo la rimozione del permesso `Audio` nella release 14). Da ricontrollare nella checklist 8.1
+- [x] 6.8 Notifiche che non restano negli Eventi: dal 12 ottobre il sistema scarta le notifiche con `appName` «20-20-20», anche quelle inviate a mano via D-Bus, mentre accetta gli altri nomi. Con la release 9 funzionavano. Dopo 6.4, con il consenso dell'utente, riavviare la home (`systemctl --user restart lipstick`) e verificare se tornano; se no, indagare (per esempio `appName` uguale al nome del file `.desktop`). Esito: con la release 16 le notifiche sono tornate negli Eventi senza riavviare la home; causa non chiarita (forse la rilettura del `.desktop` all'aggiornamento, dopo la rimozione del permesso `Audio` nella release 14). Da ricontrollare nella checklist 9.1
 
-## 7. Lingue (D7)
+## 7. Nuova macchina a stati (break-cycle, break-alerts, D3)
 
-- [ ] 7.1 Generare e compilare le traduzioni italiano e inglese; verificare sul telefono con la lingua di sistema in italiano e in inglese che non restino stringhe non tradotte
+- [ ] 7.1 Riscrivere `CycleController.qml` con le 6 fasi interne di D3, `confirm()`/`restartWork()`/`stop()`, `endTime` conservato dopo lo scadere e `overtimeSeconds`; verificare sul telefono con `testWorkSeconds` a 5 s il giro completo (Avvia → Lavoro scaduto → Stop → Inizia pausa → Pausa scaduta → Stop), «Riprendi lavoro», lo Stop a metà di ogni fase senza avvisi successivi e che `KeepAlive` sia attivo solo durante il conto alla rovescia
+- [ ] 7.2 Aggiornare `MainPage.qml` (nomi degli stati, solo «Stop» in «Lavoro» e «Pausa», «Inizia pausa» e «Riprendi lavoro» in «In attesa della pausa», 0:00 più il tempo in più rosso dopo 10 s con dissolvenza) e i testi della cover per i nuovi stati (oggi in «In attesa della pausa» mostrerebbe «Break finished»); verificare gli scenari «Risposta pronta» e «Ritorno dopo lo schermo spento» di «Tempo in più»
+- [ ] 7.3 Allineare `AlertPlayer.qml`, `harbour-202020.qml` e i testi della notifica: l'avviso si ferma solo con Stop e i testi restano coerenti col nuovo flusso; verificare gli scenari di `break-alerts` in loop con «Notifica» e con «Sveglia»
 
-## 8. Verifica finale e pacchetto
+## 8. Lingue (D7)
 
-- [ ] 8.1 Scrivere `docs/acceptance-checklist.md` con tutti gli scenari di `break-cycle` e `break-alerts` ed eseguirla sul telefono con le durate predefinite (almeno un ciclo completo da 20 min a schermo spento), annotando gli esiti
-- [ ] 8.2 Eseguire `sfdk check` sull'RPM finale e annotare in `docs/sailfish.md` se è pubblicabile nel Jolla Store, su OpenRepos o su entrambi; impostare la versione 0.1.0 e il tag `sailfish-v0.1.0`
+- [ ] 8.1 Generare e compilare le traduzioni italiano e inglese; verificare sul telefono con la lingua di sistema in italiano e in inglese che non restino stringhe non tradotte. Da rigenerare dopo il gruppo 7, perché le stringhe cambiano: la verifica sul telefono si fa una volta sola
+
+## 9. Verifica finale e pacchetto
+
+- [ ] 9.1 Scrivere `docs/acceptance-checklist.md` con tutti gli scenari di `break-cycle` e `break-alerts` ed eseguirla sul telefono con le durate predefinite (almeno un ciclo completo da 20 min a schermo spento), annotando gli esiti
+- [ ] 9.2 Eseguire `sfdk check` sull'RPM finale e annotare in `docs/sailfish.md` se è pubblicabile nel Jolla Store, su OpenRepos o su entrambi; impostare la versione 0.1.0 e il tag `sailfish-v0.1.0`

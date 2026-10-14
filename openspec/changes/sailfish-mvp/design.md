@@ -41,10 +41,13 @@ project_sailfish_os/
 Le build escono in `build/sailfish/`, ignorata da git.
 
 ### D3. Logica del ciclo in un solo oggetto QML
-`CycleController` contiene lo stato (enum dei 5 stati di `break-cycle`), l'istante di fine fase `endTime` (ms epoch) e le funzioni `start()`, `confirm()` e `stop()`. Le pagine leggono solo le sue proprietà.
+`CycleController` contiene la fase corrente, l'istante di fine fase `endTime` (ms epoch) e le funzioni `confirm()`, `restartWork()` e `stop()`. Le pagine leggono solo le sue proprietà.
+- Le fasi interne sono 6: `waitWork`, `working`, `workDone`, `waitBreak`, `onBreak`, `breakDone`. La pagina raggruppa `working` e `workDone` nello stato «Lavoro» di `break-cycle` (in corso / scaduto), e `onBreak` e `breakDone` in «Pausa».
+- `confirm()` è il pulsante principale delle attese: da `waitWork` porta a `working`, da `waitBreak` a `onBreak`. `restartWork()` porta da `waitBreak` a `working`. `stop()` chiude la fase: da `working`/`workDone` porta a `waitBreak`, da `onBreak`/`breakDone` a `waitWork`.
 - Il tempo rimanente si calcola come `endTime - Date.now()`, mai contando i tick. Così resta corretto dopo un suspend o un ritardo.
-- Un `Timer` da 1 s aggiorna la UI. Lo scadere viene controllato a ogni tick e da un secondo `Timer` mono-colpo impostato sul tempo rimanente.
-- *Perché*: un solo punto di verità, facile da tradurre in Kotlin. *Alternativa scartata*: logica in C++, che con questa dimensione aggiungerebbe solo complessità.
+- `endTime` resta impostato anche dopo lo scadere: il tempo in più è `Date.now() - endTime`, quindi è corretto anche dopo che lo schermo è rimasto spento.
+- Un `Timer` da 1 s aggiorna la UI, sia durante il conto alla rovescia sia nelle fasi scadute. Lo scadere viene controllato a ogni tick e da un secondo `Timer` mono-colpo impostato sul tempo rimanente. `KeepAlive` resta legato solo al conto alla rovescia (e al loop dell'avviso, vedi D4): il tempo in più si aggiorna solo quando l'app è visibile.
+- *Perché*: un solo punto di verità, facile da tradurre in Kotlin. La visualizzazione del tempo in più (0:00 fisso più un `-m:ss` rosso dopo 10 s) è ispirata a Minidoro (GPL-3.0), che però lo conta sommando i tick e a schermo spento resta indietro. *Alternativa scartata*: logica in C++, che con questa dimensione aggiungerebbe solo complessità.
 
 ### D4. Tenere sveglio il telefono con `Nemo.KeepAlive`
 `KeepAlive { enabled: ... }` è attivo solo mentre una fase è in corso o un avviso è in loop. Impedisce il suspend della CPU ma non tiene acceso lo schermo. All'uscita dell'app il processo termina e il blocco viene rilasciato, quindi non resta nulla attivo.
@@ -81,7 +84,7 @@ GPLv3 (come `reddo-keyboard`, accettata da OpenRepos e F-Droid). Nome pacchetto 
 - [L'interfaccia D-Bus di `ngfd` non è documentata per le app, e la sua introspezione è sbagliata] → se un aggiornamento la cambiasse, la «Sveglia» non suonerebbe (resterebbe solo la notifica senza suono). Va ricontrollato nella checklist di accettazione a ogni versione di Sailfish.
 - [`KeepAlive` consuma batteria durante i 20 minuti] → misurato nello spike: circa l'1% ogni 20 minuti, accettabile. È attivo solo durante le fasi e il loop.
 - [Target di build 5.1 e telefono 5.2] → è la stessa combinazione già funzionante per `reddo-keyboard`.
-- [Il loop resta acceso se l'utente si allontana] → è il comportamento voluto; «Stop» e il pulsante principale lo fermano subito.
+- [Il loop resta acceso se l'utente si allontana] → è il comportamento voluto; «Stop» lo ferma subito.
 
 ## Migration Plan
 

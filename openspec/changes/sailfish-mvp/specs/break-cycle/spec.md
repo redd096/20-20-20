@@ -8,63 +8,83 @@ Scandire la regola 20-20-20 con un ciclo di due fasi, lavoro e pausa, avviato da
 
 ### Requirement: Stati del ciclo
 
-L'app SHALL trovarsi sempre in uno di questi stati: «Fermo», «Lavoro in corso», «Lavoro finito», «Pausa in corso», «Pausa finita». All'avvio dell'app lo stato SHALL essere «Fermo». L'app SHALL mostrare in modo evidente lo stato corrente e un solo pulsante principale, la cui etichetta dipende dallo stato: «Avvia» in «Fermo», «Inizia pausa» in «Lavoro finito», «Riprendi» in «Pausa finita». Durante «Lavoro in corso» e «Pausa in corso» il pulsante principale non è disponibile.
+L'app SHALL trovarsi sempre in uno di questi stati: «In attesa del lavoro», «Lavoro», «In attesa della pausa», «Pausa». «Lavoro» e «Pausa» hanno due momenti: «in corso», mentre scorre il conto alla rovescia, e «scaduto», dopo che il conto alla rovescia è arrivato a zero. All'avvio dell'app lo stato SHALL essere «In attesa del lavoro». L'app SHALL mostrare in modo evidente lo stato corrente e solo questi comandi, con un pulsante principale ben visibile:
+
+- «In attesa del lavoro»: «Avvia».
+- «Lavoro» e «Pausa», in corso o scaduti: solo «Stop».
+- «In attesa della pausa»: «Inizia pausa» come pulsante principale e «Riprendi lavoro».
 
 #### Scenario: Avvio dell'app
 - **WHEN** l'utente apre l'app
-- **THEN** lo stato è «Fermo» e il pulsante principale mostra «Avvia»
+- **THEN** lo stato è «In attesa del lavoro» e il pulsante principale mostra «Avvia»
 
 ### Requirement: Fase di lavoro
 
-Premendo «Avvia» in «Fermo», o «Riprendi» in «Pausa finita», l'app SHALL passare a «Lavoro in corso» e avviare un conto alla rovescia lungo quanto la durata di lavoro configurata. Allo scadere l'app SHALL passare a «Lavoro finito» e far partire l'avviso (vedi `break-alerts`). La fase di pausa MUST NOT partire senza una conferma dell'utente.
+Premendo «Avvia» in «In attesa del lavoro», o «Riprendi lavoro» in «In attesa della pausa», l'app SHALL passare a «Lavoro» in corso e avviare un conto alla rovescia lungo quanto la durata di lavoro configurata. Allo scadere «Lavoro» SHALL diventare scaduto e l'app SHALL far partire l'avviso (vedi `break-alerts`). La fase di pausa MUST NOT partire senza una conferma dell'utente.
 
 #### Scenario: Avvio del ciclo
-- **WHEN** lo stato è «Fermo» e l'utente preme «Avvia»
-- **THEN** lo stato diventa «Lavoro in corso» con un conto alla rovescia pari alla durata di lavoro
+- **WHEN** lo stato è «In attesa del lavoro» e l'utente preme «Avvia»
+- **THEN** lo stato diventa «Lavoro» in corso con un conto alla rovescia pari alla durata di lavoro
 
 #### Scenario: Fine del lavoro
 - **WHEN** il conto alla rovescia del lavoro arriva a zero
-- **THEN** lo stato diventa «Lavoro finito», parte l'avviso e il pulsante principale mostra «Inizia pausa»
+- **THEN** lo stato resta «Lavoro», ora scaduto, parte l'avviso e l'unico comando disponibile è «Stop»
 
 #### Scenario: Nessuna conferma
-- **WHEN** lo stato è «Lavoro finito» e l'utente non preme nulla
-- **THEN** l'app resta in «Lavoro finito» senza avviare la pausa
+- **WHEN** «Lavoro» è scaduto e l'utente non preme nulla
+- **THEN** l'app resta in «Lavoro» scaduto, il tempo in più continua a crescere e la pausa non parte
+
+#### Scenario: Lavoro rimandato
+- **WHEN** lo stato è «In attesa della pausa» e l'utente preme «Riprendi lavoro»
+- **THEN** lo stato diventa «Lavoro» in corso con un nuovo conto alla rovescia pari alla durata di lavoro
 
 ### Requirement: Fase di pausa
 
-Premendo «Inizia pausa» in «Lavoro finito», l'app SHALL interrompere l'eventuale avviso in corso, passare a «Pausa in corso» e avviare un conto alla rovescia lungo quanto la durata di pausa configurata. Allo scadere l'app SHALL passare a «Pausa finita» e far partire l'avviso. Il lavoro successivo MUST NOT partire senza una conferma dell'utente.
+Premendo «Inizia pausa» in «In attesa della pausa», l'app SHALL passare a «Pausa» in corso e avviare un conto alla rovescia lungo quanto la durata di pausa configurata. Allo scadere «Pausa» SHALL diventare scaduta e l'app SHALL far partire l'avviso. Il lavoro successivo MUST NOT partire senza una conferma dell'utente.
 
 #### Scenario: Inizio della pausa
-- **WHEN** lo stato è «Lavoro finito» e l'utente preme «Inizia pausa»
-- **THEN** l'avviso si interrompe e lo stato diventa «Pausa in corso» con un conto alla rovescia pari alla durata di pausa
+- **WHEN** lo stato è «In attesa della pausa» e l'utente preme «Inizia pausa»
+- **THEN** lo stato diventa «Pausa» in corso con un conto alla rovescia pari alla durata di pausa
 
 #### Scenario: Fine della pausa
 - **WHEN** il conto alla rovescia della pausa arriva a zero
-- **THEN** lo stato diventa «Pausa finita», parte l'avviso e il pulsante principale mostra «Riprendi»
-
-#### Scenario: Ripresa del lavoro
-- **WHEN** lo stato è «Pausa finita» e l'utente preme «Riprendi»
-- **THEN** l'avviso si interrompe e lo stato diventa «Lavoro in corso» con un nuovo conto alla rovescia pari alla durata di lavoro
+- **THEN** lo stato resta «Pausa», ora scaduta, parte l'avviso e l'unico comando disponibile è «Stop»
 
 ### Requirement: Stop
 
-In ogni stato diverso da «Fermo» l'app SHALL offrire un comando «Stop» che interrompe l'eventuale conto alla rovescia e l'avviso in corso e riporta lo stato a «Fermo».
+In «Lavoro» e «Pausa», in corso o scaduti, il comando «Stop» SHALL chiudere la fase corrente: interrompe l'eventuale conto alla rovescia e l'avviso in corso. Da «Lavoro» lo stato SHALL diventare «In attesa della pausa»; da «Pausa» SHALL diventare «In attesa del lavoro». Nei due stati di attesa nessun conto alla rovescia né avviso SHALL essere attivo. Non esiste un comando per azzerare il ciclo: per smettere l'utente chiude l'app.
 
-#### Scenario: Stop durante il lavoro
-- **WHEN** lo stato è «Lavoro in corso» e l'utente preme «Stop»
-- **THEN** il conto alla rovescia si annulla, nessun avviso parte in seguito e lo stato diventa «Fermo»
+#### Scenario: Stop dopo la fine del lavoro
+- **WHEN** «Lavoro» è scaduto con l'avviso in loop e l'utente preme «Stop»
+- **THEN** l'avviso si interrompe, lo stato diventa «In attesa della pausa» e la pausa non parte
 
-#### Scenario: Stop durante un avviso
-- **WHEN** lo stato è «Lavoro finito» con l'avviso in loop e l'utente preme «Stop»
-- **THEN** l'avviso si interrompe e lo stato diventa «Fermo»
+#### Scenario: Lavoro finito in anticipo
+- **WHEN** lo stato è «Lavoro» in corso con 10 minuti rimanenti e l'utente preme «Stop»
+- **THEN** il conto alla rovescia si annulla, nessun avviso parte in seguito e lo stato diventa «In attesa della pausa»
+
+#### Scenario: Stop durante la pausa
+- **WHEN** lo stato è «Pausa» in corso e l'utente preme «Stop»
+- **THEN** il conto alla rovescia si annulla, nessun avviso parte in seguito e lo stato diventa «In attesa del lavoro»
 
 ### Requirement: Tempo rimanente
 
-Durante «Lavoro in corso» e «Pausa in corso» l'app SHALL mostrare il tempo rimanente nel formato minuti:secondi, aggiornato almeno una volta al secondo mentre l'app è visibile. Il tempo rimanente SHALL essere calcolato dall'istante di fine della fase, in modo da restare corretto dopo che lo schermo è stato spento o l'app ridotta a icona.
+Durante «Lavoro» e «Pausa» in corso l'app SHALL mostrare il tempo rimanente nel formato minuti:secondi, aggiornato almeno una volta al secondo mentre l'app è visibile. Il tempo rimanente SHALL essere calcolato dall'istante di fine della fase, in modo da restare corretto dopo che lo schermo è stato spento o l'app ridotta a icona.
 
 #### Scenario: Ritorno all'app dopo lo schermo spento
 - **WHEN** l'utente avvia il lavoro di 20 minuti, spegne lo schermo e lo riaccende dopo 5 minuti
 - **THEN** l'app mostra circa 15:00 rimanenti
+
+### Requirement: Tempo in più
+
+In «Lavoro» e «Pausa» scaduti l'app SHALL mostrare 0:00 al posto del tempo rimanente e, a partire da 10 secondi dopo lo scadere, anche il tempo trascorso dallo scadere, in rosso, nel formato -minuti:secondi, aggiornato almeno una volta al secondo mentre l'app è visibile. Il tempo in più SHALL essere calcolato dall'istante di fine della fase e MUST NOT tenere sveglio il dispositivo.
+
+#### Scenario: Risposta pronta
+- **WHEN** «Lavoro» scade e l'utente preme «Stop» entro 5 secondi
+- **THEN** il tempo in più non viene mai mostrato
+
+#### Scenario: Ritorno dopo lo schermo spento
+- **WHEN** «Lavoro» scade con lo schermo spento e l'utente lo riaccende 2 minuti dopo
+- **THEN** l'app mostra 0:00 e un tempo in più di circa -2:00
 
 ### Requirement: Durate configurabili
 
@@ -79,7 +99,7 @@ L'utente SHALL poter impostare la durata di lavoro in minuti interi da 1 a 120 (
 - **THEN** la durata di lavoro è 25 minuti
 
 #### Scenario: Modifica durante una fase
-- **WHEN** lo stato è «Lavoro in corso» con 10 minuti rimanenti e l'utente cambia la durata di lavoro a 30 minuti
+- **WHEN** lo stato è «Lavoro» in corso con 10 minuti rimanenti e l'utente cambia la durata di lavoro a 30 minuti
 - **THEN** la fase in corso finisce comunque dopo 10 minuti e il lavoro successivo dura 30 minuti
 
 ### Requirement: Nessuna attività ad app chiusa
@@ -87,5 +107,5 @@ L'utente SHALL poter impostare la durata di lavoro in minuti interi da 1 a 120 (
 Il ciclo SHALL funzionare solo mentre l'app è aperta, in primo piano o ridotta a icona. Chiudendo l'app il ciclo SHALL interrompersi senza lasciare timer, avvisi o processi attivi, e l'app MUST NOT avviarsi automaticamente all'accensione del dispositivo.
 
 #### Scenario: Chiusura durante il lavoro
-- **WHEN** lo stato è «Lavoro in corso» e l'utente chiude l'app
+- **WHEN** lo stato è «Lavoro» in corso e l'utente chiude l'app
 - **THEN** allo scadere della durata di lavoro non parte nessun avviso e nessun processo dell'app resta attivo
