@@ -44,9 +44,9 @@ Stato al 13 ottobre 2026 (release `0.1.0-13`). 6.1–6.5 provati dall'utente sul
 
 ## 7. Nuova macchina a stati (break-cycle, break-alerts, D3)
 
-- [ ] 7.1 Riscrivere `CycleController.qml` con le 6 fasi interne di D3, `confirm()`/`restartWork()`/`stop()`, `endTime` conservato dopo lo scadere e `overtimeSeconds`; verificare sul telefono con `testWorkSeconds` a 5 s il giro completo (Avvia → Lavoro scaduto → Stop → Inizia pausa → Pausa scaduta → Stop), «Riprendi lavoro», lo Stop a metà di ogni fase senza avvisi successivi e che `KeepAlive` sia attivo solo durante il conto alla rovescia
-- [ ] 7.2 Aggiornare `MainPage.qml` (nomi degli stati, solo «Stop» in «Lavoro» e «Pausa», «Inizia pausa» e «Riprendi lavoro» in «In attesa della pausa», 0:00 più il tempo in più rosso dopo 10 s con dissolvenza) e i testi della cover per i nuovi stati (oggi in «In attesa della pausa» mostrerebbe «Break finished»); verificare gli scenari «Risposta pronta» e «Ritorno dopo lo schermo spento» di «Tempo in più»
-- [ ] 7.3 Allineare `AlertPlayer.qml`, `harbour-202020.qml` e i testi della notifica: l'avviso si ferma solo con Stop e i testi restano coerenti col nuovo flusso; verificare gli scenari di `break-alerts` in loop con «Notifica» e con «Sveglia»
+- [x] 7.1 Riscrivere `CycleController.qml` con le 6 fasi interne di D3, `confirm()`/`restartWork()`/`stop()`, `endTime` conservato dopo lo scadere e `overtimeSeconds`; verificare sul telefono con `testWorkSeconds` a 5 s il giro completo (Avvia → Lavoro scaduto → Stop → Inizia pausa → Pausa scaduta → Stop), «Riprendi lavoro», lo Stop a metà di ogni fase senza avvisi successivi e che `KeepAlive` sia attivo solo durante il conto alla rovescia
+- [x] 7.2 Aggiornare `MainPage.qml` (nomi degli stati, solo «Stop» in «Lavoro» e «Pausa», «Inizia pausa» e «Riprendi lavoro» in «In attesa della pausa», 0:00 più il tempo in più rosso dopo 10 s con dissolvenza) e i testi della cover per i nuovi stati (oggi in «In attesa della pausa» mostrerebbe «Break finished»); verificare gli scenari «Risposta pronta» e «Ritorno dopo lo schermo spento» di «Tempo in più»
+- [x] 7.3 Allineare `AlertPlayer.qml`, `harbour-202020.qml` e i testi della notifica: l'avviso si ferma solo con Stop e i testi restano coerenti col nuovo flusso; verificare gli scenari di `break-alerts` in loop con «Notifica» e con «Sveglia»
 
 ## 8. Lingue (D7)
 

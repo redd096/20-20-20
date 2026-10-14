@@ -1,7 +1,8 @@
 import QtQuick 2.0
 import Sailfish.Silica 1.0
 
-// Main page: current phase, remaining time, the main button and Stop.
+// Main page: current state, remaining time or overtime, and the commands
+// of the current state.
 // A pull-down menu opens the settings.
 Page {
     id: page
@@ -12,23 +13,16 @@ Page {
 
     allowedOrientations: Orientation.All
 
-    // Human-readable name of a phase.
-    function phaseText(phase) {
+    // Name of the visible state (spec "break-cycle"): running and expired
+    // phases share the same name.
+    function stateText(phase) {
         switch (phase) {
-        case "working": return qsTr("Working")
-        case "workDone": return qsTr("Work finished")
-        case "onBreak": return qsTr("On break")
-        case "breakDone": return qsTr("Break finished")
-        default: return qsTr("Stopped")
-        }
-    }
-
-    // Label of the main button: what pressing it will do.
-    function buttonText(phase) {
-        switch (phase) {
-        case "workDone": return qsTr("Start break")
-        case "breakDone": return qsTr("Resume")
-        default: return qsTr("Start")
+        case "working":
+        case "workDone": return qsTr("Work")
+        case "waitBreak": return qsTr("Waiting for break")
+        case "onBreak":
+        case "breakDone": return qsTr("Break")
+        default: return qsTr("Waiting for work")
         }
     }
 
@@ -55,35 +49,58 @@ Page {
                 x: Theme.horizontalPageMargin
                 horizontalAlignment: Text.AlignHCenter
                 wrapMode: Text.Wrap
-                text: page.phaseText(page.cycle.phase)
+                text: page.stateText(page.cycle.phase)
                 color: Theme.highlightColor
                 font.pixelSize: Theme.fontSizeLarge
             }
 
-            // Remaining time, only while a countdown is running.
+            // Overtime, in red, shown 10 s after the countdown has expired
+            // (spec "break-cycle", "Overtime"). It keeps its space when
+            // hidden, so the time below does not jump when it appears.
             Label {
                 anchors.horizontalCenter: parent.horizontalCenter
-                visible: page.cycle.counting
+                visible: page.cycle.counting || page.cycle.expired
+                opacity: page.cycle.overtimeSeconds >= 10 ? 1.0 : 0.0
+                Behavior on opacity { FadeAnimator {} }
+                text: page.cycle.overtimeText
+                color: Theme.errorColor
+                font.pixelSize: Theme.fontSizeHuge
+            }
+
+            // Remaining time while a countdown runs, 0:00 once it has expired.
+            Label {
+                anchors.horizontalCenter: parent.horizontalCenter
+                visible: page.cycle.counting || page.cycle.expired
                 text: page.cycle.remainingText
                 font.pixelSize: Theme.fontSizeHuge * 2
             }
 
             Item { width: 1; height: Theme.paddingLarge }
 
-            // Main button, hidden during a countdown (spec "break-cycle").
+            // Main button of the waiting states: Start, or Start break.
             Button {
                 anchors.horizontalCenter: parent.horizontalCenter
-                visible: !page.cycle.counting
+                visible: page.cycle.phase === "waitWork" || page.cycle.phase === "waitBreak"
                 preferredWidth: Theme.buttonWidthLarge
-                text: page.buttonText(page.cycle.phase)
+                text: page.cycle.phase === "waitBreak" ? qsTr("Start break") : qsTr("Start")
                 onClicked: page.cycle.confirm()
             }
 
-            // Stop is available in every phase except "idle".
+            // Second choice while waiting for the break: skip it.
             Button {
                 anchors.horizontalCenter: parent.horizontalCenter
-                visible: page.cycle.phase !== "idle"
+                visible: page.cycle.phase === "waitBreak"
                 preferredWidth: Theme.buttonWidthMedium
+                text: qsTr("Restart work")
+                onClicked: page.cycle.restartWork()
+            }
+
+            // Stop is the only command during work and break, running or
+            // expired: it ends the phase and silences the alert.
+            Button {
+                anchors.horizontalCenter: parent.horizontalCenter
+                visible: page.cycle.inWork || page.cycle.inBreak
+                preferredWidth: Theme.buttonWidthLarge
                 text: qsTr("Stop")
                 onClicked: page.cycle.stop()
             }

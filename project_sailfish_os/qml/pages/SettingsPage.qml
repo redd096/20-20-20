@@ -62,7 +62,7 @@ Page {
                         onClicked: page.settings.alertRepeat = "once"
                     }
                     MenuItem {
-                        text: qsTr("Loop until confirmed")
+                        text: qsTr("Loop until stopped")
                         onClicked: page.settings.alertRepeat = "loop"
                     }
                 }

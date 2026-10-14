@@ -25,7 +25,7 @@ Item {
     // How long the "alarm" type rings with the "once" repeat, in seconds.
     property int alarmOnceSeconds: 30
 
-    // True while an alert is waiting for the user's confirmation.
+    // True from the end of a countdown until the user presses Stop.
     readonly property bool active: _phase !== ""
     // True while the sound keeps repeating.
     readonly property bool looping: active && repeat === "loop"
@@ -132,7 +132,7 @@ Item {
     }
 
     // The ngfd alarm always repeats: with the "once" repeat it is stopped
-    // after alarmOnceSeconds. The alert stays active until the user confirms.
+    // after alarmOnceSeconds. The alert stays active until the user presses Stop.
     Timer {
         id: alarmOnceStop
         interval: alert.alarmOnceSeconds * 1000

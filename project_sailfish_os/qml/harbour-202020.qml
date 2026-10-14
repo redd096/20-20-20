@@ -51,7 +51,7 @@ ApplicationWindow {
             alertPlayer.start(phase)
             app.showMainPage()
         }
-        // Confirm or Stop: the alert must not outlive the phase that started it.
+        // Stop: the alert must not outlive the phase that started it.
         onPhaseChanged: if (phase !== "workDone" && phase !== "breakDone") alertPlayer.stop()
     }
 

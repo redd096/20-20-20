@@ -27,65 +27,65 @@
 <context>
     <name>CoverPage</name>
     <message>
-        <location filename="../qml/cover/CoverPage.qml" line="34"/>
+        <location filename="../qml/cover/CoverPage.qml" line="15"/>
         <source>Time for a break</source>
         <translation>È ora della pausa</translation>
     </message>
     <message>
-        <location filename="../qml/cover/CoverPage.qml" line="34"/>
+        <location filename="../qml/cover/CoverPage.qml" line="16"/>
         <source>Break finished</source>
         <translation>Pausa finita</translation>
+    </message>
+    <message>
+        <location filename="../qml/cover/CoverPage.qml" line="17"/>
+        <source>Waiting for break</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
     <name>MainPage</name>
     <message>
-        <location filename="../qml/pages/MainPage.qml" line="18"/>
-        <source>Working</source>
-        <translation>Lavoro in corso</translation>
-    </message>
-    <message>
-        <location filename="../qml/pages/MainPage.qml" line="19"/>
-        <source>Work finished</source>
-        <translation>Lavoro finito</translation>
-    </message>
-    <message>
-        <location filename="../qml/pages/MainPage.qml" line="20"/>
-        <source>On break</source>
-        <translation>Pausa in corso</translation>
-    </message>
-    <message>
-        <location filename="../qml/pages/MainPage.qml" line="21"/>
-        <source>Break finished</source>
-        <translation>Pausa finita</translation>
-    </message>
-    <message>
-        <location filename="../qml/pages/MainPage.qml" line="22"/>
-        <source>Stopped</source>
-        <translation>Fermo</translation>
-    </message>
-    <message>
-        <location filename="../qml/pages/MainPage.qml" line="29"/>
+        <location filename="../qml/pages/MainPage.qml" line="85"/>
         <source>Start break</source>
         <translation>Inizia pausa</translation>
     </message>
     <message>
-        <location filename="../qml/pages/MainPage.qml" line="30"/>
-        <source>Resume</source>
-        <translation>Riprendi</translation>
-    </message>
-    <message>
-        <location filename="../qml/pages/MainPage.qml" line="31"/>
+        <location filename="../qml/pages/MainPage.qml" line="85"/>
         <source>Start</source>
         <translation>Avvia</translation>
     </message>
     <message>
-        <location filename="../qml/pages/MainPage.qml" line="41"/>
+        <location filename="../qml/pages/MainPage.qml" line="35"/>
         <source>Settings</source>
         <translation>Impostazioni</translation>
     </message>
     <message>
-        <location filename="../qml/pages/MainPage.qml" line="87"/>
+        <location filename="../qml/pages/MainPage.qml" line="21"/>
+        <source>Work</source>
+        <translation type="unfinished">Lavoro</translation>
+    </message>
+    <message>
+        <location filename="../qml/pages/MainPage.qml" line="22"/>
+        <source>Waiting for break</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../qml/pages/MainPage.qml" line="24"/>
+        <source>Break</source>
+        <translation type="unfinished">Pausa</translation>
+    </message>
+    <message>
+        <location filename="../qml/pages/MainPage.qml" line="25"/>
+        <source>Waiting for work</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../qml/pages/MainPage.qml" line="94"/>
+        <source>Restart work</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../qml/pages/MainPage.qml" line="104"/>
         <source>Stop</source>
         <translation>Stop</translation>
     </message>
@@ -145,8 +145,8 @@
     </message>
     <message>
         <location filename="../qml/pages/SettingsPage.qml" line="65"/>
-        <source>Loop until confirmed</source>
-        <translation>In loop fino alla conferma</translation>
+        <source>Loop until stopped</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../qml/pages/SettingsPage.qml" line="73"/>
