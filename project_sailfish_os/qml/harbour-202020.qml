@@ -25,7 +25,7 @@ ApplicationWindow {
         path: "/apps/harbour-202020"
         property int workMinutes: 20
         property int breakSeconds: 20
-        property string alertRepeat: "once"         // "once" | "loop"
+        property string alertRepeat: "loop"         // "loop" | "once"
         property string alertType: "notification"   // "notification" | "alarm"
         property int alarmOnceSeconds: 30           // seconds, 5-60
         // Testing only, not shown in the UI: when above 0, the work phase
@@ -36,7 +36,7 @@ ApplicationWindow {
     AlertPlayer {
         id: alertPlayer
         type: appSettings.alertType === "alarm" ? "alarm" : "notification"
-        repeat: appSettings.alertRepeat === "loop" ? "loop" : "once"
+        repeat: appSettings.alertRepeat === "once" ? "once" : "loop"
         alarmOnceSeconds: Math.max(5, Math.min(60, appSettings.alarmOnceSeconds))
     }
 

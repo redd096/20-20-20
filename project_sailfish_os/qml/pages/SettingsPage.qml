@@ -55,7 +55,7 @@ Page {
             ComboBox {
                 id: repeatBox
                 label: qsTr("Repeat")
-                Component.onCompleted: currentIndex = page.settings.alertRepeat === "loop" ? 1 : 0
+                Component.onCompleted: currentIndex = page.settings.alertRepeat === "once" ? 0 : 1
                 menu: ContextMenu {
                     MenuItem {
                         text: qsTr("Once")

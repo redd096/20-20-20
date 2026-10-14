@@ -53,6 +53,7 @@ Stato al 13 ottobre 2026 (release `0.1.0-13`). 6.1–6.5 provati dall'utente sul
 - [x] 8.1 Generare e compilare le traduzioni italiano e inglese; verificare sul telefono con la lingua di sistema in italiano e in inglese che non restino stringhe non tradotte. Da rigenerare dopo il gruppo 7, perché le stringhe cambiano: la verifica sul telefono si fa una volta sola
 
   Esito (14 ottobre 2026, release 20): italiano verificato sul telefono. L'inglese, lingua dei sorgenti e fallback per le lingue senza traduzione, è controllato sul codice (tutte le stringhe passano da `qsTr()`, tranne il nome «20-20-20»); la prova sul telefono in inglese, che richiede un riavvio, passa nella checklist 9.1
+- [x] 8.2 Ripetizione predefinita «In loop» al posto di «Una volta» (richiesta dell'utente del 14 ottobre 2026), in `harbour-202020.qml`, nella spec `break-alerts` e in `docs/sailfish.md`; la verifica dei valori predefiniti è nella checklist 9.1 (A14)
 
 ## 9. Verifica finale e pacchetto
 

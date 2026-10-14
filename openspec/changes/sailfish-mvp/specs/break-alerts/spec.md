@@ -20,7 +20,7 @@ Quando «Lavoro» o «Pausa» diventano scaduti (vedi `break-cycle`), l'app SHAL
 
 ### Requirement: Ripetizione dell'avviso
 
-L'utente SHALL poter scegliere la ripetizione dell'avviso tra «Una volta» (predefinita) e «In loop». Con «Una volta» il suono SHALL essere riprodotto una sola volta (con «Sveglia», per la durata impostata: vedi «Durata della sveglia»). Con «In loop» il suono SHALL ripetersi finché l'utente preme «Stop». In entrambi i casi lo stato resta scaduto finché l'utente preme «Stop». La scelta SHALL restare salvata anche dopo la chiusura dell'app.
+L'utente SHALL poter scegliere la ripetizione dell'avviso tra «Una volta» e «In loop» (predefinita). Con «Una volta» il suono SHALL essere riprodotto una sola volta (con «Sveglia», per la durata impostata: vedi «Durata della sveglia»). Con «In loop» il suono SHALL ripetersi finché l'utente preme «Stop». In entrambi i casi lo stato resta scaduto finché l'utente preme «Stop». La scelta SHALL restare salvata anche dopo la chiusura dell'app.
 
 #### Scenario: Una volta
 - **WHEN** la ripetizione è «Una volta» e il lavoro finisce
