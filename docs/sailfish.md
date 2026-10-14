@@ -27,6 +27,13 @@ sudo systemctl stop docker
 - `sfdk build` compiles into `build/sailfish/` and writes the RPM to `build/sailfish/RPMS/`.
 - `sfdk check` runs the Jolla Store (Harbour) validation. It must end with `Validation succeeded`.
 
+## Publishing
+
+Checked on 2026-10-14 with `sfdk check` on `harbour-202020-0.1.0-22.aarch64.rpm`: `Validation succeeded`, so the package can go to both stores.
+
+- **Jolla Store (Harbour)**: allowed, the validation has no errors. It has 3 rpmlint warnings, none blocking: unstripped binary, no `URL:` tag, changelog version (`0.1.0-1`) different from the package release.
+- **OpenRepos**: allowed, it does not require the Harbour rules.
+
 ## Install
 
 ```sh
