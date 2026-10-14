@@ -82,7 +82,7 @@
     <message>
         <location filename="../qml/pages/MainPage.qml" line="94"/>
         <source>Restart work</source>
-        <translation>Riprendi lavoro</translation>
+        <translation>Riavvia lavoro</translation>
     </message>
     <message>
         <location filename="../qml/pages/MainPage.qml" line="104"/>
