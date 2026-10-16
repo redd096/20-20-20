@@ -19,7 +19,7 @@
 
 ## 4. Build e prova sul telefono
 
-- [ ] 4.1 Portare `Release:` a 25 in `project_sailfish_os/rpm/harbour-202020.spec`, fare la build e il `check` di Harbour, copiare l'RPM sul telefono e cancellare quello della release 24 (l'utente lo installa e lancia `dconf reset -f /apps/harbour-202020/`); verificare che il `check` passi senza nuovi errori
+- [x] 4.1 Portare `Release:` a 25 in `project_sailfish_os/rpm/harbour-202020.spec`, fare la build e il `check` di Harbour, copiare l'RPM sul telefono e cancellare quello della release 24 (l'utente lo installa e lancia `dconf reset -f /apps/harbour-202020/`); verificare che il `check` passi senza nuovi errori
 - [ ] 4.2 Sul telefono eseguire le righe con esito `-` della checklist, in italiano, e segnare gli esiti in `docs/acceptance-checklist.md`; se con «non disturbare» il tipo «Sound» suona ancora, fermarsi (design, Risks); verificare che siano tutte `OK`
 
 ## Workflow follow-up
