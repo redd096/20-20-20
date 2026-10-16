@@ -27,7 +27,7 @@ Fuori scope:
 <!-- Nessuna. -->
 
 ### Modified Capabilities
-- `break-alerts`: cambia il requisito «Tipo di avviso» (con «Notifica», scelta tra volume Applicazioni, predefinito, e volume Suoneria; entrambi muti col profilo silenzioso, solo il volume Suoneria rispetta «non disturbare»). Il requisito «Ripetizione dell'avviso» resta valido così com'è.
+- `break-alerts`: nuovo requisito «Volume della notifica» (con «Notifica», scelta tra volume Applicazioni, predefinito, e volume Suoneria; solo il volume Suoneria rispetta «non disturbare»). «Tipo di avviso» e «Ripetizione dell'avviso» restano validi così come sono: entrambi i volumi sono muti col profilo silenzioso.
 
 ## Impact
 
