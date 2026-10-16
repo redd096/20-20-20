@@ -26,16 +26,15 @@ Un elemento `Audio` con `source` uguale a `notificationSoundFile` (`jolla-messag
 
 ### D3. Loop col `Timer` esistente
 Lo stesso `notificationLoop` (ogni 4 s) chiama `Audio.play()` invece di ripubblicare la notifica quando `volume` è `app`. Il ritmo è uguale a quello del volume Suoneria e `stop()` ferma timer e `Audio` in un solo punto.
-- Alternativa scartata: `Audio.loops = Audio.Infinite`. Il suono (3,2 s) ripartirebbe senza pausa, con un ritmo diverso dall'altra «Notifica», e ci sarebbe un secondo meccanismo di loop da fermare.
+- Alternativa scartata: `Audio.loops = Audio.Infinite` (la proprietà che ripete il file appena finisce, usata da Minidoro su `SoundEffect`). Il suono (3,2 s) ripartirebbe senza pausa, mentre col timer ogni 4 s c'è il suono e poi circa 0,8 s di silenzio, come col volume Suoneria; e ci sarebbe un secondo meccanismo di loop da fermare.
+- `KeepAlive` resta com'è: col loop è già attivo (`looping`), con «Una volta» non c'è nessun timer nostro da tenere sveglio.
 
-### D4. `KeepAlive` anche mentre `Audio` suona
-`KeepAlive` resta attivo anche finché `Audio` è in riproduzione. Con «Una volta» nessun timer è attivo dopo l'inizio dell'avviso, e senza questo il dispositivo potrebbe sospendersi durante i 3 s del suono a schermo spento. Il costo è nullo: dura solo quanto il suono.
-
-### D5. Permesso Sailjail `Audio`
+### D4. Permesso Sailjail `Audio`
 `Permissions=Audio` nella sezione `[X-Sailjail]` del `.desktop`. Non serve nessun `Requires` in più nel `.spec`: il modulo QML di QtMultimedia fa parte del sistema ed è ammesso in Harbour.
 
 ## Risks / Trade-offs
 
 - [Col permesso `Audio` le notifiche potrebbero sparire di nuovo dagli Eventi (task 6.8 di `sailfish-mvp`, causa mai chiarita)] → La checklist ripete B11 sulla nuova release. Se fallisce, si prova prima il riavvio della home, poi si riapre la decisione.
 - [`Audio` potrebbe essere muto anche con «non disturbare», contro quanto atteso] → Il comportamento sarebbe solo più restrittivo: si corregge lo scenario della spec dopo la prova sul telefono.
+- [Con «Una volta» e lo schermo spento il suono lo riproduce ora il processo dell'app, non lipstick o `ngfd`: se il telefono si sospendesse durante i 3 s il suono verrebbe tagliato (di solito PulseAudio lo tiene sveglio mentre uno stream suona)] → Riga apposita nella checklist; se succede, `KeepAlive` attivo anche mentre `Audio` suona.
 - [Volume Applicazioni a zero: l'avviso non si sente] → Resta la vibrazione, come col profilo silenzioso; nessuna azione.
