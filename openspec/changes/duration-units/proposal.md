@@ -32,4 +32,5 @@ Fuori scope: ore come unità, durate diverse per cicli successivi (pausa lunga d
 - `CycleController.qml` non cambia: riceve già le durate in secondi.
 - Traduzioni: nuove stringhe in inglese e italiano.
 - `docs/sailfish.md`: elenco delle chiavi dconf e procedura di prova senza `testWorkSeconds`.
+- `docs/acceptance-checklist.md`: il passo preliminare che azzera `testWorkSeconds` diventa `dconf reset -f /apps/harbour-202020/`.
 - Nessuna nuova dipendenza.
