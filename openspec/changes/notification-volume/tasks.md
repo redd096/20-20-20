@@ -8,14 +8,13 @@
 ## 2. Suono col volume Applicazioni
 
 - [ ] 2.1 In `project_sailfish_os/qml/AlertPlayer.qml` aggiungere l'elemento `Audio` con `notificationSoundFile` e il percorso `volume: app`: notifica pubblicata una volta con `sound` vuoto, vibrazione, `Audio.play()`, e `notificationLoop` che col volume `app` richiama `Audio.play()` invece di ripubblicare la notifica; `stop()` ferma anche `Audio`; aggiornare il commento in testa al file (design D2, D3); verificare sul telefono che in loop il banner compaia una sola volta
-- [ ] 2.2 Tenere `KeepAlive` attivo anche mentre `Audio` suona (design D4); verificare sul telefono con «Una volta» e lo schermo spento che il suono si senta intero
-- [ ] 2.3 Aggiungere `Permissions=Audio` nella sezione `[X-Sailjail]` di `project_sailfish_os/harbour-202020.desktop` (design D5); verificare che il `check` di Harbour passi senza nuovi errori
+- [ ] 2.2 Aggiungere `Permissions=Audio` nella sezione `[X-Sailjail]` di `project_sailfish_os/harbour-202020.desktop` (design D4); verificare che il `check` di Harbour passi senza nuovi errori
 
 ## 3. Traduzioni e documentazione
 
 - [ ] 3.1 Dopo la prima build, tradurre in italiano le nuove stringhe in `project_sailfish_os/translations/harbour-202020-it.ts` («Volume», «Volume applicazioni», «Volume suoneria» e le due descrizioni); verificare che il file non contenga voci `type="unfinished"`
 - [ ] 3.2 In `docs/sailfish.md` aggiungere `notificationVolume` alla tabella delle chiavi e correggere la descrizione di `alertType` (`notification` non segue più sempre il volume Suoneria); verificare rileggendo la tabella
-- [ ] 3.3 In `docs/acceptance-checklist.md` aggiungere righe con esito `-` per gli scenari di «Volume della notifica» (predefinito, volume Applicazioni coi tasti, silenzioso, «non disturbare» con i due volumi, un solo banner in loop, volume conservato) e per «Una volta» a schermo spento col volume Applicazioni, e rimettere a `-` A14 (nuovo predefinito), B3, B4, B5, B10 e B11; verificare che ogni nuovo scenario della spec abbia una riga
+- [ ] 3.3 In `docs/acceptance-checklist.md` aggiungere righe con esito `-` per gli scenari di «Volume della notifica» (predefinito, volume Applicazioni coi tasti, silenzioso, «non disturbare» con i due volumi, un solo banner in loop, volume conservato) e per «Una volta» a schermo spento col volume Applicazioni (il suono si sente intero, vedi design Risks), e rimettere a `-` A14 (nuovo predefinito), B3, B4, B5, B10 e B11; verificare che ogni nuovo scenario della spec abbia una riga
 
 ## 4. Build e prova sul telefono
 
