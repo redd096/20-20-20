@@ -1,13 +1,13 @@
 # Acceptance checklist (Sailfish OS)
 
-On-device tests for the `sailfish-mvp` change: every scenario of the `break-cycle` and `break-alerts` specs, plus the app in English. Rows A19-A23 were added by the `duration-units` change.
+On-device tests for the `sailfish-mvp` change: every scenario of the `break-cycle` and `break-alerts` specs, plus the app in English. Rows A19-A23 were added by the `duration-units` change, rows B12-B20 by the `notification-volume` change.
 
 **Before starting**
 
 - Install the final RPM (see [`sailfish.md`](sailfish.md)).
 - Reset the settings to the defaults:
   `ssh -F ../keyboard_jolla/ssh/jolla.conf jolla "dconf reset -f /apps/harbour-202020/"`
-- Unless a test says otherwise, use the defaults: work 20 min, break 20 s, repeat "Loop until stopped", type "Notification".
+- Unless a test says otherwise, use the defaults: work 20 min, break 20 s, repeat "Loop until stopped", type "Notification", volume "Application volume".
 - Short tests may set work to 1 min in the settings; test A2 and B1 MUST use the default 20 min.
 
 Result: `OK`, `FAIL` (with a note) or `-` (not run).
@@ -31,7 +31,7 @@ Device: Jolla, Sailfish OS 5.1.0.11, release 21. Date: 2026-10-14.
 | A11 | Stop during break | Break running, press "Stop" | Countdown cancelled, no alert later, state "Waiting for work" | OK |
 | A12 | Quick answer | Work ends, press "Stop" within 5 s | Overtime never shown | OK |
 | A13 | Overtime after screen off | Work ends with the screen off, turn it on 2 min later | 0:00 and a red overtime of about -2:00 | OK |
-| A14 | Defaults | `dconf reset -f /apps/harbour-202020/`, open settings | Units "Minutes and seconds", work 20 min, break 20 s, repeat "Loop until stopped", type "Notification" | OK |
+| A14 | Defaults | `dconf reset -f /apps/harbour-202020/`, open settings | Units "Minutes and seconds", work 20 min, break 20 s, repeat "Loop until stopped", type "Notification", volume "Application volume" | - |
 | A15 | Settings kept | Set work 25 min, close and reopen the app | Work 25 min | OK |
 | A16 | Change during a phase | Work running, change work duration | Current phase ends at its old time; the next work uses the new duration | OK |
 | A17 | Close during work | Work running, close the app; after the work time check `ps` via ssh | No alert, no `harbour-202020` process | OK |
@@ -48,15 +48,24 @@ Device: Jolla, Sailfish OS 5.1.0.11, release 21. Date: 2026-10-14.
 |---|----------|-------|----------|--------|
 | B1 | Screen off during work | Start the 20 min work, minimize, screen off | Alert within 5 s of the end | OK |
 | B2 | Break end | Break ends while looking away | Alert recognizable without looking (sound and/or vibration) | OK |
-| B3 | Once | Repeat "Once", work ends | Sound plays once, state stays "Work" finished | OK |
-| B4 | Loop until Stop | Repeat "Loop until stopped", work ends, press "Stop" after 30 s | Sound repeats for 30 s, stops on the press | OK |
-| B5 | Notification, silent profile | Type "Notification", silent profile, work ends | No sound, "Work" still becomes finished | OK |
+| B3 | Once | Repeat "Once", work ends | Sound plays once, state stays "Work" finished | - |
+| B4 | Loop until Stop | Repeat "Loop until stopped", work ends, press "Stop" after 30 s | Sound repeats for 30 s, stops on the press | - |
+| B5 | Notification, silent profile | Type "Notification", silent profile, work ends | No sound, "Work" still becomes finished | - |
 | B6 | Alarm, silent profile | Type "Alarm", silent profile, work ends | Alert is audible | OK |
 | B7 | System alarm volume | Type "Alarm", lower the alarm volume in system settings, work ends | Alarm ringtone at the lower volume | OK |
 | B8 | Alarm once | Type "Alarm", "Once", alarm length 30 s, work ends | Rings about 30 s, then silent; state stays "Work" finished | OK |
 | B9 | Alarm length kept | Set alarm length 15 s, close and reopen the app | Alarm length 15 s | OK |
-| B10 | Stop during loop | "Loop until stopped", break finished, press "Stop" | Sound stops at once, state "Waiting for work" | OK |
-| B11 | Events list | After an alert, open the Events view | The app's notification is listed (see task 6.8) | OK |
+| B10 | Stop during loop | "Loop until stopped", break finished, press "Stop" | Sound stops at once, state "Waiting for work" | - |
+| B11 | Events list | After an alert, open the Events view | The app's notification is listed (see task 6.8) | - |
+| B12 | Volume default | `dconf reset -f /apps/harbour-202020/`, open settings | Volume "Application volume"; the menu is shown only with type "Notification" | - |
+| B13 | Application volume | With the app open, lower the volume with the keys, work ends | Alert at the lower volume; the ringtone volume in system settings is unchanged | - |
+| B14 | Ringtone volume, silent profile | Volume "Ringtone volume", silent profile, work ends | No sound, "Work" still becomes finished | - |
+| B15 | Application volume, do not disturb | Do not disturb on, work ends | Alert is audible | - |
+| B16 | Ringtone volume, do not disturb | Volume "Ringtone volume", do not disturb on, work ends | No sound, "Work" still becomes finished | - |
+| B17 | One banner in loop | "Loop until stopped", work ends, press "Stop" after 30 s | Sound repeats for 30 s, the banner appears only once | - |
+| B18 | Volume kept | Choose "Ringtone volume", close and reopen the app | Volume "Ringtone volume" | - |
+| B19 | Once with screen off | Repeat "Once", minimize, screen off, work ends | The whole sound is heard (about 3 s) | - |
+| B20 | Volume menu hidden | Choose type "Alarm" | The Volume menu disappears | - |
 
 ## C. Language
 

@@ -57,7 +57,8 @@ The app stores its settings in dconf under `/apps/harbour-202020/`. A missing ke
 | `workSeconds` | work duration in seconds: 60 to 3600 (1 to 60 min) when shown in minutes, 5 to 120 when shown in seconds | 1200 |
 | `breakSeconds` | break duration in seconds, same ranges as `workSeconds` | 20 |
 | `alertRepeat` | `once`, or `loop` (until Stop) | `loop` |
-| `alertType` | `notification` (follows ringtone volume, silent mode and do not disturb), or `alarm` (the system alarm: your alarm tone and volume, rings even in silent mode) | `notification` |
+| `alertType` | `notification` (volume chosen with `notificationVolume`, muted in silent mode), or `alarm` (the system alarm: your alarm tone and volume, rings even in silent mode) | `notification` |
+| `notificationVolume` | volume of the `notification` type: `app` (application volume, played by the app; rings even in do not disturb), or `ringtone` (ringtone volume, played by the system; respects do not disturb) | `app` |
 | `alarmOnceSeconds` | how long the `alarm` type rings with the `once` repeat, seconds from 5 to 60 | 30 |
 
 To read them, or reset them to the defaults, without root:
