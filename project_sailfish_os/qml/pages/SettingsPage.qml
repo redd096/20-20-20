@@ -153,6 +153,19 @@ Page {
                 }
             }
 
+            // Only for "Sound" and "Notification" in a loop: the alarm uses the
+            // vibration of the system alarm. The click flips the stored value
+            // itself (automaticCheck off), so the order of Silica's own
+            // handlers does not matter.
+            TextSwitch {
+                visible: repeatBox.currentIndex === 1 && typeBox.currentIndex !== 2
+                text: qsTr("Vibrate at every repeat")
+                description: qsTr("Also in silent mode and do not disturb, when the sound is muted.")
+                automaticCheck: false
+                checked: page.settings.loopVibration
+                onClicked: page.settings.loopVibration = !checked
+            }
+
             // The system alarm repeats until it is stopped, so "Once" needs a
             // length. It fades in over the first 20 seconds.
             StepSlider {

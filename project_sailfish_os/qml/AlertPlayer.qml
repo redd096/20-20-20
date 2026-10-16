@@ -21,14 +21,19 @@ import QtFeedback 5.0
 //   the app stops it. A silent notification is published as well, to show
 //   the message and turn the screen on.
 //
-// The "sound" and "notification" types vibrate once when the alert starts; the "alarm"
-// type uses the vibration of the ngfd event. The mechanisms were chosen with
-// device spikes, see docs/sailfish-spike.md.
+// The "sound" and "notification" types vibrate when the alert starts, and at
+// every repeat of the loop if vibrateInLoop is set; the "alarm" type uses the
+// vibration of the ngfd event. The mechanisms were chosen with device
+// spikes, see docs/sailfish-spike.md.
 Item {
     id: alert
 
     property string type: "sound"          // "sound" | "notification" | "alarm"
     property string repeat: "once"          // "once" | "loop"
+    // With the "loop" repeat, the "sound" and "notification" types vibrate at
+    // every repeat too. Like the first vibration, it ignores silent mode and
+    // do not disturb.
+    property bool vibrateInLoop: false
     // How long the "alarm" type rings with the "once" repeat, in seconds.
     property int alarmOnceSeconds: 30
 
@@ -170,6 +175,8 @@ Item {
         interval: 4000
         repeat: true
         onTriggered: {
+            if (alert.vibrateInLoop)
+                vibra.start()
             if (alert.type === "sound")
                 alert.playSound()
             else

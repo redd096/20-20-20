@@ -30,6 +30,8 @@ ApplicationWindow {
         property int workSeconds: 1200
         property int breakSeconds: 20
         property string alertRepeat: "loop"         // "loop" | "once"
+        // With the "loop" repeat, vibrate at every repeat, not only at the start.
+        property bool loopVibration: false
         property string alertType: "sound"          // "sound" | "notification" | "alarm"
         property int alarmOnceSeconds: 30           // seconds, 5-60
     }
@@ -46,6 +48,7 @@ ApplicationWindow {
         type: appSettings.alertType === "alarm" || appSettings.alertType === "notification"
               ? appSettings.alertType : "sound"
         repeat: appSettings.alertRepeat === "once" ? "once" : "loop"
+        vibrateInLoop: appSettings.loopVibration
         alarmOnceSeconds: Math.max(5, Math.min(60, appSettings.alarmOnceSeconds))
     }
 

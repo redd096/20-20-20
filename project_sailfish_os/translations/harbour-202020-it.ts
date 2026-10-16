@@ -4,22 +4,22 @@
 <context>
     <name>AlertPlayer</name>
     <message>
-        <location filename="../qml/AlertPlayer.qml" line="142"/>
+        <location filename="../qml/AlertPlayer.qml" line="147"/>
         <source>Time for a break</source>
         <translation>È ora della pausa</translation>
     </message>
     <message>
-        <location filename="../qml/AlertPlayer.qml" line="142"/>
+        <location filename="../qml/AlertPlayer.qml" line="147"/>
         <source>Break finished</source>
         <translation>Pausa finita</translation>
     </message>
     <message>
-        <location filename="../qml/AlertPlayer.qml" line="143"/>
+        <location filename="../qml/AlertPlayer.qml" line="148"/>
         <source>Look at something about 20 feet (6 m) away.</source>
         <translation>Guarda qualcosa a circa 6 metri di distanza.</translation>
     </message>
     <message>
-        <location filename="../qml/AlertPlayer.qml" line="144"/>
+        <location filename="../qml/AlertPlayer.qml" line="149"/>
         <source>You can go back to the screen.</source>
         <translation>Puoi tornare allo schermo.</translation>
     </message>
@@ -116,7 +116,7 @@
     <message>
         <location filename="../qml/pages/SettingsPage.qml" line="81"/>
         <location filename="../qml/pages/SettingsPage.qml" line="93"/>
-        <location filename="../qml/pages/SettingsPage.qml" line="164"/>
+        <location filename="../qml/pages/SettingsPage.qml" line="177"/>
         <source>s</source>
         <translation>s</translation>
     </message>
@@ -206,7 +206,17 @@
         <translation>Sveglia</translation>
     </message>
     <message>
-        <location filename="../qml/pages/SettingsPage.qml" line="165"/>
+        <location filename="../qml/pages/SettingsPage.qml" line="162"/>
+        <source>Vibrate at every repeat</source>
+        <translation>Vibra a ogni ripetizione</translation>
+    </message>
+    <message>
+        <location filename="../qml/pages/SettingsPage.qml" line="163"/>
+        <source>Also in silent mode and do not disturb, when the sound is muted.</source>
+        <translation>Anche col profilo silenzioso e con «non disturbare», quando il suono è muto.</translation>
+    </message>
+    <message>
+        <location filename="../qml/pages/SettingsPage.qml" line="178"/>
         <source>Alarm length</source>
         <translation>Durata sveglia</translation>
     </message>
