@@ -11,19 +11,19 @@ Chi usa l'app alla Pomodoro (per esempio con «Minuti e minuti», 25/5) vuole un
   - «Pausa lunga dopo N lavori», da 1 a 10;
   - «Durata della pausa lunga», nella stessa unità della pausa normale secondo la modalità delle unità: in minuti da 1 a 60 con passo 1, in secondi da 5 a 120 con passo 5 (le stesse regole degli altri cursori).
 - Con la modalità Pomodoro attiva:
-  - la pagina principale mostra un contatore dei lavori, vicino al timer e ai pulsanti;
+  - la pagina principale mostra un contatore dei lavori in basso, nella stessa posizione dei contatori di Minidoro;
   - quando il contatore ha raggiunto N, la pausa successiva («Inizia pausa») dura quanto la pausa lunga; quando la pausa lunga parte, il contatore torna a zero;
   - nel menu a tendina, oltre a «Impostazioni», compare «Azzera contatore».
 
-### Scelte proposte, da confermare prima del design
+### Scelte (confermate dall'utente il 16 ottobre 2026)
 
-- **Cosa conta come lavoro fatto**: un lavoro arrivato a zero (scaduto). Un lavoro chiuso in anticipo con «Stop» non conta; «Riavvia lavoro» non conta il lavoro rimandato.
+- **Cosa conta come lavoro fatto** (deciso dall'utente): ogni lavoro che finisce, sia arrivato a zero sia chiuso in anticipo con «Stop». «Riavvia lavoro» non aggiunge nulla: il lavoro precedente è già stato contato quando è finito, e quello nuovo conta quando finirà.
 - **Formato del contatore**: «lavori fatti / N», per esempio «2/3».
 - **Valori predefiniti**: pausa lunga dopo 3 lavori (come Minidoro); durata della pausa lunga 15 min con la pausa in minuti, 60 s con la pausa in secondi. Il cambio di modalità delle unità riporta anche la pausa lunga al suo predefinito, come già le altre durate.
 - **Contatore non salvato**: riparte da zero a ogni apertura dell'app, come in Minidoro; «Azzera contatore» serve durante una sessione.
 - **Nome dello stato**: la pausa lunga si mostra come «Pausa lunga» nella pagina principale; avviso e notifica restano quelli della pausa normale.
 
-Fuori scope: un'icona o un contatore sulla copertina (cover), statistiche o storico dei lavori, testi dell'avviso diversi per la pausa lunga.
+Fuori scope: un'icona o un contatore sulla copertina (cover), statistiche o storico dei lavori, testi dell'avviso diversi per la pausa lunga, i contatori manuali di Minidoro (stella e cerchio, per contare a mano interruzioni esterne e interne).
 
 ## Capabilities
 
