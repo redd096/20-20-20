@@ -125,15 +125,23 @@ Page {
                 }
             }
 
+            // Menu order: "sound", "notification", "alarm". Each description
+            // says how the alert sounds and what its limits are.
             ComboBox {
                 id: typeBox
                 label: qsTr("Type")
-                // For "Notification" the Volume menu below explains the behaviour.
-                description: currentIndex === 1
+                description: currentIndex === 2
                              ? qsTr("Uses your alarm tone and alarm volume, even in silent mode and do not disturb.")
-                             : ""
-                Component.onCompleted: currentIndex = page.settings.alertType === "alarm" ? 1 : 0
+                             : currentIndex === 1
+                               ? qsTr("A system notification on the ringtone volume. Silent in silent mode and do not disturb. With the loop, the banner is shown again at every repeat.")
+                               : qsTr("Played by the app on the media volume, set with the volume keys while the app is open. Silent in silent mode and do not disturb.")
+                Component.onCompleted: currentIndex = page.settings.alertType === "alarm" ? 2
+                                                    : page.settings.alertType === "notification" ? 1 : 0
                 menu: ContextMenu {
+                    MenuItem {
+                        text: qsTr("Sound")
+                        onClicked: page.settings.alertType = "sound"
+                    }
                     MenuItem {
                         text: qsTr("Notification")
                         onClicked: page.settings.alertType = "notification"
@@ -145,30 +153,10 @@ Page {
                 }
             }
 
-            // Only for "Notification": the alarm always uses the alarm volume.
-            ComboBox {
-                visible: typeBox.currentIndex === 0
-                label: qsTr("Volume")
-                description: currentIndex === 1
-                             ? qsTr("Follows the ringtone volume, silent mode and do not disturb.")
-                             : qsTr("Follows the application volume, set with the volume keys while the app is open. Silent in silent mode, but rings even in do not disturb.")
-                Component.onCompleted: currentIndex = page.settings.notificationVolume === "ringtone" ? 1 : 0
-                menu: ContextMenu {
-                    MenuItem {
-                        text: qsTr("Application volume")
-                        onClicked: page.settings.notificationVolume = "app"
-                    }
-                    MenuItem {
-                        text: qsTr("Ringtone volume")
-                        onClicked: page.settings.notificationVolume = "ringtone"
-                    }
-                }
-            }
-
             // The system alarm repeats until it is stopped, so "Once" needs a
             // length. It fades in over the first 20 seconds.
             StepSlider {
-                visible: typeBox.currentIndex === 1 && repeatBox.currentIndex === 0
+                visible: typeBox.currentIndex === 2 && repeatBox.currentIndex === 0
                 minimumValue: 5
                 maximumValue: 60
                 stepSize: 5

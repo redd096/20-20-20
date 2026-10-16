@@ -30,10 +30,7 @@ ApplicationWindow {
         property int workSeconds: 1200
         property int breakSeconds: 20
         property string alertRepeat: "loop"         // "loop" | "once"
-        property string alertType: "notification"   // "notification" | "alarm"
-        // Volume of the "notification" type: "app" (application volume,
-        // played by the app) | "ringtone" (ringtone volume, played by the system).
-        property string notificationVolume: "app"
+        property string alertType: "sound"          // "sound" | "notification" | "alarm"
         property int alarmOnceSeconds: 30           // seconds, 5-60
     }
 
@@ -46,9 +43,9 @@ ApplicationWindow {
 
     AlertPlayer {
         id: alertPlayer
-        type: appSettings.alertType === "alarm" ? "alarm" : "notification"
+        type: appSettings.alertType === "alarm" || appSettings.alertType === "notification"
+              ? appSettings.alertType : "sound"
         repeat: appSettings.alertRepeat === "once" ? "once" : "loop"
-        volume: appSettings.notificationVolume === "ringtone" ? "ringtone" : "app"
         alarmOnceSeconds: Math.max(5, Math.min(60, appSettings.alarmOnceSeconds))
     }
 

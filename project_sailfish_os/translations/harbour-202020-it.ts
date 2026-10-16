@@ -4,22 +4,22 @@
 <context>
     <name>AlertPlayer</name>
     <message>
-        <location filename="../qml/AlertPlayer.qml" line="136"/>
+        <location filename="../qml/AlertPlayer.qml" line="142"/>
         <source>Time for a break</source>
         <translation>È ora della pausa</translation>
     </message>
     <message>
-        <location filename="../qml/AlertPlayer.qml" line="136"/>
+        <location filename="../qml/AlertPlayer.qml" line="142"/>
         <source>Break finished</source>
         <translation>Pausa finita</translation>
     </message>
     <message>
-        <location filename="../qml/AlertPlayer.qml" line="137"/>
+        <location filename="../qml/AlertPlayer.qml" line="143"/>
         <source>Look at something about 20 feet (6 m) away.</source>
         <translation>Guarda qualcosa a circa 6 metri di distanza.</translation>
     </message>
     <message>
-        <location filename="../qml/AlertPlayer.qml" line="138"/>
+        <location filename="../qml/AlertPlayer.qml" line="144"/>
         <source>You can go back to the screen.</source>
         <translation>Puoi tornare allo schermo.</translation>
     </message>
@@ -116,7 +116,7 @@
     <message>
         <location filename="../qml/pages/SettingsPage.qml" line="81"/>
         <location filename="../qml/pages/SettingsPage.qml" line="93"/>
-        <location filename="../qml/pages/SettingsPage.qml" line="176"/>
+        <location filename="../qml/pages/SettingsPage.qml" line="164"/>
         <source>s</source>
         <translation>s</translation>
     </message>
@@ -171,52 +171,42 @@
         <translation>In loop fino allo Stop</translation>
     </message>
     <message>
-        <location filename="../qml/pages/SettingsPage.qml" line="130"/>
+        <location filename="../qml/pages/SettingsPage.qml" line="132"/>
         <source>Type</source>
         <translation>Tipo</translation>
     </message>
     <message>
-        <location filename="../qml/pages/SettingsPage.qml" line="133"/>
+        <location filename="../qml/pages/SettingsPage.qml" line="134"/>
         <source>Uses your alarm tone and alarm volume, even in silent mode and do not disturb.</source>
         <translation>Usa la suoneria e il volume della sveglia, anche col profilo silenzioso e con «non disturbare».</translation>
     </message>
     <message>
-        <location filename="../qml/pages/SettingsPage.qml" line="151"/>
-        <source>Volume</source>
-        <translation>Volume</translation>
+        <location filename="../qml/pages/SettingsPage.qml" line="136"/>
+        <source>A system notification on the ringtone volume. Silent in silent mode and do not disturb. With the loop, the banner is shown again at every repeat.</source>
+        <translation>Notifica di sistema sul volume della suoneria. Muta col profilo silenzioso e con «non disturbare». In loop il banner ricompare a ogni ripetizione.</translation>
     </message>
     <message>
-        <location filename="../qml/pages/SettingsPage.qml" line="153"/>
-        <source>Follows the ringtone volume, silent mode and do not disturb.</source>
-        <translation>Segue il volume della suoneria, il profilo silenzioso e «non disturbare».</translation>
+        <location filename="../qml/pages/SettingsPage.qml" line="137"/>
+        <source>Played by the app on the media volume, set with the volume keys while the app is open. Silent in silent mode and do not disturb.</source>
+        <translation>Lo riproduce l&apos;app sul volume dei media, che si regola coi tasti del volume mentre l&apos;app è aperta. Muto col profilo silenzioso e con «non disturbare».</translation>
     </message>
     <message>
-        <location filename="../qml/pages/SettingsPage.qml" line="138"/>
+        <location filename="../qml/pages/SettingsPage.qml" line="142"/>
+        <source>Sound</source>
+        <translation>Suono</translation>
+    </message>
+    <message>
+        <location filename="../qml/pages/SettingsPage.qml" line="146"/>
         <source>Notification</source>
         <translation>Notifica</translation>
     </message>
     <message>
-        <location filename="../qml/pages/SettingsPage.qml" line="142"/>
+        <location filename="../qml/pages/SettingsPage.qml" line="150"/>
         <source>Alarm</source>
         <translation>Sveglia</translation>
     </message>
     <message>
-        <location filename="../qml/pages/SettingsPage.qml" line="154"/>
-        <source>Follows the application volume, set with the volume keys while the app is open. Silent in silent mode, but rings even in do not disturb.</source>
-        <translation>Segue il volume delle applicazioni, che si regola coi tasti del volume mentre l&apos;app è aperta. Muto col profilo silenzioso, ma suona anche con «non disturbare».</translation>
-    </message>
-    <message>
-        <location filename="../qml/pages/SettingsPage.qml" line="158"/>
-        <source>Application volume</source>
-        <translation>Volume applicazioni</translation>
-    </message>
-    <message>
-        <location filename="../qml/pages/SettingsPage.qml" line="162"/>
-        <source>Ringtone volume</source>
-        <translation>Volume suoneria</translation>
-    </message>
-    <message>
-        <location filename="../qml/pages/SettingsPage.qml" line="177"/>
+        <location filename="../qml/pages/SettingsPage.qml" line="165"/>
         <source>Alarm length</source>
         <translation>Durata sveglia</translation>
     </message>

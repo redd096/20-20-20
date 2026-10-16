@@ -1,35 +1,34 @@
 import QtQuick 2.0
 import QtMultimedia 5.6
+import Nemo.Configuration 1.0
 import Nemo.DBus 2.0
 import Nemo.KeepAlive 1.2
 import Nemo.Notifications 1.0
 import QtFeedback 5.0
 
-// End-of-phase alert (spec "break-alerts"). Two alert types:
+// End-of-phase alert (spec "break-alerts"). Three alert types:
 //
-// - "notification": a critical notification with a sound, on one of two
-//   volumes:
-//   - "app": the app plays the sound itself (QtMultimedia, Sailjail "Audio"
-//     permission), on the application volume. Muted in silent mode, but it
-//     rings in do not disturb. The notification is silent and published once.
-//   - "ringtone": the system plays the notification sound on the ringtone
-//     volume, so it respects silent mode and do not disturb.
+// - "sound": the app plays the sound itself (QtMultimedia, Sailjail "Audio"
+//   permission), on the media volume. Muted in silent mode by the system and
+//   in do not disturb by the app. The notification is silent and published
+//   once, so the banner is shown once even in a loop.
+// - "notification": a critical notification with a sound. The system plays
+//   it on the ringtone volume, so it respects silent mode and do not disturb.
+//   The loop publishes it again, so the banner is shown at every repeat.
 // - "alarm": the system alarm, played by the feedback daemon ngfd (event
 //   "clock"): the user's alarm tone, at the alarm volume, with the alarm
 //   vibration, even in silent mode. It fades in over 20 s and repeats until
 //   the app stops it. A silent notification is published as well, to show
 //   the message and turn the screen on.
 //
-// The "notification" type vibrates once when the alert starts; the "alarm"
+// The "sound" and "notification" types vibrate once when the alert starts; the "alarm"
 // type uses the vibration of the ngfd event. The mechanisms were chosen with
 // device spikes, see docs/sailfish-spike.md.
 Item {
     id: alert
 
-    property string type: "notification"   // "notification" | "alarm"
+    property string type: "sound"          // "sound" | "notification" | "alarm"
     property string repeat: "once"          // "once" | "loop"
-    // Volume of the "notification" type.
-    property string volume: "app"           // "app" | "ringtone"
     // How long the "alarm" type rings with the "once" repeat, in seconds.
     property int alarmOnceSeconds: 30
 
@@ -62,12 +61,12 @@ Item {
             playAlarm()
             if (repeat === "once")
                 alarmOnceStop.restart()
-        } else if (volume === "app") {
+        } else if (type === "sound") {
             // The sound comes from the app; the notification is only visual.
             vibra.start()
             notification.sound = ""
             publishNotification()
-            appSound.play()
+            playSound()
             if (repeat === "loop")
                 notificationLoop.start()
         } else {
@@ -87,6 +86,13 @@ Item {
         notification.previewSummary = notification.summary
         notification.previewBody = notification.body
         notification.publish()
+    }
+
+    // Plays the sound of the "sound" type, unless do not disturb is on. The
+    // system mutes it in silent mode, but not in do not disturb.
+    function playSound() {
+        if (!doNotDisturb.value)
+            appSound.play()
     }
 
     // Asks ngfd to play the system alarm. The answer arrives later: if the
@@ -138,24 +144,34 @@ Item {
                                           : qsTr("You can go back to the screen.")
     }
 
-    // Sound of the "notification" type with the "app" volume. Loaded when
-    // the app starts, so the first alert plays without delay.
+    // Sound of the "sound" type. Loaded when the app starts, so the first
+    // alert plays without delay.
     Audio {
         id: appSound
         source: alert.notificationSoundFile
     }
 
-    // Loop for the "notification" type. With the "app" volume only the sound
-    // is played again. With the "ringtone" volume, publishing the same
-    // notification again replaces it, shows the banner and plays its sound
-    // again. The sound lasts 3.2 s: every 4 s keeps a short pause between plays.
+    // Do not disturb, as set by the system (lipstick). If the sandbox does not
+    // allow reading it, it stays false and the "sound" type always rings.
+    ConfigurationValue {
+        id: doNotDisturb
+        key: "/lipstick/do_not_disturb"
+        defaultValue: false
+    }
+
+    // Loop for the "sound" and "notification" types. With "sound" only the
+    // sound is played again; checking do not disturb at every repeat mutes
+    // the next ones as soon as it is turned on. With "notification",
+    // publishing the same notification again replaces it, shows the banner
+    // and plays its sound again. The sound lasts 3.2 s: every 4 s keeps a
+    // short pause between plays.
     Timer {
         id: notificationLoop
         interval: 4000
         repeat: true
         onTriggered: {
-            if (alert.volume === "app")
-                appSound.play()
+            if (alert.type === "sound")
+                alert.playSound()
             else
                 alert.publishNotification()
         }
