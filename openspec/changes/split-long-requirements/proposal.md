@@ -14,13 +14,15 @@ Nessun comportamento dell'app cambia: si riorganizza solo il testo delle spec.
 
 I requisiti originali tengono nome e scenari; ogni requisito nuovo ha scenari propri.
 
+In più il pulsante «Riprendi lavoro» prende nelle spec il nome che ha nell'app dalla release 22, «Riavvia lavoro» (il conto alla rovescia riparte da capo): in «Comandi per stato» e in «Fase di lavoro», requisito e scenario «Lavoro rimandato».
+
 ## Capabilities
 
 ### New Capabilities
 <!-- Nessuna. -->
 
 ### Modified Capabilities
-- `break-cycle`: «Stati del ciclo» e «Durate configurabili» si accorciano; nuovi «Comandi per stato», «Intervalli delle durate», «Predefiniti per modalità».
+- `break-cycle`: «Stati del ciclo» e «Durate configurabili» si accorciano; «Fase di lavoro» usa il nome «Riavvia lavoro»; nuovi «Comandi per stato», «Intervalli delle durate», «Predefiniti per modalità».
 - `break-alerts`: «Tipo di avviso» si accorcia; nuovo «Profilo silenzioso e non disturbare».
 
 ## Impact

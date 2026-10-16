@@ -46,6 +46,26 @@ L'utente SHALL poter scegliere una modalità delle unità tra «Minuti e secondi
 - **WHEN** lo stato è «Lavoro» in corso con 10 minuti rimanenti e l'utente sceglie «Secondi e secondi»
 - **THEN** la fase in corso finisce comunque dopo 10 minuti e il lavoro successivo dura 20 secondi
 
+### Requirement: Fase di lavoro
+
+Premendo «Avvia» in «In attesa del lavoro», o «Riavvia lavoro» in «In attesa della pausa», l'app SHALL passare a «Lavoro» in corso e avviare un conto alla rovescia lungo quanto la durata di lavoro configurata. Allo scadere «Lavoro» SHALL diventare scaduto e l'app SHALL far partire l'avviso (vedi `break-alerts`). La fase di pausa MUST NOT partire senza una conferma dell'utente.
+
+#### Scenario: Avvio del ciclo
+- **WHEN** lo stato è «In attesa del lavoro» e l'utente preme «Avvia»
+- **THEN** lo stato diventa «Lavoro» in corso con un conto alla rovescia pari alla durata di lavoro
+
+#### Scenario: Fine del lavoro
+- **WHEN** il conto alla rovescia del lavoro arriva a zero
+- **THEN** lo stato resta «Lavoro», ora scaduto, parte l'avviso e l'unico comando disponibile è «Stop»
+
+#### Scenario: Nessuna conferma
+- **WHEN** «Lavoro» è scaduto e l'utente non preme nulla
+- **THEN** l'app resta in «Lavoro» scaduto, il tempo in più continua a crescere e la pausa non parte
+
+#### Scenario: Lavoro rimandato
+- **WHEN** lo stato è «In attesa della pausa» e l'utente preme «Riavvia lavoro»
+- **THEN** lo stato diventa «Lavoro» in corso con un nuovo conto alla rovescia pari alla durata di lavoro
+
 ## ADDED Requirements
 
 ### Requirement: Comandi per stato
@@ -54,7 +74,7 @@ L'app SHALL mostrare in modo evidente lo stato corrente e solo questi comandi, c
 
 - «In attesa del lavoro»: «Avvia».
 - «Lavoro» e «Pausa», in corso o scaduti: solo «Stop».
-- «In attesa della pausa»: «Inizia pausa» come pulsante principale e «Riprendi lavoro».
+- «In attesa della pausa»: «Inizia pausa» come pulsante principale e «Riavvia lavoro».
 
 #### Scenario: Comandi durante una fase
 - **WHEN** lo stato è «Lavoro» in corso
@@ -62,7 +82,7 @@ L'app SHALL mostrare in modo evidente lo stato corrente e solo questi comandi, c
 
 #### Scenario: Comandi in attesa della pausa
 - **WHEN** lo stato è «In attesa della pausa»
-- **THEN** il pulsante principale è «Inizia pausa» e l'altro comando è «Riprendi lavoro»
+- **THEN** il pulsante principale è «Inizia pausa» e l'altro comando è «Riavvia lavoro»
 
 ### Requirement: Intervalli delle durate
 
