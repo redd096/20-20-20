@@ -1,4 +1,5 @@
 import QtQuick 2.0
+import QtMultimedia 5.6
 import Nemo.DBus 2.0
 import Nemo.KeepAlive 1.2
 import Nemo.Notifications 1.0
@@ -6,8 +7,13 @@ import QtFeedback 5.0
 
 // End-of-phase alert (spec "break-alerts"). Two alert types:
 //
-// - "notification": a critical notification with a sound. The system plays
-//   it on the ringtone volume, so it respects silent mode and do not disturb.
+// - "notification": a critical notification with a sound, on one of two
+//   volumes:
+//   - "app": the app plays the sound itself (QtMultimedia, Sailjail "Audio"
+//     permission), on the application volume. Muted in silent mode, but it
+//     rings in do not disturb. The notification is silent and published once.
+//   - "ringtone": the system plays the notification sound on the ringtone
+//     volume, so it respects silent mode and do not disturb.
 // - "alarm": the system alarm, played by the feedback daemon ngfd (event
 //   "clock"): the user's alarm tone, at the alarm volume, with the alarm
 //   vibration, even in silent mode. It fades in over 20 s and repeats until
@@ -22,6 +28,8 @@ Item {
 
     property string type: "notification"   // "notification" | "alarm"
     property string repeat: "once"          // "once" | "loop"
+    // Volume of the "notification" type.
+    property string volume: "app"           // "app" | "ringtone"
     // How long the "alarm" type rings with the "once" repeat, in seconds.
     property int alarmOnceSeconds: 30
 
@@ -54,6 +62,14 @@ Item {
             playAlarm()
             if (repeat === "once")
                 alarmOnceStop.restart()
+        } else if (volume === "app") {
+            // The sound comes from the app; the notification is only visual.
+            vibra.start()
+            notification.sound = ""
+            publishNotification()
+            appSound.play()
+            if (repeat === "loop")
+                notificationLoop.start()
         } else {
             vibra.start()
             notification.sound = notificationSoundFile
@@ -105,6 +121,7 @@ Item {
         }
         alarmOnceStop.stop()
         notificationLoop.stop()
+        appSound.stop()
         vibra.stop()
     }
 
@@ -121,14 +138,27 @@ Item {
                                           : qsTr("You can go back to the screen.")
     }
 
-    // Loop for the "notification" type: publishing the same notification
-    // again replaces it, shows the banner and plays its sound again.
-    // The ringtone lasts 3.2 s.
+    // Sound of the "notification" type with the "app" volume. Loaded when
+    // the app starts, so the first alert plays without delay.
+    Audio {
+        id: appSound
+        source: alert.notificationSoundFile
+    }
+
+    // Loop for the "notification" type. With the "app" volume only the sound
+    // is played again. With the "ringtone" volume, publishing the same
+    // notification again replaces it, shows the banner and plays its sound
+    // again. The sound lasts 3.2 s: every 4 s keeps a short pause between plays.
     Timer {
         id: notificationLoop
         interval: 4000
         repeat: true
-        onTriggered: alert.publishNotification()
+        onTriggered: {
+            if (alert.volume === "app")
+                appSound.play()
+            else
+                alert.publishNotification()
+        }
     }
 
     // The ngfd alarm always repeats: with the "once" repeat it is stopped

@@ -128,9 +128,10 @@ Page {
             ComboBox {
                 id: typeBox
                 label: qsTr("Type")
+                // For "Notification" the Volume menu below explains the behaviour.
                 description: currentIndex === 1
                              ? qsTr("Uses your alarm tone and alarm volume, even in silent mode and do not disturb.")
-                             : qsTr("Follows the ringtone volume, silent mode and do not disturb.")
+                             : ""
                 Component.onCompleted: currentIndex = page.settings.alertType === "alarm" ? 1 : 0
                 menu: ContextMenu {
                     MenuItem {
@@ -140,6 +141,26 @@ Page {
                     MenuItem {
                         text: qsTr("Alarm")
                         onClicked: page.settings.alertType = "alarm"
+                    }
+                }
+            }
+
+            // Only for "Notification": the alarm always uses the alarm volume.
+            ComboBox {
+                visible: typeBox.currentIndex === 0
+                label: qsTr("Volume")
+                description: currentIndex === 1
+                             ? qsTr("Follows the ringtone volume, silent mode and do not disturb.")
+                             : qsTr("Follows the application volume, set with the volume keys while the app is open. Silent in silent mode, but rings even in do not disturb.")
+                Component.onCompleted: currentIndex = page.settings.notificationVolume === "ringtone" ? 1 : 0
+                menu: ContextMenu {
+                    MenuItem {
+                        text: qsTr("Application volume")
+                        onClicked: page.settings.notificationVolume = "app"
+                    }
+                    MenuItem {
+                        text: qsTr("Ringtone volume")
+                        onClicked: page.settings.notificationVolume = "ringtone"
                     }
                 }
             }

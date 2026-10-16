@@ -4,22 +4,22 @@
 <context>
     <name>AlertPlayer</name>
     <message>
-        <location filename="../qml/AlertPlayer.qml" line="119"/>
+        <location filename="../qml/AlertPlayer.qml" line="136"/>
         <source>Time for a break</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/AlertPlayer.qml" line="119"/>
+        <location filename="../qml/AlertPlayer.qml" line="136"/>
         <source>Break finished</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/AlertPlayer.qml" line="120"/>
+        <location filename="../qml/AlertPlayer.qml" line="137"/>
         <source>Look at something about 20 feet (6 m) away.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/AlertPlayer.qml" line="121"/>
+        <location filename="../qml/AlertPlayer.qml" line="138"/>
         <source>You can go back to the screen.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -116,7 +116,7 @@
     <message>
         <location filename="../qml/pages/SettingsPage.qml" line="81"/>
         <location filename="../qml/pages/SettingsPage.qml" line="93"/>
-        <location filename="../qml/pages/SettingsPage.qml" line="155"/>
+        <location filename="../qml/pages/SettingsPage.qml" line="176"/>
         <source>s</source>
         <translation type="unfinished"></translation>
     </message>
@@ -176,27 +176,47 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/pages/SettingsPage.qml" line="132"/>
+        <location filename="../qml/pages/SettingsPage.qml" line="133"/>
         <source>Uses your alarm tone and alarm volume, even in silent mode and do not disturb.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/pages/SettingsPage.qml" line="133"/>
+        <location filename="../qml/pages/SettingsPage.qml" line="151"/>
+        <source>Volume</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../qml/pages/SettingsPage.qml" line="153"/>
         <source>Follows the ringtone volume, silent mode and do not disturb.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/pages/SettingsPage.qml" line="137"/>
+        <location filename="../qml/pages/SettingsPage.qml" line="138"/>
         <source>Notification</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/pages/SettingsPage.qml" line="141"/>
+        <location filename="../qml/pages/SettingsPage.qml" line="142"/>
         <source>Alarm</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/pages/SettingsPage.qml" line="156"/>
+        <location filename="../qml/pages/SettingsPage.qml" line="154"/>
+        <source>Follows the application volume, set with the volume keys while the app is open. Silent in silent mode, but rings even in do not disturb.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../qml/pages/SettingsPage.qml" line="158"/>
+        <source>Application volume</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../qml/pages/SettingsPage.qml" line="162"/>
+        <source>Ringtone volume</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../qml/pages/SettingsPage.qml" line="177"/>
         <source>Alarm length</source>
         <translation type="unfinished"></translation>
     </message>
