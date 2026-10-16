@@ -13,8 +13,8 @@
 
 ## 3. Documentazione
 
-- [ ] 3.1 In `docs/sailfish.md` aggiornare la tabella delle chiavi (`durationUnits`, `workSeconds`, `breakSeconds` con i nuovi intervalli; rimuovere `workMinutes` e `testWorkSeconds`), sostituire la procedura di prova veloce con la modalità «Seconds and seconds» e aggiungere il `dconf reset -f` da lanciare dopo l'installazione di questa release (design D5); verificare con `grep -n "testWorkSeconds\|workMinutes" docs/sailfish.md` senza risultati
-- [ ] 3.2 In `docs/acceptance-checklist.md` sostituire il passo preliminare che azzera `testWorkSeconds` con `dconf reset -f /apps/harbour-202020/`, aggiornare l'esito atteso di A14 con la modalità «Minutes and seconds» e aggiungere righe con esito `-` per i nuovi scenari di `break-cycle` (intervalli in minuti, intervalli in secondi, cambio di modalità, riselezione della modalità attiva, cambio di modalità durante una fase); verificare con `grep -n testWorkSeconds docs/acceptance-checklist.md` senza risultati
+- [x] 3.1 In `docs/sailfish.md` aggiornare la tabella delle chiavi (`durationUnits`, `workSeconds`, `breakSeconds` con i nuovi intervalli; rimuovere `workMinutes` e `testWorkSeconds`), sostituire la procedura di prova veloce con la modalità «Seconds and seconds» e aggiungere il `dconf reset -f` da lanciare dopo l'installazione di questa release (design D5); verificare con `grep -n "testWorkSeconds\|workMinutes" docs/sailfish.md` senza risultati
+- [x] 3.2 In `docs/acceptance-checklist.md` sostituire il passo preliminare che azzera `testWorkSeconds` con `dconf reset -f /apps/harbour-202020/`, aggiornare l'esito atteso di A14 con la modalità «Minutes and seconds» e aggiungere righe con esito `-` per i nuovi scenari di `break-cycle` (intervalli in minuti, intervalli in secondi, cambio di modalità, riselezione della modalità attiva, cambio di modalità durante una fase); verificare con `grep -n testWorkSeconds docs/acceptance-checklist.md` senza risultati
 
 ## 4. Build e prova sul telefono
 

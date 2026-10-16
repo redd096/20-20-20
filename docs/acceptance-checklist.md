@@ -1,12 +1,12 @@
 # Acceptance checklist (Sailfish OS)
 
-On-device tests for the `sailfish-mvp` change: every scenario of the `break-cycle` and `break-alerts` specs, plus the app in English.
+On-device tests for the `sailfish-mvp` change: every scenario of the `break-cycle` and `break-alerts` specs, plus the app in English. Rows A19-A23 were added by the `duration-units` change.
 
 **Before starting**
 
 - Install the final RPM (see [`sailfish.md`](sailfish.md)).
-- Remove the test-only key, so the work phase uses the real duration:
-  `ssh -F ../keyboard_jolla/ssh/jolla.conf jolla "dconf reset /apps/harbour-202020/testWorkSeconds"`
+- Reset the settings to the defaults:
+  `ssh -F ../keyboard_jolla/ssh/jolla.conf jolla "dconf reset -f /apps/harbour-202020/"`
 - Unless a test says otherwise, use the defaults: work 20 min, break 20 s, repeat "Loop until stopped", type "Notification".
 - Short tests may set work to 1 min in the settings; test A2 and B1 MUST use the default 20 min.
 
@@ -31,11 +31,16 @@ Device: Jolla, Sailfish OS 5.1.0.11, release 21. Date: 2026-10-14.
 | A11 | Stop during break | Break running, press "Stop" | Countdown cancelled, no alert later, state "Waiting for work" | OK |
 | A12 | Quick answer | Work ends, press "Stop" within 5 s | Overtime never shown | OK |
 | A13 | Overtime after screen off | Work ends with the screen off, turn it on 2 min later | 0:00 and a red overtime of about -2:00 | OK |
-| A14 | Defaults | `dconf reset -f /apps/harbour-202020/`, open settings | Work 20 min, break 20 s, repeat "Loop until stopped", type "Notification" | OK |
+| A14 | Defaults | `dconf reset -f /apps/harbour-202020/`, open settings | Units "Minutes and seconds", work 20 min, break 20 s, repeat "Loop until stopped", type "Notification" | - |
 | A15 | Settings kept | Set work 25 min, close and reopen the app | Work 25 min | OK |
 | A16 | Change during a phase | Work running, change work duration | Current phase ends at its old time; the next work uses the new duration | OK |
 | A17 | Close during work | Work running, close the app; after the work time check `ps` via ssh | No alert, no `harbour-202020` process | OK |
 | A18 | No autostart | Reboot the phone | The app does not start by itself | OK |
+| A19 | Ranges in minutes | Units "Minutes and minutes", move both sliders to the ends | Work and break from 1 to 60 min, steps of 1 min | - |
+| A20 | Ranges in seconds | Units "Seconds and seconds", move both sliders to the ends | Work and break from 5 to 120 s, steps of 5 s | - |
+| A21 | Units change | Units "Minutes and seconds", work 30 min, choose "Minutes and minutes" | Sliders show at once work 25 min and break 5 min | - |
+| A22 | Same units again | Units "Minutes and seconds", work 30 min, choose "Minutes and seconds" again | Work still 30 min | - |
+| A23 | Units change during a phase | Work running, choose "Seconds and seconds" | Current phase ends at its old time; the next work lasts 20 s | - |
 
 ## B. Break alerts (`break-alerts`)
 

@@ -53,12 +53,12 @@ The app stores its settings in dconf under `/apps/harbour-202020/`. A missing ke
 
 | Key | Values | Default |
 | --- | --- | --- |
-| `workMinutes` | work duration, whole minutes from 1 to 120 | 20 |
-| `breakSeconds` | break duration, whole seconds from 5 to 300 | 20 |
+| `durationUnits` | units shown in the settings: `minutesAndSeconds` (work in minutes, break in seconds), `minutesAndMinutes` or `secondsAndSeconds` | `minutesAndSeconds` |
+| `workSeconds` | work duration in seconds: 60 to 3600 (1 to 60 min) when shown in minutes, 5 to 120 when shown in seconds | 1200 |
+| `breakSeconds` | break duration in seconds, same ranges as `workSeconds` | 20 |
 | `alertRepeat` | `once`, or `loop` (until Stop) | `loop` |
 | `alertType` | `notification` (follows ringtone volume, silent mode and do not disturb), or `alarm` (the system alarm: your alarm tone and volume, rings even in silent mode) | `notification` |
 | `alarmOnceSeconds` | how long the `alarm` type rings with the `once` repeat, seconds from 5 to 60 | 30 |
-| `testWorkSeconds` | testing only, not in the UI: when above 0, the work phase lasts this many seconds | not set |
 
 To read them, or reset them to the defaults, without root:
 
@@ -67,15 +67,12 @@ ssh -F ../keyboard_jolla/ssh/jolla.conf jolla "dconf dump /apps/harbour-202020/"
 ssh -F ../keyboard_jolla/ssh/jolla.conf jolla "dconf reset -f /apps/harbour-202020/"
 ```
 
-For quick tests on the device, the work phase can be shortened to a few seconds, and restored afterwards:
-
-```sh
-ssh -F ../keyboard_jolla/ssh/jolla.conf jolla "dconf write /apps/harbour-202020/testWorkSeconds 5"
-ssh -F ../keyboard_jolla/ssh/jolla.conf jolla "dconf reset /apps/harbour-202020/testWorkSeconds"
-```
-
 - `dconf dump` prints every key stored by the app.
 - `dconf reset -f` deletes them all: on its next start the app uses the defaults.
+
+For quick tests on the device, choose the units "Seconds and seconds" in the settings: work and break then last from 5 to 120 seconds. Changing the units resets both durations to the defaults of the new units.
+
+Release 23 changed the keys that store the durations, without migrating the old values: after upgrading from an older release, run the `dconf reset -f` command above once.
 
 ## Removal
 
