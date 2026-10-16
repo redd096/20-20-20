@@ -23,14 +23,22 @@ ApplicationWindow {
     ConfigurationGroup {
         id: appSettings
         path: "/apps/harbour-202020"
-        property int workMinutes: 20
+        // Units shown in the settings: "minutesAndSeconds" (work in minutes,
+        // break in seconds) | "minutesAndMinutes" | "secondsAndSeconds".
+        // Durations are always stored in seconds, whatever the units.
+        property string durationUnits: "minutesAndSeconds"
+        property int workSeconds: 1200
         property int breakSeconds: 20
         property string alertRepeat: "loop"         // "loop" | "once"
         property string alertType: "notification"   // "notification" | "alarm"
         property int alarmOnceSeconds: 30           // seconds, 5-60
-        // Testing only, not shown in the UI: when above 0, the work phase
-        // lasts this many seconds instead of workMinutes. See docs/sailfish.md.
-        property int testWorkSeconds: 0
+    }
+
+    // Keeps a stored duration inside the range of its unit, in case dconf
+    // was edited by hand: 1-60 min, or 5-120 s.
+    function clampDuration(seconds, inMinutes) {
+        return inMinutes ? Math.max(60, Math.min(3600, seconds))
+                         : Math.max(5, Math.min(120, seconds))
     }
 
     AlertPlayer {
@@ -42,11 +50,12 @@ ApplicationWindow {
 
     CycleController {
         id: cycleController
-        // Clamp the stored values, in case dconf was edited by hand.
-        workSeconds: appSettings.testWorkSeconds > 0
-                     ? appSettings.testWorkSeconds
-                     : Math.max(1, Math.min(120, appSettings.workMinutes)) * 60
-        breakSeconds: Math.max(5, Math.min(300, appSettings.breakSeconds))
+        // Work is in minutes unless the units are "secondsAndSeconds"; break
+        // only with "minutesAndMinutes". Same rule as in SettingsPage.
+        workSeconds: app.clampDuration(appSettings.workSeconds,
+                                       appSettings.durationUnits !== "secondsAndSeconds")
+        breakSeconds: app.clampDuration(appSettings.breakSeconds,
+                                        appSettings.durationUnits === "minutesAndMinutes")
         onPhaseFinished: {
             alertPlayer.start(phase)
             app.showMainPage()

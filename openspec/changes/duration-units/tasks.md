@@ -2,8 +2,8 @@
 
 ## 1. Chiavi dconf e clamp
 
-- [ ] 1.1 In `project_sailfish_os/qml/harbour-202020.qml` sostituire `workMinutes` e `testWorkSeconds` con `durationUnits` (stringa, predefinita `minutesAndSeconds`) e `workSeconds` (predefinita 1200), tenendo `breakSeconds` (predefinita 20), come da design D1; verificare con `grep -rn "workMinutes\|testWorkSeconds" project_sailfish_os` senza risultati
-- [ ] 1.2 Nel binding verso `CycleController` bloccare ogni durata ai limiti della sua unità nella modalità attiva (60–3600 s se in minuti, 5–120 s se in secondi), come da design D4; verificare leggendo il binding per le tre modalità
+- [x] 1.1 In `project_sailfish_os/qml/harbour-202020.qml` sostituire `workMinutes` e `testWorkSeconds` con `durationUnits` (stringa, predefinita `minutesAndSeconds`) e `workSeconds` (predefinita 1200), tenendo `breakSeconds` (predefinita 20), come da design D1; verificare con `grep -rn "workMinutes\|testWorkSeconds" project_sailfish_os` senza risultati
+- [x] 1.2 Nel binding verso `CycleController` bloccare ogni durata ai limiti della sua unità nella modalità attiva (60–3600 s se in minuti, 5–120 s se in secondi), come da design D4; verificare leggendo il binding per le tre modalità
 
 ## 2. Pagina delle impostazioni
 
