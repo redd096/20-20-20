@@ -3,8 +3,8 @@
 ## 1. Interruttore e vibrazione in loop
 
 - [x] 1.1 In `project_sailfish_os/qml/harbour-202020.qml` aggiungere la chiave `loopVibration` (booleana, predefinita `false`) e passarla ad `AlertPlayer` come proprietà `vibrateInLoop`; verificare leggendo il binding
-- [ ] 1.2 In `project_sailfish_os/qml/AlertPlayer.qml` far avviare `vibra` anche da `notificationLoop` quando `vibrateInLoop` è vero, senza controlli di profilo o «non disturbare», come per la prima vibrazione; verificare sul telefono che con l'interruttore acceso il telefono vibri a ogni giro e smetta allo «Stop»
-- [ ] 1.3 In `project_sailfish_os/qml/pages/SettingsPage.qml` aggiungere un `TextSwitch` «Vibrate at every repeat», visibile solo con «Loop until stopped» e il tipo «Sound» o «Notification», con `automaticCheck` spento e il clic che inverte il valore salvato (così non conta l'ordine dei gestori di Silica); verificare sul telefono che sparisca con «Once» e con «Alarm»
+- [x] 1.2 In `project_sailfish_os/qml/AlertPlayer.qml` far avviare `vibra` anche da `notificationLoop` quando `vibrateInLoop` è vero, senza controlli di profilo o «non disturbare», come per la prima vibrazione; verificare sul telefono che con l'interruttore acceso il telefono vibri a ogni giro e smetta allo «Stop»
+- [x] 1.3 In `project_sailfish_os/qml/pages/SettingsPage.qml` aggiungere un `TextSwitch` «Vibrate at every repeat», visibile solo con «Loop until stopped» e il tipo «Sound» o «Notification», con `automaticCheck` spento e il clic che inverte il valore salvato (così non conta l'ordine dei gestori di Silica); verificare sul telefono che sparisca con «Once» e con «Alarm»
 
 ## 2. Traduzioni e documentazione
 
@@ -15,7 +15,7 @@
 ## 3. Build e prova sul telefono
 
 - [x] 3.1 Portare `Release:` a 26 in `project_sailfish_os/rpm/harbour-202020.spec`, fare la build e il `check` di Harbour, copiare l'RPM sul telefono e cancellare quello della release 25 (l'utente lo installa); verificare che il `check` passi senza nuovi errori
-- [ ] 3.2 Sul telefono eseguire le righe con esito `-` della checklist, in italiano, e segnare gli esiti in `docs/acceptance-checklist.md`; verificare che siano tutte `OK`
+- [x] 3.2 Sul telefono eseguire le righe con esito `-` della checklist, in italiano, e segnare gli esiti in `docs/acceptance-checklist.md`; verificare che siano tutte `OK`
 
 ## Workflow follow-up
 

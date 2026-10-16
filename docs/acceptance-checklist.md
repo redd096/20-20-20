@@ -66,11 +66,11 @@ Device: Jolla, Sailfish OS 5.1.0.11, release 21. Date: 2026-10-14.
 | B18 | Type kept | Choose type "Notification", close and reopen the app | Type "Notification" | OK |
 | B19 | Once with screen off | Type "Sound", repeat "Once", minimize, screen off, work ends | The whole sound is heard (about 3 s) | OK |
 | B20 | Banner repeated with Notification | Type "Notification", "Loop until stopped", work ends | The banner appears again at every repeat | OK |
-| B21 | Vibration only at the start | "Vibrate at every repeat" off, "Loop until stopped", work ends | Vibrates only at the start, the sound repeats | - |
-| B22 | Vibration at every repeat | "Vibrate at every repeat" on, "Loop until stopped", work ends, press "Stop" after 30 s | Vibrates at every repeat of the sound for 30 s, stops on the press | - |
-| B23 | Vibration only, silent profile | "Vibrate at every repeat" on, type "Sound", "Loop until stopped", silent profile, work ends | No sound, vibrates at every repeat until "Stop" | - |
-| B24 | Switch kept | Turn "Vibrate at every repeat" on, close and reopen the app | The switch is on | - |
-| B25 | Switch visibility | Choose repeat "Once", then type "Alarm" | The switch is shown only with "Loop until stopped" and type "Sound" or "Notification" | - |
+| B21 | Vibration only at the start | "Vibrate at every repeat" off, "Loop until stopped", work ends | Vibrates only at the start, the sound repeats | OK |
+| B22 | Vibration at every repeat | "Vibrate at every repeat" on, "Loop until stopped", work ends, press "Stop" after 30 s | Vibrates at every repeat of the sound for 30 s, stops on the press | OK |
+| B23 | Vibration only, silent profile | "Vibrate at every repeat" on, type "Sound", "Loop until stopped", silent profile, work ends | No sound, vibrates at every repeat until "Stop" | OK |
+| B24 | Switch kept | Turn "Vibrate at every repeat" on, close and reopen the app | The switch is on | OK |
+| B25 | Switch visibility | Choose repeat "Once", then type "Alarm" | The switch is shown only with "Loop until stopped" and type "Sound" or "Notification" | OK |
 
 ## C. Language
 
@@ -85,5 +85,6 @@ Device: Jolla, Sailfish OS 5.1.0.11, release 21. Date: 2026-10-14.
 - Release 23 (`duration-units`, 2026-10-16): A14, A15, A16 and the new A19-A23 passed, in Italian, after `dconf reset -f`.
 - Release 24 (`notification-volume`, first version with a separate Volume menu, 2026-10-16): all rows passed; with do not disturb the media-volume sound was audible, as then intended. Release 25 merged the Volume menu into the "Sound" type and mutes it in do not disturb, so the rows were reset.
 - Release 25 (2026-10-16): A14, B3, B4, B5, B10, B11 and B12-B20 passed, in Italian, after `dconf reset -f`. B15: with do not disturb the "Sound" type is silent, so the sandbox can read `/lipstick/do_not_disturb`.
+- Release 26 (`vibration-loop`, 2026-10-16): B21-B25 passed, in Italian.
 - A17: `ps aux | grep harbour-202020` listed only the ssh shell and the `grep` itself, so no app process was left.
 - C1: the Italian label of "Restart work" was "Riprendi lavoro" ("resume"), misleading because the work timer restarts from the full duration. Changed to "Riavvia lavoro" in release 22.
