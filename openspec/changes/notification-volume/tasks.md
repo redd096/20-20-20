@@ -18,7 +18,7 @@
 
 ## 4. Build e prova sul telefono
 
-- [ ] 4.1 Portare `Release:` a 24 in `project_sailfish_os/rpm/harbour-202020.spec`, fare la build e il `check` di Harbour, copiare l'RPM sul telefono e cancellare quello della release 23 (l'utente lo installa); verificare che il `check` passi senza nuovi errori
+- [x] 4.1 Portare `Release:` a 24 in `project_sailfish_os/rpm/harbour-202020.spec`, fare la build e il `check` di Harbour, copiare l'RPM sul telefono e cancellare quello della release 23 (l'utente lo installa); verificare che il `check` passi senza nuovi errori
 - [ ] 4.2 Sul telefono eseguire le righe con esito `-` della checklist, in italiano, e segnare gli esiti in `docs/acceptance-checklist.md`; se B11 fallisce, fermarsi e riaprire la decisione sul permesso (design, Risks); verificare che siano tutte `OK`
 
 ## Workflow follow-up
