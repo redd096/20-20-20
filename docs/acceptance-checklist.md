@@ -1,6 +1,6 @@
 # Acceptance checklist (Sailfish OS)
 
-On-device tests for the `sailfish-mvp` change: every scenario of the `break-cycle` and `break-alerts` specs, plus the app in English. Rows A19-A23 were added by the `duration-units` change, rows B12-B20 by the `notification-volume` change.
+On-device tests for the `sailfish-mvp` change: every scenario of the `break-cycle` and `break-alerts` specs, plus the app in English. Rows A19-A23 were added by the `duration-units` change, rows B12-B20 by the `notification-volume` change, rows B21-B25 by the `vibration-loop` change.
 
 **Before starting**
 
@@ -66,6 +66,11 @@ Device: Jolla, Sailfish OS 5.1.0.11, release 21. Date: 2026-10-14.
 | B18 | Type kept | Choose type "Notification", close and reopen the app | Type "Notification" | OK |
 | B19 | Once with screen off | Type "Sound", repeat "Once", minimize, screen off, work ends | The whole sound is heard (about 3 s) | OK |
 | B20 | Banner repeated with Notification | Type "Notification", "Loop until stopped", work ends | The banner appears again at every repeat | OK |
+| B21 | Vibration only at the start | "Vibrate at every repeat" off, "Loop until stopped", work ends | Vibrates only at the start, the sound repeats | - |
+| B22 | Vibration at every repeat | "Vibrate at every repeat" on, "Loop until stopped", work ends, press "Stop" after 30 s | Vibrates at every repeat of the sound for 30 s, stops on the press | - |
+| B23 | Vibration only, silent profile | "Vibrate at every repeat" on, type "Sound", "Loop until stopped", silent profile, work ends | No sound, vibrates at every repeat until "Stop" | - |
+| B24 | Switch kept | Turn "Vibrate at every repeat" on, close and reopen the app | The switch is on | - |
+| B25 | Switch visibility | Choose repeat "Once", then type "Alarm" | The switch is shown only with "Loop until stopped" and type "Sound" or "Notification" | - |
 
 ## C. Language
 
