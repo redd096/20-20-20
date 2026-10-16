@@ -8,6 +8,26 @@ Page {
     // The app ConfigurationGroup: every change is saved to dconf right away.
     property var settings
 
+    // Which duration is shown in minutes: work unless the units are
+    // "secondsAndSeconds", break only with "minutesAndMinutes".
+    // Same rule as the clamp in harbour-202020.qml.
+    readonly property bool workInMinutes: settings.durationUnits !== "secondsAndSeconds"
+    readonly property bool breakInMinutes: settings.durationUnits === "minutesAndMinutes"
+
+    // Saves new units with their default durations (in seconds). Picking the
+    // units already in use changes nothing.
+    function setUnits(units, workSeconds, breakSeconds) {
+        if (units === settings.durationUnits)
+            return
+        settings.durationUnits = units
+        settings.workSeconds = workSeconds
+        settings.breakSeconds = breakSeconds
+        // StepSlider reads its value only when created: recreate both sliders
+        // so they show the new units and defaults right away.
+        durationSliders.active = false
+        durationSliders.active = true
+    }
+
     allowedOrientations: Orientation.All
 
     SilicaFlickable {
@@ -22,22 +42,59 @@ Page {
 
             SectionHeader { text: qsTr("Durations") }
 
-            StepSlider {
-                minimumValue: 1
-                maximumValue: 120
-                initialValue: page.settings.workMinutes
-                unit: qsTr("min")
-                label: qsTr("Work")
-                onEdited: page.settings.workMinutes = newValue
+            // Like the other menus: read once, saved when the user picks an entry.
+            ComboBox {
+                label: qsTr("Units")
+                Component.onCompleted: currentIndex = page.settings.durationUnits === "minutesAndMinutes" ? 1
+                                                    : page.settings.durationUnits === "secondsAndSeconds" ? 2 : 0
+                menu: ContextMenu {
+                    MenuItem {
+                        text: qsTr("Minutes and seconds")
+                        onClicked: page.setUnits("minutesAndSeconds", 20 * 60, 20)
+                    }
+                    MenuItem {
+                        text: qsTr("Minutes and minutes")
+                        onClicked: page.setUnits("minutesAndMinutes", 25 * 60, 5 * 60)
+                    }
+                    MenuItem {
+                        text: qsTr("Seconds and seconds")
+                        onClicked: page.setUnits("secondsAndSeconds", 20, 20)
+                    }
+                }
             }
 
-            StepSlider {
-                minimumValue: 5
-                maximumValue: 300
-                initialValue: page.settings.breakSeconds
-                unit: qsTr("s")
-                label: qsTr("Break")
-                onEdited: page.settings.breakSeconds = newValue
+            // Durations are stored in seconds. A slider in minutes goes from
+            // 1 to 60 in steps of 1; a slider in seconds from 5 to 120 in steps of 5.
+            Loader {
+                id: durationSliders
+                width: parent.width
+                sourceComponent: Column {
+                    width: parent.width
+
+                    StepSlider {
+                        readonly property bool inMinutes: page.workInMinutes
+                        minimumValue: inMinutes ? 1 : 5
+                        maximumValue: inMinutes ? 60 : 120
+                        stepSize: inMinutes ? 1 : 5
+                        initialValue: inMinutes ? Math.round(page.settings.workSeconds / 60)
+                                                : page.settings.workSeconds
+                        unit: inMinutes ? qsTr("min") : qsTr("s")
+                        label: qsTr("Work")
+                        onEdited: page.settings.workSeconds = inMinutes ? newValue * 60 : newValue
+                    }
+
+                    StepSlider {
+                        readonly property bool inMinutes: page.breakInMinutes
+                        minimumValue: inMinutes ? 1 : 5
+                        maximumValue: inMinutes ? 60 : 120
+                        stepSize: inMinutes ? 1 : 5
+                        initialValue: inMinutes ? Math.round(page.settings.breakSeconds / 60)
+                                                : page.settings.breakSeconds
+                        unit: inMinutes ? qsTr("min") : qsTr("s")
+                        label: qsTr("Break")
+                        onEdited: page.settings.breakSeconds = inMinutes ? newValue * 60 : newValue
+                    }
+                }
             }
 
             Label {
