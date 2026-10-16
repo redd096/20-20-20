@@ -31,16 +31,16 @@ Device: Jolla, Sailfish OS 5.1.0.11, release 21. Date: 2026-10-14.
 | A11 | Stop during break | Break running, press "Stop" | Countdown cancelled, no alert later, state "Waiting for work" | OK |
 | A12 | Quick answer | Work ends, press "Stop" within 5 s | Overtime never shown | OK |
 | A13 | Overtime after screen off | Work ends with the screen off, turn it on 2 min later | 0:00 and a red overtime of about -2:00 | OK |
-| A14 | Defaults | `dconf reset -f /apps/harbour-202020/`, open settings | Units "Minutes and seconds", work 20 min, break 20 s, repeat "Loop until stopped", type "Notification" | - |
+| A14 | Defaults | `dconf reset -f /apps/harbour-202020/`, open settings | Units "Minutes and seconds", work 20 min, break 20 s, repeat "Loop until stopped", type "Notification" | OK |
 | A15 | Settings kept | Set work 25 min, close and reopen the app | Work 25 min | OK |
 | A16 | Change during a phase | Work running, change work duration | Current phase ends at its old time; the next work uses the new duration | OK |
 | A17 | Close during work | Work running, close the app; after the work time check `ps` via ssh | No alert, no `harbour-202020` process | OK |
 | A18 | No autostart | Reboot the phone | The app does not start by itself | OK |
-| A19 | Ranges in minutes | Units "Minutes and minutes", move both sliders to the ends | Work and break from 1 to 60 min, steps of 1 min | - |
-| A20 | Ranges in seconds | Units "Seconds and seconds", move both sliders to the ends | Work and break from 5 to 120 s, steps of 5 s | - |
-| A21 | Units change | Units "Minutes and seconds", work 30 min, choose "Minutes and minutes" | Sliders show at once work 25 min and break 5 min | - |
-| A22 | Same units again | Units "Minutes and seconds", work 30 min, choose "Minutes and seconds" again | Work still 30 min | - |
-| A23 | Units change during a phase | Work running, choose "Seconds and seconds" | Current phase ends at its old time; the next work lasts 20 s | - |
+| A19 | Ranges in minutes | Units "Minutes and minutes", move both sliders to the ends | Work and break from 1 to 60 min, steps of 1 min | OK |
+| A20 | Ranges in seconds | Units "Seconds and seconds", move both sliders to the ends | Work and break from 5 to 120 s, steps of 5 s | OK |
+| A21 | Units change | Units "Minutes and seconds", work 30 min, choose "Minutes and minutes" | Sliders show at once work 25 min and break 5 min | OK |
+| A22 | Same units again | Units "Minutes and seconds", work 30 min, choose "Minutes and seconds" again | Work still 30 min | OK |
+| A23 | Units change during a phase | Work running, choose "Seconds and seconds" | Current phase ends at its old time; the next work lasts 20 s | OK |
 
 ## B. Break alerts (`break-alerts`)
 
@@ -68,5 +68,6 @@ Device: Jolla, Sailfish OS 5.1.0.11, release 21. Date: 2026-10-14.
 ## Notes
 
 - All 31 scenarios passed on release 21 (2026-10-14).
+- Release 23 (`duration-units`, 2026-10-16): A14, A15, A16 and the new A19-A23 passed, in Italian, after `dconf reset -f`.
 - A17: `ps aux | grep harbour-202020` listed only the ssh shell and the `grep` itself, so no app process was left.
 - C1: the Italian label of "Restart work" was "Riprendi lavoro" ("resume"), misleading because the work timer restarts from the full duration. Changed to "Riavvia lavoro" in release 22.
