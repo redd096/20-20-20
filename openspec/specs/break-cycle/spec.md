@@ -8,11 +8,7 @@ Scandire la regola 20-20-20 con un ciclo di due fasi, lavoro e pausa, avviato da
 
 ### Requirement: Stati del ciclo
 
-L'app SHALL trovarsi sempre in uno di questi stati: «In attesa del lavoro», «Lavoro», «In attesa della pausa», «Pausa». «Lavoro» e «Pausa» hanno due momenti: «in corso», mentre scorre il conto alla rovescia, e «scaduto», dopo che il conto alla rovescia è arrivato a zero. All'avvio dell'app lo stato SHALL essere «In attesa del lavoro». L'app SHALL mostrare in modo evidente lo stato corrente e solo questi comandi, con un pulsante principale ben visibile:
-
-- «In attesa del lavoro»: «Avvia».
-- «Lavoro» e «Pausa», in corso o scaduti: solo «Stop».
-- «In attesa della pausa»: «Inizia pausa» come pulsante principale e «Riprendi lavoro».
+L'app SHALL trovarsi sempre in uno di questi stati: «In attesa del lavoro», «Lavoro», «In attesa della pausa», «Pausa». «Lavoro» e «Pausa» hanno due momenti: «in corso», mentre scorre il conto alla rovescia, e «scaduto», dopo che il conto alla rovescia è arrivato a zero. All'avvio dell'app lo stato SHALL essere «In attesa del lavoro». I comandi di ogni stato sono in «Comandi per stato».
 
 #### Scenario: Avvio dell'app
 - **WHEN** l'utente apre l'app
@@ -20,7 +16,7 @@ L'app SHALL trovarsi sempre in uno di questi stati: «In attesa del lavoro», «
 
 ### Requirement: Fase di lavoro
 
-Premendo «Avvia» in «In attesa del lavoro», o «Riprendi lavoro» in «In attesa della pausa», l'app SHALL passare a «Lavoro» in corso e avviare un conto alla rovescia lungo quanto la durata di lavoro configurata. Allo scadere «Lavoro» SHALL diventare scaduto e l'app SHALL far partire l'avviso (vedi `break-alerts`). La fase di pausa MUST NOT partire senza una conferma dell'utente.
+Premendo «Avvia» in «In attesa del lavoro», o «Riavvia lavoro» in «In attesa della pausa», l'app SHALL passare a «Lavoro» in corso e avviare un conto alla rovescia lungo quanto la durata di lavoro configurata. Allo scadere «Lavoro» SHALL diventare scaduto e l'app SHALL far partire l'avviso (vedi `break-alerts`). La fase di pausa MUST NOT partire senza una conferma dell'utente.
 
 #### Scenario: Avvio del ciclo
 - **WHEN** lo stato è «In attesa del lavoro» e l'utente preme «Avvia»
@@ -35,7 +31,7 @@ Premendo «Avvia» in «In attesa del lavoro», o «Riprendi lavoro» in «In at
 - **THEN** l'app resta in «Lavoro» scaduto, il tempo in più continua a crescere e la pausa non parte
 
 #### Scenario: Lavoro rimandato
-- **WHEN** lo stato è «In attesa della pausa» e l'utente preme «Riprendi lavoro»
+- **WHEN** lo stato è «In attesa della pausa» e l'utente preme «Riavvia lavoro»
 - **THEN** lo stato diventa «Lavoro» in corso con un nuovo conto alla rovescia pari alla durata di lavoro
 
 ### Requirement: Fase di pausa
@@ -88,7 +84,7 @@ In «Lavoro» e «Pausa» scaduti l'app SHALL mostrare 0:00 al posto del tempo r
 
 ### Requirement: Durate configurabili
 
-L'utente SHALL poter scegliere una modalità delle unità tra «Minuti e secondi» (lavoro in minuti, pausa in secondi; predefinita), «Minuti e minuti» e «Secondi e secondi». Ogni durata espressa in minuti SHALL andare da 1 a 60 con passo 1, ogni durata in secondi da 5 a 120 con passo 5. I predefiniti per modalità SHALL essere 20 min / 20 s, 25 min / 5 min e 20 s / 20 s. Scegliendo una modalità diversa da quella attiva, entrambe le durate SHALL tornare ai predefiniti della nuova modalità. Modalità e durate SHALL restare salvate anche dopo la chiusura dell'app. Una modifica fatta mentre una fase è in corso SHALL valere dalla fase successiva, senza alterare quella in corso.
+L'utente SHALL poter scegliere una modalità delle unità tra «Minuti e secondi» (lavoro in minuti, pausa in secondi; predefinita), «Minuti e minuti» e «Secondi e secondi». Modalità e durate SHALL restare salvate anche dopo la chiusura dell'app. Una modifica fatta mentre una fase è in corso SHALL valere dalla fase successiva, senza alterare quella in corso. Intervalli e predefiniti sono in «Intervalli delle durate» e «Predefiniti per modalità».
 
 #### Scenario: Valori predefiniti
 - **WHEN** l'utente apre l'app per la prima volta
@@ -129,3 +125,35 @@ Il ciclo SHALL funzionare solo mentre l'app è aperta, in primo piano o ridotta 
 #### Scenario: Chiusura durante il lavoro
 - **WHEN** lo stato è «Lavoro» in corso e l'utente chiude l'app
 - **THEN** allo scadere della durata di lavoro non parte nessun avviso e nessun processo dell'app resta attivo
+
+### Requirement: Comandi per stato
+
+L'app SHALL mostrare in modo evidente lo stato corrente e solo questi comandi, con un pulsante principale ben visibile:
+
+- «In attesa del lavoro»: «Avvia».
+- «Lavoro» e «Pausa», in corso o scaduti: solo «Stop».
+- «In attesa della pausa»: «Inizia pausa» come pulsante principale e «Riavvia lavoro».
+
+#### Scenario: Comandi durante una fase
+- **WHEN** lo stato è «Lavoro» in corso
+- **THEN** l'unico comando mostrato è «Stop»
+
+#### Scenario: Comandi in attesa della pausa
+- **WHEN** lo stato è «In attesa della pausa»
+- **THEN** il pulsante principale è «Inizia pausa» e l'altro comando è «Riavvia lavoro»
+
+### Requirement: Intervalli delle durate
+
+Ogni durata espressa in minuti SHALL andare da 1 a 60 con passo 1, ogni durata espressa in secondi da 5 a 120 con passo 5, in qualsiasi modalità delle unità.
+
+#### Scenario: Unità diverse per lavoro e pausa
+- **WHEN** la modalità è «Minuti e secondi»
+- **THEN** il lavoro si imposta da 1 a 60 minuti a passi di 1 minuto e la pausa da 5 a 120 secondi a passi di 5 secondi
+
+### Requirement: Predefiniti per modalità
+
+I predefiniti per modalità SHALL essere 20 min / 20 s per «Minuti e secondi», 25 min / 5 min per «Minuti e minuti» e 20 s / 20 s per «Secondi e secondi». Scegliendo una modalità diversa da quella attiva, entrambe le durate SHALL tornare ai predefiniti della nuova modalità.
+
+#### Scenario: Predefiniti di Secondi e secondi
+- **WHEN** la modalità è «Minuti e minuti» e l'utente sceglie «Secondi e secondi»
+- **THEN** il lavoro dura 20 secondi e la pausa 20 secondi

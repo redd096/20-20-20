@@ -32,7 +32,7 @@ L'utente SHALL poter scegliere la ripetizione dell'avviso tra «Una volta» e «
 
 ### Requirement: Tipo di avviso
 
-L'utente SHALL poter scegliere il tipo di avviso tra «Suono» (predefinito), «Notifica» e «Sveglia». Con «Suono» l'avviso SHALL seguire il volume delle applicazioni, con «Notifica» quello della suoneria; entrambi SHALL essere muti col profilo silenzioso e con «non disturbare». Con «Sveglia» l'avviso SHALL usare la sveglia di sistema, con la suoneria e il volume della sveglia scelti dall'utente, e SHALL essere udibile anche col profilo silenzioso. La scelta SHALL restare salvata anche dopo la chiusura dell'app.
+L'utente SHALL poter scegliere il tipo di avviso tra «Suono» (predefinito), «Notifica» e «Sveglia». Con «Suono» l'avviso SHALL seguire il volume delle applicazioni, con «Notifica» quello della suoneria, con «Sveglia» la suoneria e il volume della sveglia di sistema scelti dall'utente. La scelta SHALL restare salvata anche dopo la chiusura dell'app. Il comportamento col profilo silenzioso e con «non disturbare» è in «Profilo silenzioso e non disturbare».
 
 #### Scenario: Tipo predefinito
 - **WHEN** l'utente apre l'app per la prima volta
@@ -101,3 +101,11 @@ Ogni avviso SHALL mostrare un banner col messaggio della fase finita. Con «Suon
 #### Scenario: Banner ripetuto con Notifica
 - **WHEN** il tipo è «Notifica», la ripetizione è «In loop» e il lavoro finisce
 - **THEN** il banner ricompare a ogni ripetizione del suono
+
+### Requirement: Profilo silenzioso e non disturbare
+
+Con «Suono» e «Notifica» l'avviso SHALL essere muto col profilo silenzioso e con «non disturbare». Con «Sveglia» l'avviso SHALL essere udibile anche col profilo silenzioso.
+
+#### Scenario: Silenzioso e non disturbare insieme
+- **WHEN** il tipo è «Suono», il telefono è nel profilo silenzioso, «non disturbare» è attivo e il lavoro finisce
+- **THEN** l'avviso non emette suono e «Lavoro» diventa comunque scaduto
