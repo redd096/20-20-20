@@ -14,8 +14,8 @@
 ## 3. Traduzioni e documentazione
 
 - [x] 3.1 Dopo la build, tradurre in italiano le nuove stringhe in `project_sailfish_os/translations/harbour-202020-it.ts` («Suono» e le descrizioni dei tre tipi) e controllare che le stringhe del menu «Volume» non ci siano più; verificare che il file non contenga voci `type="unfinished"`
-- [ ] 3.2 In `docs/sailfish.md` aggiornare la riga di `alertType` con i tre valori e il predefinito `sound`, e togliere `notificationVolume`; verificare con `grep -n notificationVolume docs/sailfish.md` senza risultati
-- [ ] 3.3 In `docs/acceptance-checklist.md` adattare le righe B12-B20 e la riga dei valori predefiniti ai tre tipi (aggiungendo una riga per il banner ripetuto con «Notification»), e rimettere a `-` le righe da ripetere; verificare che ogni scenario di «Tipo di avviso» e «Banner dell'avviso» abbia una riga
+- [x] 3.2 In `docs/sailfish.md` aggiornare la riga di `alertType` con i tre valori e il predefinito `sound`, e togliere `notificationVolume`; verificare con `grep -n notificationVolume docs/sailfish.md` senza risultati
+- [x] 3.3 In `docs/acceptance-checklist.md` adattare le righe B12-B20 e la riga dei valori predefiniti ai tre tipi (aggiungendo una riga per il banner ripetuto con «Notification»), e rimettere a `-` le righe da ripetere; verificare che ogni scenario di «Tipo di avviso» e «Banner dell'avviso» abbia una riga
 
 ## 4. Build e prova sul telefono
 
