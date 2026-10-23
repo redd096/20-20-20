@@ -144,6 +144,19 @@ Item {
         appIcon: "harbour-202020"
         // Critical urgency turns the screen on and keeps one entry in Events.
         urgency: Notification.Critical
+        // System category whose only effect is the "communication_led"
+        // feedback: the notification LED blinks while the screen is off,
+        // until the Events view is opened. No extra sound or vibration.
+        category: "im.received"
+        // Tapping the banner or the Events entry opens the app on the main
+        // page (DBusAdaptor in harbour-202020.qml).
+        remoteActions: [{
+            "name": "default",
+            "service": "org.redd096.harbour-202020",
+            "path": "/org/redd096/harbour202020",
+            "iface": "org.redd096.harbour202020",
+            "method": "showMainPage"
+        }]
         summary: alert._phase === "workDone" ? qsTr("Time for a break") : qsTr("Break finished")
         body: alert._phase === "workDone" ? qsTr("Look at something about 20 feet (6 m) away.")
                                           : qsTr("You can go back to the screen.")

@@ -8,7 +8,7 @@ Oggi toccare la notifica dell'avviso, nel banner o negli Eventi, la chiude solta
 
 - Toccare la notifica (banner o Eventi) porta l'app in primo piano sulla pagina principale, anche con «Porta l'app in primo piano» spento.
 - L'app espone un piccolo servizio D-Bus con un solo metodo che mostra la pagina principale; la notifica lo chiama come azione predefinita (`remoteActions`).
-- LED delle notifiche: oggi a schermo spento non lampeggia, perché la notifica non ha l'hint `x-nemo-feedback`. Impostarlo a `notifier`, l'evento ngfd di sistema (`/usr/share/ngfd/events.d/notifier.ini`) che accende solo il LED (`PatternCommunication`), senza suono né vibrazione, quindi valido per tutti e tre i tipi di avviso. Come nelle altre app, il LED si spegne quando l'utente apre la vista Eventi.
+- LED delle notifiche: oggi a schermo spento non lampeggia, perché la notifica non ha l'hint `x-nemo-feedback`. Dal QML non si imposta direttamente: si usa la categoria di sistema `im.received`, che lo imposta a `communication_led`, l'evento ngfd che accende solo il LED (`PatternCommunicationIM`), senza suono né vibrazione, quindi valido per tutti e tre i tipi di avviso. Come nelle altre app, il LED si spegne quando l'utente apre la vista Eventi.
 - Da verificare sul telefono: se dopo «Stop», senza passare dagli Eventi, il LED continua a lampeggiare. Se sì, decidere allora se «Stop» deve chiudere anche la notifica.
 - Nessun file `.service` né `ExecDBus`: quando c'è una notifica l'app è per forza aperta, perché il ciclo vive dentro l'app.
 
@@ -32,5 +32,5 @@ Fuori scope: pulsanti nella notifica (per esempio «Stop»), avvio dell'app da s
 ## Impact
 
 - `project_sailfish_os/qml/harbour-202020.qml` (o `AlertPlayer.qml`): `DBusAdaptor` di `Nemo.DBus` con il metodo che porta l'app in primo piano.
-- `project_sailfish_os/qml/AlertPlayer.qml`: `remoteActions` con l'azione `default` e l'hint `x-nemo-feedback` sulla `Notification`.
+- `project_sailfish_os/qml/AlertPlayer.qml`: `remoteActions` con l'azione `default` e la categoria `im.received` sulla `Notification`.
 - `docs/sailfish.md` (nome D-Bus), `docs/acceptance-checklist.md` (tocco su banner ed Eventi, con l'interruttore acceso e spento; LED a schermo spento, spento dopo la vista Eventi, comportamento dopo «Stop»).

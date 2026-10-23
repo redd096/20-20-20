@@ -4,22 +4,22 @@
 <context>
     <name>AlertPlayer</name>
     <message>
-        <location filename="../qml/AlertPlayer.qml" line="147"/>
+        <location filename="../qml/AlertPlayer.qml" line="160"/>
         <source>Time for a break</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/AlertPlayer.qml" line="147"/>
+        <location filename="../qml/AlertPlayer.qml" line="160"/>
         <source>Break finished</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/AlertPlayer.qml" line="148"/>
+        <location filename="../qml/AlertPlayer.qml" line="161"/>
         <source>Look at something about 20 feet (6 m) away.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/AlertPlayer.qml" line="149"/>
+        <location filename="../qml/AlertPlayer.qml" line="162"/>
         <source>You can go back to the screen.</source>
         <translation type="unfinished"></translation>
     </message>

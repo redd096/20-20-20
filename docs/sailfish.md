@@ -76,6 +76,12 @@ For quick tests on the device, choose the units "Seconds and seconds" in the set
 
 Release 23 changed the keys that store the durations, without migrating the old values: after upgrading from an older release, run the `dconf reset -f` command above once.
 
+## D-Bus service
+
+While it runs, the app owns `org.redd096.harbour-202020` on the session bus (Sailjail allows only `OrganizationName.ApplicationName` from the `.desktop` file). It exports one method, `org.redd096.harbour202020.showMainPage` at `/org/redd096/harbour202020`, which the alert notification calls when it is tapped: the app comes to the foreground on the main page. There is no `.service` file, so nothing can start the app through D-Bus.
+
+The alert notification uses the system category `im.received`, whose only effect is the notification LED while the screen is off.
+
 ## Removal
 
 ```sh
