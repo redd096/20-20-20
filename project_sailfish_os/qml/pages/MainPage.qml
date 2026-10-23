@@ -14,14 +14,14 @@ Page {
     allowedOrientations: Orientation.All
 
     // Name of the visible state (spec "break-cycle"): running and expired
-    // phases share the same name.
+    // phases share the same name. A long break has its own name (spec "pomodoro").
     function stateText(phase) {
         switch (phase) {
         case "working":
         case "workDone": return qsTr("Work")
         case "waitBreak": return qsTr("Waiting for break")
         case "onBreak":
-        case "breakDone": return qsTr("Break")
+        case "breakDone": return page.cycle.longBreak ? qsTr("Long break") : qsTr("Break")
         default: return qsTr("Waiting for work")
         }
     }
@@ -31,6 +31,11 @@ Page {
         contentHeight: column.height
 
         PullDownMenu {
+            MenuItem {
+                visible: page.settings.pomodoro
+                text: qsTr("Reset counter")
+                onClicked: page.cycle.resetCounter()
+            }
             MenuItem {
                 text: qsTr("Settings")
                 onClicked: pageStack.push(Qt.resolvedUrl("SettingsPage.qml"), { settings: page.settings })
@@ -105,5 +110,15 @@ Page {
                 onClicked: page.cycle.stop()
             }
         }
+    }
+
+    // Pomodoro work counter at the bottom of the page, like in Minidoro:
+    // works done / works before the long break.
+    Label {
+        anchors { bottom: parent.bottom; bottomMargin: Theme.paddingLarge * 2; horizontalCenter: parent.horizontalCenter }
+        visible: page.settings.pomodoro
+        text: page.cycle.worksDone + "/" + page.cycle.longBreakAfter
+        color: Theme.secondaryHighlightColor
+        font.pixelSize: Theme.fontSizeLarge
     }
 }

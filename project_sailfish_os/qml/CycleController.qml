@@ -19,6 +19,10 @@ import Nemo.KeepAlive 1.2
 //   end of time   working -> workDone      onBreak -> breakDone
 //
 // Every transition needs a user action, except the end of a countdown.
+//
+// Pomodoro (spec "pomodoro"): every work that ends is counted in worksDone.
+// With the mode on, once worksDone reaches longBreakAfter, the next break
+// lasts longBreakSeconds and resets the counter.
 Item {
     id: cycle
 
@@ -26,6 +30,15 @@ Item {
     // phase only applies from the next one.
     property int workSeconds: 20 * 60
     property int breakSeconds: 20
+    property bool pomodoro: false
+    property int longBreakAfter: 3
+    property int longBreakSeconds: 60
+
+    // Works ended since the app started or the last reset. Counted even with
+    // the Pomodoro mode off, where it is just not shown.
+    property int worksDone: 0
+    // True during a long break, running or expired.
+    property bool longBreak: false
 
     property string phase: "waitWork"
     // End time of the current countdown, in ms since the epoch. It is kept
@@ -56,8 +69,12 @@ Item {
     function confirm() {
         if (phase === "waitWork")
             begin("working", workSeconds)
-        else if (phase === "waitBreak")
-            begin("onBreak", breakSeconds)
+        else if (phase === "waitBreak") {
+            longBreak = pomodoro && worksDone >= longBreakAfter
+            if (longBreak)
+                worksDone = 0
+            begin("onBreak", longBreak ? longBreakSeconds : breakSeconds)
+        }
     }
 
     // Second button of "waitBreak": skips the break and starts work again.
@@ -69,10 +86,17 @@ Item {
     // Stop button: ends the current phase, running or expired, and moves to
     // the next waiting state. Does nothing in the waiting states.
     function stop() {
-        if (inWork)
+        if (inWork) {
+            worksDone++
             finish("waitBreak")
+        }
         else if (inBreak)
             finish("waitWork")
+    }
+
+    // "Reset counter" of the Pomodoro mode.
+    function resetCounter() {
+        worksDone = 0
     }
 
     // Starts a countdown of the given length for the given phase.

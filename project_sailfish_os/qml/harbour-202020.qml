@@ -59,6 +59,11 @@ ApplicationWindow {
         property int alarmOnceSeconds: 30           // seconds, 5-60
         // At the end of a phase, bring the app to the foreground.
         property bool bringToFront: true
+        // Pomodoro mode: a long break after longBreakAfter works (1-10).
+        // longBreakSeconds is in seconds, shown in the unit of the break.
+        property bool pomodoro: false
+        property int longBreakAfter: 3
+        property int longBreakSeconds: 60
     }
 
     // Keeps a stored duration inside the range of its unit, in case dconf
@@ -85,6 +90,10 @@ ApplicationWindow {
                                        appSettings.durationUnits !== "secondsAndSeconds")
         breakSeconds: app.clampDuration(appSettings.breakSeconds,
                                         appSettings.durationUnits === "minutesAndMinutes")
+        pomodoro: appSettings.pomodoro
+        longBreakAfter: Math.max(1, Math.min(10, appSettings.longBreakAfter))
+        longBreakSeconds: app.clampDuration(appSettings.longBreakSeconds,
+                                            appSettings.durationUnits === "minutesAndMinutes")
         onPhaseFinished: {
             alertPlayer.start(phase)
             app.showMainPage(appSettings.bringToFront)

@@ -61,6 +61,9 @@ The app stores its settings in dconf under `/apps/harbour-202020/`. A missing ke
 | `loopVibration` | with the `loop` repeat and the `sound` or `notification` type, vibrate at every repeat (`true`) or only at the start (`false`); the vibration ignores silent mode and do not disturb | `false` |
 | `alarmOnceSeconds` | how long the `alarm` type rings with the `once` repeat, seconds from 5 to 60 | 30 |
 | `bringToFront` | at the end of each phase, bring the app to the foreground (`true`) or only show the alert (`false`); the settings page is closed in both cases | `true` |
+| `pomodoro` | Pomodoro mode: a long break after a number of works, and a work counter on the main page | `false` |
+| `longBreakAfter` | number of works before the long break, 1 to 10 | 3 |
+| `longBreakSeconds` | long break duration in seconds, same ranges as `breakSeconds`; reset with the other durations when the units change (900 for `minutesAndMinutes`, 60 otherwise) | 60 |
 
 To read them, or reset them to the defaults, without root:
 

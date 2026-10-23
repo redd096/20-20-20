@@ -14,18 +14,21 @@ Page {
     readonly property bool workInMinutes: settings.durationUnits !== "secondsAndSeconds"
     readonly property bool breakInMinutes: settings.durationUnits === "minutesAndMinutes"
 
-    // Saves new units with their default durations (in seconds). Picking the
-    // units already in use changes nothing.
-    function setUnits(units, workSeconds, breakSeconds) {
+    // Saves new units with their default durations (in seconds), long break
+    // included. Picking the units already in use changes nothing.
+    function setUnits(units, workSeconds, breakSeconds, longBreakSeconds) {
         if (units === settings.durationUnits)
             return
         settings.durationUnits = units
         settings.workSeconds = workSeconds
         settings.breakSeconds = breakSeconds
-        // StepSlider reads its value only when created: recreate both sliders
+        settings.longBreakSeconds = longBreakSeconds
+        // StepSlider reads its value only when created: recreate the sliders
         // so they show the new units and defaults right away.
         durationSliders.active = false
         durationSliders.active = true
+        pomodoroSliders.active = false
+        pomodoroSliders.active = true
     }
 
     allowedOrientations: Orientation.All
@@ -50,15 +53,15 @@ Page {
                 menu: ContextMenu {
                     MenuItem {
                         text: qsTr("Minutes and seconds")
-                        onClicked: page.setUnits("minutesAndSeconds", 20 * 60, 20)
+                        onClicked: page.setUnits("minutesAndSeconds", 20 * 60, 20, 60)
                     }
                     MenuItem {
                         text: qsTr("Minutes and minutes")
-                        onClicked: page.setUnits("minutesAndMinutes", 25 * 60, 5 * 60)
+                        onClicked: page.setUnits("minutesAndMinutes", 25 * 60, 5 * 60, 15 * 60)
                     }
                     MenuItem {
                         text: qsTr("Seconds and seconds")
-                        onClicked: page.setUnits("secondsAndSeconds", 20, 20)
+                        onClicked: page.setUnits("secondsAndSeconds", 20, 20, 60)
                     }
                 }
             }
@@ -187,6 +190,50 @@ Page {
                 automaticCheck: false
                 checked: page.settings.bringToFront
                 onClicked: page.settings.bringToFront = !checked
+            }
+
+            // Optional Pomodoro mode (spec "pomodoro"), after all the other
+            // sections. Same click handling as the other switches.
+            SectionHeader { text: qsTr("Pomodoro") }
+
+            TextSwitch {
+                text: qsTr("Pomodoro timer")
+                description: qsTr("A long break after a number of works. The main page shows the works done.")
+                automaticCheck: false
+                checked: page.settings.pomodoro
+                onClicked: page.settings.pomodoro = !checked
+            }
+
+            // Recreated by setUnits(), like the duration sliders. The long
+            // break uses the unit and the ranges of the break.
+            Loader {
+                id: pomodoroSliders
+                width: parent.width
+                visible: page.settings.pomodoro
+                sourceComponent: Column {
+                    width: parent.width
+
+                    StepSlider {
+                        minimumValue: 1
+                        maximumValue: 10
+                        initialValue: page.settings.longBreakAfter
+                        unit: qsTr("works")
+                        label: qsTr("Long break after")
+                        onEdited: page.settings.longBreakAfter = newValue
+                    }
+
+                    StepSlider {
+                        readonly property bool inMinutes: page.breakInMinutes
+                        minimumValue: inMinutes ? 1 : 5
+                        maximumValue: inMinutes ? 60 : 120
+                        stepSize: inMinutes ? 1 : 5
+                        initialValue: inMinutes ? Math.round(page.settings.longBreakSeconds / 60)
+                                                : page.settings.longBreakSeconds
+                        unit: inMinutes ? qsTr("min") : qsTr("s")
+                        label: qsTr("Long break")
+                        onEdited: page.settings.longBreakSeconds = inMinutes ? newValue * 60 : newValue
+                    }
+                }
             }
         }
         VerticalScrollDecorator {}
