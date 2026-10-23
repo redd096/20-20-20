@@ -84,9 +84,9 @@ Device: Jolla, Sailfish OS 5.1.0.11, release 21. Date: 2026-10-14.
 | B32 | LED with screen off | Screen off, work ends, let the screen turn off again without unlocking | The notification LED blinks | OK |
 | B33 | LED off after unlocking | LED blinking, unlock the phone | The LED stops | OK |
 | B34 | LED after Stop | LED blinking, unlock, open the app from Home, press "Stop", turn the screen off | The LED does not blink (it already stopped on unlock) | OK |
-| B35 | Notification closed on Stop | Work ends, press "Stop" in the app, open Events | No notification of the app in Events | - |
-| B36 | Closed on Stop from the cover | Minimize, work ends, tap the cancel action on the cover, open Events | No notification of the app in Events | - |
-| B37 | Unhandled alert | Minimize, work ends, open Events without pressing "Stop", tap the notification | The notification is in Events; the tap opens the app on the main page | - |
+| B35 | Notification closed on Stop | Work ends, press "Stop" in the app, open Events | No notification of the app in Events | OK |
+| B36 | Closed on Stop from the cover | Minimize, work ends, tap the cancel action on the cover, open Events | No notification of the app in Events | OK |
+| B37 | Unhandled alert | Minimize, work ends, open Events without pressing "Stop", tap the notification | The notification is in Events; the tap opens the app on the main page | OK |
 
 ## C. Language
 
@@ -105,5 +105,6 @@ Device: Jolla, Sailfish OS 5.1.0.11, release 21. Date: 2026-10-14.
 - Release 27 (`foreground-toggle`, 2026-10-23): B26-B29 passed, in Italian. B28: the dragged value is not saved, the previous duration stays.
 - Release 28 (`cover-actions`, 2026-10-23): A24-A27 passed, in Italian.
 - Release 29 (`notification-tap`, 2026-10-23): B30-B34 passed, in Italian. The D-Bus name `org.redd096.harbour-202020` is accepted by Sailjail and released when the app closes. The LED is blue (`im.received` category) and stops as soon as the phone is unlocked, like for other apps.
+- Release 30 (`close-on-stop`, 2026-10-23): B35-B37 passed, in Italian.
 - A17: `ps aux | grep harbour-202020` listed only the ssh shell and the `grep` itself, so no app process was left.
 - C1: the Italian label of "Restart work" was "Riprendi lavoro" ("resume"), misleading because the work timer restarts from the full duration. Changed to "Riavvia lavoro" in release 22.
