@@ -103,7 +103,7 @@ Short durations: units "Seconds and seconds", "Pomodoro timer" on, long break af
 | D7 | Long break after three works | Long break 60 s, counter 3/3, press "Start break" | State "Long break" with 1:00, counter 0/3 | OK |
 | D8 | Normal break before the number | Counter 2/3, press "Start break" | Break of 20 s, counter stays 2/3 | OK |
 | D9 | Long break on units change | Units "Minutes and seconds", long break 90 s, choose "Minutes and minutes" | Long break slider shows 15 min | OK |
-| D10 | Counter label | Mode on, look at the bottom of the main page | "Works done: 0/3" | - |
+| D10 | Counter label | Mode on, look at the bottom of the main page | "Works done: 0/3" | OK |
 
 ## C. Language
 
@@ -123,5 +123,6 @@ Short durations: units "Seconds and seconds", "Pomodoro timer" on, long break af
 - Release 28 (`cover-actions`, 2026-10-23): A24-A27 passed, in Italian.
 - Release 29 (`notification-tap`, 2026-10-23): B30-B34 passed, in Italian. The D-Bus name `org.redd096.harbour-202020` is accepted by Sailjail and released when the app closes. The LED is blue (`im.received` category) and stops as soon as the phone is unlocked, like for other apps.
 - Release 30 (`close-on-stop`, 2026-10-23): B35-B37 passed, in Italian.
+- Releases 31-32 (`pomodoro-timer`, 2026-10-23): D1-D9 passed on release 31, D10 (counter label, also in landscape) on release 32, in Italian.
 - A17: `ps aux | grep harbour-202020` listed only the ssh shell and the `grep` itself, so no app process was left.
 - C1: the Italian label of "Restart work" was "Riprendi lavoro" ("resume"), misleading because the work timer restarts from the full duration. Changed to "Riavvia lavoro" in release 22.
