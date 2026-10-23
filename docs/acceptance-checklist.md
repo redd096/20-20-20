@@ -41,6 +41,10 @@ Device: Jolla, Sailfish OS 5.1.0.11, release 21. Date: 2026-10-14.
 | A21 | Units change | Units "Minutes and seconds", work 30 min, choose "Minutes and minutes" | Sliders show at once work 25 min and break 5 min | OK |
 | A22 | Same units again | Units "Minutes and seconds", work 30 min, choose "Minutes and seconds" again | Work still 30 min | OK |
 | A23 | Units change during a phase | Work running, choose "Seconds and seconds" | Current phase ends at its old time; the next work lasts 20 s | OK |
+| A24 | Start work from the cover | "Waiting for work", minimize, tap the play action on the cover | Work starts, the cover shows the remaining time | - |
+| A25 | Start break from the cover | "Waiting for break", minimize, tap the play action on the cover | The break starts, the cover shows the remaining time | - |
+| A26 | Stop from the cover during the alert | "Loop until stopped", "Bring app to front" off, minimize, work ends, tap the cancel action on the cover | The alert stops, the state becomes "Waiting for break", the app stays minimized | - |
+| A27 | Stop from the cover during the break | Break running, minimize, tap the cancel action on the cover | The break ends, the state becomes "Waiting for work" | - |
 
 ## B. Break alerts (`break-alerts`)
 
