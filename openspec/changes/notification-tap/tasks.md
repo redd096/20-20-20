@@ -2,7 +2,7 @@
 
 ## 1. Tocco sulla notifica
 
-- [ ] 1.1 In `project_sailfish_os/qml/harbour-202020.qml` dare a `showMainPage()` un argomento `front` (la fine fase passa `appSettings.bringToFront`) e aggiungere un `DBusAdaptor` con servizio `org.redd096.harbour-202020`, percorso `/org/redd096/harbour202020`, interfaccia `org.redd096.harbour202020` e metodo `showMainPage` che chiama `showMainPage(true)` (design D1-D3); verificare rileggendo il codice che la fine fase si comporti come prima
+- [x] 1.1 In `project_sailfish_os/qml/harbour-202020.qml` dare a `showMainPage()` un argomento `front` (la fine fase passa `appSettings.bringToFront`) e aggiungere un `DBusAdaptor` con servizio `org.redd096.harbour-202020`, percorso `/org/redd096/harbour202020`, interfaccia `org.redd096.harbour202020` e metodo `showMainPage` che chiama `showMainPage(true)` (design D1-D3); verificare rileggendo il codice che la fine fase si comporti come prima
 - [ ] 1.2 In `project_sailfish_os/qml/AlertPlayer.qml` aggiungere alla `Notification` la `remoteActions` con l'azione `default` verso quel servizio e metodo; verificare sul telefono che toccare banner ed Eventi apra l'app sulla pagina principale, anche con «Porta l'app in primo piano» spento. Se il servizio non si registra (errore nel log `journalctl`), fermarsi e riaprire la decisione sulla riserva del design
 
 ## 2. LED
