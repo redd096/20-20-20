@@ -8,6 +8,8 @@ Oggi toccare la notifica dell'avviso, nel banner o negli Eventi, la chiude solta
 
 - Toccare la notifica (banner o Eventi) porta l'app in primo piano sulla pagina principale, anche con «Porta l'app in primo piano» spento.
 - L'app espone un piccolo servizio D-Bus con un solo metodo che mostra la pagina principale; la notifica lo chiama come azione predefinita (`remoteActions`).
+- LED delle notifiche: oggi a schermo spento non lampeggia, perché la notifica non ha l'hint `x-nemo-feedback`. Impostarlo a `notifier`, l'evento ngfd di sistema (`/usr/share/ngfd/events.d/notifier.ini`) che accende solo il LED (`PatternCommunication`), senza suono né vibrazione, quindi valido per tutti e tre i tipi di avviso. Come nelle altre app, il LED si spegne quando l'utente apre la vista Eventi.
+- Da verificare sul telefono: se dopo «Stop», senza passare dagli Eventi, il LED continua a lampeggiare. Se sì, decidere allora se «Stop» deve chiudere anche la notifica.
 - Nessun file `.service` né `ExecDBus`: quando c'è una notifica l'app è per forza aperta, perché il ciclo vive dentro l'app.
 
 Verifiche già fatte (2026-10-23):
@@ -25,10 +27,10 @@ Fuori scope: pulsanti nella notifica (per esempio «Stop»), avvio dell'app da s
 <!-- Nessuna. -->
 
 ### Modified Capabilities
-- `break-alerts`: il tocco sulla notifica apre l'app sulla pagina principale.
+- `break-alerts`: il tocco sulla notifica apre l'app sulla pagina principale; la notifica accende il LED a schermo spento.
 
 ## Impact
 
 - `project_sailfish_os/qml/harbour-202020.qml` (o `AlertPlayer.qml`): `DBusAdaptor` di `Nemo.DBus` con il metodo che porta l'app in primo piano.
-- `project_sailfish_os/qml/AlertPlayer.qml`: `remoteActions` con l'azione `default` sulla `Notification`.
-- `docs/sailfish.md` (nome D-Bus), `docs/acceptance-checklist.md` (tocco su banner ed Eventi, con l'interruttore acceso e spento).
+- `project_sailfish_os/qml/AlertPlayer.qml`: `remoteActions` con l'azione `default` e l'hint `x-nemo-feedback` sulla `Notification`.
+- `docs/sailfish.md` (nome D-Bus), `docs/acceptance-checklist.md` (tocco su banner ed Eventi, con l'interruttore acceso e spento; LED a schermo spento, spento dopo la vista Eventi, comportamento dopo «Stop»).
