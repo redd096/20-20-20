@@ -16,12 +16,12 @@ Toccare la notifica dell'avviso, nel banner o nella vista Eventi, SHALL portare 
 
 ### Requirement: LED delle notifiche
 
-La notifica dell'avviso SHALL far lampeggiare il LED delle notifiche del dispositivo a schermo spento, con qualsiasi tipo di avviso, senza aggiungere suoni o vibrazioni. Come per le altre notifiche, il LED SHALL spegnersi quando l'utente apre la vista Eventi.
+La notifica dell'avviso SHALL far lampeggiare il LED delle notifiche del dispositivo a schermo spento, con qualsiasi tipo di avviso, senza aggiungere suoni o vibrazioni. Come per le altre notifiche, il LED SHALL spegnersi quando l'utente sblocca il telefono.
 
 #### Scenario: LED a schermo spento
-- **WHEN** il lavoro finisce con lo schermo spento e lo schermo si spegne di nuovo senza che l'utente guardi gli Eventi
+- **WHEN** il lavoro finisce con lo schermo spento e lo schermo si spegne di nuovo senza che l'utente sblocchi il telefono
 - **THEN** il LED delle notifiche lampeggia
 
-#### Scenario: LED spento dopo la vista Eventi
-- **WHEN** il LED lampeggia e l'utente apre la vista Eventi
+#### Scenario: LED spento allo sblocco
+- **WHEN** il LED lampeggia e l'utente sblocca il telefono
 - **THEN** il LED smette di lampeggiare

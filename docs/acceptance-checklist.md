@@ -79,11 +79,11 @@ Device: Jolla, Sailfish OS 5.1.0.11, release 21. Date: 2026-10-14.
 | B27 | Alert only | "Bring app to front" off, settings open, open another app, work ends, then open the app from Home | The alert starts and you stay in the other app; the app opens on the main page, with "Stop" | OK |
 | B28 | Settings closed while dragging | Short durations, settings open, hold a duration slider while the phase ends | The settings close without errors; reopened, the duration is the one saved before dragging | OK |
 | B29 | Front switch kept | Turn "Bring app to front" off, close and reopen the app | The switch is off | OK |
-| B30 | Tap on the banner | "Bring app to front" off, open another app, work ends, tap the banner | The app comes to the foreground on the main page, with "Stop" | - |
-| B31 | Tap in Events | Minimize, work ends, open Events, tap the notification | The app comes to the foreground on the main page | - |
-| B32 | LED with screen off | Screen off, work ends, let the screen turn off again without opening Events | The notification LED blinks | - |
-| B33 | LED off after Events | LED blinking, open Events | The LED stops | - |
-| B34 | LED after Stop (observation) | LED blinking, open the app from Home and press "Stop" without opening Events, turn the screen off | Note whether the LED still blinks | - |
+| B30 | Tap on the banner | "Bring app to front" off, open another app, work ends, tap the banner | The app comes to the foreground on the main page, with "Stop" | OK |
+| B31 | Tap in Events | Minimize, work ends, open Events, tap the notification | The app comes to the foreground on the main page | OK |
+| B32 | LED with screen off | Screen off, work ends, let the screen turn off again without unlocking | The notification LED blinks | OK |
+| B33 | LED off after unlocking | LED blinking, unlock the phone | The LED stops | OK |
+| B34 | LED after Stop | LED blinking, unlock, open the app from Home, press "Stop", turn the screen off | The LED does not blink (it already stopped on unlock) | OK |
 
 ## C. Language
 
@@ -101,5 +101,6 @@ Device: Jolla, Sailfish OS 5.1.0.11, release 21. Date: 2026-10-14.
 - Release 26 (`vibration-loop`, 2026-10-16): B21-B25 passed, in Italian.
 - Release 27 (`foreground-toggle`, 2026-10-23): B26-B29 passed, in Italian. B28: the dragged value is not saved, the previous duration stays.
 - Release 28 (`cover-actions`, 2026-10-23): A24-A27 passed, in Italian.
+- Release 29 (`notification-tap`, 2026-10-23): B30-B34 passed, in Italian. The D-Bus name `org.redd096.harbour-202020` is accepted by Sailjail and released when the app closes. The LED is blue (`im.received` category) and stops as soon as the phone is unlocked, like for other apps.
 - A17: `ps aux | grep harbour-202020` listed only the ssh shell and the `grep` itself, so no app process was left.
 - C1: the Italian label of "Restart work" was "Riprendi lavoro" ("resume"), misleading because the work timer restarts from the full duration. Changed to "Riavvia lavoro" in release 22.
