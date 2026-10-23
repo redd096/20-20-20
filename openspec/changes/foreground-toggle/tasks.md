@@ -3,7 +3,7 @@
 ## 1. Interruttore
 
 - [x] 1.1 In `project_sailfish_os/qml/harbour-202020.qml` aggiungere la chiave `bringToFront` (booleana, predefinita `true`) e in `showMainPage()` chiamare `activate()` solo se è vera, lasciando sempre il `pop` delle impostazioni; aggiornare il commento della funzione; verificare rileggendo la funzione
-- [ ] 1.2 In `project_sailfish_os/qml/pages/SettingsPage.qml` aggiungere nella sezione «Alert» un `TextSwitch` «Bring app to front», con `automaticCheck` spento e il clic che inverte il valore salvato, come «Vibrate at every repeat»; verificare sul telefono che il valore resti dopo la riapertura dell'app
+- [x] 1.2 In `project_sailfish_os/qml/pages/SettingsPage.qml` aggiungere nella sezione «Alert» un `TextSwitch` «Bring app to front», con `automaticCheck` spento e il clic che inverte il valore salvato, come «Vibrate at every repeat»; verificare sul telefono che il valore resti dopo la riapertura dell'app
 
 ## 2. Traduzioni e documentazione
 
@@ -14,7 +14,7 @@
 ## 3. Build e prova sul telefono
 
 - [x] 3.1 Portare `Release:` a 27 in `project_sailfish_os/rpm/harbour-202020.spec`, fare la build e il `check` di Harbour, copiare l'RPM sul telefono e cancellare quello della release 26 (l'utente lo installa); verificare che il `check` passi senza nuovi errori
-- [ ] 3.2 Sul telefono eseguire le righe con esito `-` della checklist, in italiano, e segnare gli esiti in `docs/acceptance-checklist.md`; verificare che siano tutte `OK`
+- [x] 3.2 Sul telefono eseguire le righe con esito `-` della checklist, in italiano, e segnare gli esiti in `docs/acceptance-checklist.md`; verificare che siano tutte `OK`
 
 ## Workflow follow-up
 
