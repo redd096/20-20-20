@@ -7,11 +7,11 @@
 
 ## 2. Impostazioni
 
-- [ ] 2.1 In `project_sailfish_os/qml/pages/SettingsPage.qml` estendere `setUnits()` con la pausa lunga predefinita e aggiungere la sezione «Pomodoro» (interruttore e due cursori, design D2); verificare sul telefono che i cursori compaiano solo con l'interruttore acceso e che il cambio di modalità riporti la pausa lunga al predefinito
+- [x] 2.1 In `project_sailfish_os/qml/pages/SettingsPage.qml` estendere `setUnits()` con la pausa lunga predefinita e aggiungere la sezione «Pomodoro» (interruttore e due cursori, design D2); verificare sul telefono che i cursori compaiano solo con l'interruttore acceso e che il cambio di modalità riporti la pausa lunga al predefinito
 
 ## 3. Pagina principale
 
-- [ ] 3.1 In `project_sailfish_os/qml/pages/MainPage.qml` mostrare «Long break», il contatore in basso e la voce «Reset counter» (design D3); verificare sul telefono che contatore e voce compaiano solo con la modalità accesa
+- [x] 3.1 In `project_sailfish_os/qml/pages/MainPage.qml` mostrare «Long break», il contatore in basso e la voce «Reset counter» (design D3); verificare sul telefono che contatore e voce compaiano solo con la modalità accesa
 
 ## 4. Traduzioni e documentazione
 
@@ -22,7 +22,7 @@
 ## 5. Build e prova sul telefono
 
 - [x] 5.1 Portare `Release:` a 31 in `project_sailfish_os/rpm/harbour-202020.spec`, fare la build e il `check` di Harbour, copiare l'RPM sul telefono e cancellare quello della release 30 (l'utente lo installa); verificare che il `check` passi senza nuovi errori
-- [ ] 5.2 Sul telefono eseguire le righe con esito `-` della checklist, in italiano, e segnare gli esiti in `docs/acceptance-checklist.md`; verificare che siano tutte `OK`
+- [x] 5.2 Sul telefono eseguire le righe con esito `-` della checklist, in italiano, e segnare gli esiti in `docs/acceptance-checklist.md`; verificare che siano tutte `OK`
 
 ## Workflow follow-up
 
