@@ -12,10 +12,10 @@ Oggi toccare la notifica dell'avviso, nel banner o negli Eventi, la chiude solta
 
 Verifiche già fatte (2026-10-23):
 - Sailjail: `OrganizationName` + «.» + `ApplicationName` del `.desktop` è il nome D-Bus che l'app può registrare, pensato anche per le notifiche (documentazione Sailfish, «Launchers»). Per noi `org.redd096.harbour-202020`.
-- Fernschreiber (installato sul telefono) fa esattamente questo: `remoteAction("default", ...)` verso `de.ygriega.fernschreiber`, il suo `OrganizationName.ApplicationName`.
+- Fernschreiber (installato sul telefono dal Jolla Store) fa esattamente questo: `remoteAction("default", ...)` verso `de.ygriega.fernschreiber`, il suo `OrganizationName.ApplicationName`. Quindi lo Store accetta un servizio D-Bus proprio usato dalla notifica. Il suo `ApplicationName` è `fernschreiber`: il prefisso `harbour-` è obbligatorio solo per pacchetto, eseguibile, `.desktop` e icona, non per `ApplicationName`.
 - Validatore Harbour dell'SDK: `Nemo.DBus 2.0` e `Nemo.Notifications 1.0` ammessi, nessuna regola contro un servizio D-Bus proprio. Il limite del Jolla Store discusso a gennaio 2026 riguarda le chiamate ai servizi D-Bus di altre app, non il proprio.
 
-Da verificare sul telefono durante l'implementazione: che Sailjail accetti il trattino in `harbour-202020` (i nomi D-Bus lo ammettono). Se no, la notifica resta com'è oggi e il change si chiude senza modifiche al codice.
+Da verificare sul telefono durante l'implementazione: che Sailjail accetti il trattino in `harbour-202020` (i nomi D-Bus lo ammettono). Se no, riserva: cambiare `ApplicationName` senza trattino (per esempio `app202020`), verificando che le impostazioni in dconf restino leggibili dalla sandbox; se anche questo non va, la notifica resta com'è oggi.
 
 Fuori scope: pulsanti nella notifica (per esempio «Stop»), avvio dell'app da spenta.
 
