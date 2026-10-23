@@ -1,6 +1,7 @@
 import QtQuick 2.0
 import Sailfish.Silica 1.0
 import Nemo.Configuration 1.0
+import Nemo.DBus 2.0
 import "pages"
 import "cover"
 
@@ -11,13 +12,33 @@ ApplicationWindow {
 
     // Goes back to the main page, so the phase and the main button are
     // visible as soon as the alert starts or the user opens the app. With
-    // "bringToFront" on, also brings the app to the foreground; with the
-    // device locked, it is shown right after unlocking.
-    function showMainPage() {
+    // "front", also brings the app to the foreground; with the device
+    // locked, it is shown right after unlocking.
+    function showMainPage(front) {
         if (pageStack.depth > 1)
             pageStack.pop(null, PageStackAction.Immediate)
-        if (appSettings.bringToFront)
+        if (front)
             activate()
+    }
+
+    // D-Bus service called by the alert notification when it is tapped
+    // (remoteActions in AlertPlayer.qml). Sailjail lets the app own only
+    // OrganizationName.ApplicationName from the .desktop file. Paths and
+    // interfaces cannot contain "-", so they drop it. No .service file: the
+    // app is always running while its notification exists.
+    DBusAdaptor {
+        service: "org.redd096.harbour-202020"
+        path: "/org/redd096/harbour202020"
+        iface: "org.redd096.harbour202020"
+        xml: '  <interface name="org.redd096.harbour202020">\n' +
+             '    <method name="showMainPage"/>\n' +
+             '  </interface>\n'
+
+        // A tap is an explicit request: bring the app to the front even
+        // with "bringToFront" off.
+        function showMainPage() {
+            app.showMainPage(true)
+        }
     }
 
     // Settings stored in dconf under /apps/harbour-202020.
@@ -66,7 +87,7 @@ ApplicationWindow {
                                         appSettings.durationUnits === "minutesAndMinutes")
         onPhaseFinished: {
             alertPlayer.start(phase)
-            app.showMainPage()
+            app.showMainPage(appSettings.bringToFront)
         }
         // Stop: the alert must not outlive the phase that started it.
         onPhaseChanged: if (phase !== "workDone" && phase !== "breakDone") alertPlayer.stop()

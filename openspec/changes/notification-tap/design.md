@@ -36,7 +36,9 @@ Alternativa scartata: cambiare subito `ApplicationName` in un nome senza trattin
 
 ### D4. LED
 
-Hint `x-nemo-feedback` = `notifier` sulla `Notification`. L'evento di sistema `notifier` contiene solo `mce.led_pattern = PatternCommunication`, quindi non cambia suono né vibrazione dei tre tipi di avviso. Lo spegnimento alla vista Eventi è gestito da lipstick.
+La `Notification` QML non espone gli hint (niente `x-nemo-feedback` diretto, verificato nel `plugins.qmltypes` dell'SDK). Si usa allora la categoria di sistema `im.received`, il cui file (`/usr/share/lipstick/notificationcategories/im.received.conf`) contiene solo `x-nemo-feedback=communication_led`: l'evento ngfd `communication_led` accende solo il LED (`PatternCommunicationIM`, blu), quindi non cambia suono né vibrazione dei tre tipi di avviso. Lo spegnimento alla vista Eventi è gestito da lipstick.
+
+Alternative scartate: l'hint `notifier` (richiede la `Notification` in C++); pilotare mce direttamente (il LED non si spegnerebbe da solo con la vista Eventi).
 
 ## Risks / Trade-offs
 

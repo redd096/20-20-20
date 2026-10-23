@@ -79,6 +79,11 @@ Device: Jolla, Sailfish OS 5.1.0.11, release 21. Date: 2026-10-14.
 | B27 | Alert only | "Bring app to front" off, settings open, open another app, work ends, then open the app from Home | The alert starts and you stay in the other app; the app opens on the main page, with "Stop" | OK |
 | B28 | Settings closed while dragging | Short durations, settings open, hold a duration slider while the phase ends | The settings close without errors; reopened, the duration is the one saved before dragging | OK |
 | B29 | Front switch kept | Turn "Bring app to front" off, close and reopen the app | The switch is off | OK |
+| B30 | Tap on the banner | "Bring app to front" off, open another app, work ends, tap the banner | The app comes to the foreground on the main page, with "Stop" | - |
+| B31 | Tap in Events | Minimize, work ends, open Events, tap the notification | The app comes to the foreground on the main page | - |
+| B32 | LED with screen off | Screen off, work ends, let the screen turn off again without opening Events | The notification LED blinks | - |
+| B33 | LED off after Events | LED blinking, open Events | The LED stops | - |
+| B34 | LED after Stop (observation) | LED blinking, open the app from Home and press "Stop" without opening Events, turn the screen off | Note whether the LED still blinks | - |
 
 ## C. Language
 
