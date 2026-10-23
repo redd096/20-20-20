@@ -71,10 +71,10 @@ Device: Jolla, Sailfish OS 5.1.0.11, release 21. Date: 2026-10-14.
 | B23 | Vibration only, silent profile | "Vibrate at every repeat" on, type "Sound", "Loop until stopped", silent profile, work ends | No sound, vibrates at every repeat until "Stop" | OK |
 | B24 | Switch kept | Turn "Vibrate at every repeat" on, close and reopen the app | The switch is on | OK |
 | B25 | Switch visibility | Choose repeat "Once", then type "Alarm" | The switch is shown only with "Loop until stopped" and type "Sound" or "Notification" | OK |
-| B26 | Brought to front | "Bring app to front" on, open another app, work ends | The app comes to the foreground on the main page, with "Stop" | - |
-| B27 | Alert only | "Bring app to front" off, settings open, open another app, work ends, then open the app from Home | The alert starts and you stay in the other app; the app opens on the main page, with "Stop" | - |
-| B28 | Settings closed while dragging | Short durations, settings open, hold a duration slider while the phase ends | The settings close without errors; reopened, the duration is the one saved before dragging | - |
-| B29 | Front switch kept | Turn "Bring app to front" off, close and reopen the app | The switch is off | - |
+| B26 | Brought to front | "Bring app to front" on, open another app, work ends | The app comes to the foreground on the main page, with "Stop" | OK |
+| B27 | Alert only | "Bring app to front" off, settings open, open another app, work ends, then open the app from Home | The alert starts and you stay in the other app; the app opens on the main page, with "Stop" | OK |
+| B28 | Settings closed while dragging | Short durations, settings open, hold a duration slider while the phase ends | The settings close without errors; reopened, the duration is the one saved before dragging | OK |
+| B29 | Front switch kept | Turn "Bring app to front" off, close and reopen the app | The switch is off | OK |
 
 ## C. Language
 
@@ -90,5 +90,6 @@ Device: Jolla, Sailfish OS 5.1.0.11, release 21. Date: 2026-10-14.
 - Release 24 (`notification-volume`, first version with a separate Volume menu, 2026-10-16): all rows passed; with do not disturb the media-volume sound was audible, as then intended. Release 25 merged the Volume menu into the "Sound" type and mutes it in do not disturb, so the rows were reset.
 - Release 25 (2026-10-16): A14, B3, B4, B5, B10, B11 and B12-B20 passed, in Italian, after `dconf reset -f`. B15: with do not disturb the "Sound" type is silent, so the sandbox can read `/lipstick/do_not_disturb`.
 - Release 26 (`vibration-loop`, 2026-10-16): B21-B25 passed, in Italian.
+- Release 27 (`foreground-toggle`, 2026-10-23): B26-B29 passed, in Italian. B28: the dragged value is not saved, the previous duration stays.
 - A17: `ps aux | grep harbour-202020` listed only the ssh shell and the `grep` itself, so no app process was left.
 - C1: the Italian label of "Restart work" was "Riprendi lavoro" ("resume"), misleading because the work timer restarts from the full duration. Changed to "Riavvia lavoro" in release 22.
