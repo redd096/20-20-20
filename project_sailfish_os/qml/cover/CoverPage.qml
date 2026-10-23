@@ -1,8 +1,8 @@
 import QtQuick 2.0
 import Sailfish.Silica 1.0
 
-// Passive cover: shows the remaining time, or the state when no countdown
-// is running, with no actions.
+// Cover: shows the remaining time, or the state when no countdown is
+// running, and one action that depends on the state.
 CoverBackground {
     id: cover
 
@@ -44,6 +44,18 @@ CoverBackground {
             visible: text !== ""
             text: cover.statusText(cover.cycle.phase)
             color: Theme.highlightColor
+        }
+    }
+
+    // One action, like the main button of the main page: start the next
+    // phase while waiting, Stop during work and break (it also stops the
+    // alert). "Restart work" is left to the main page.
+    CoverActionList {
+        CoverAction {
+            readonly property bool waiting: cover.cycle.phase === "waitWork"
+                                            || cover.cycle.phase === "waitBreak"
+            iconSource: waiting ? "image://theme/icon-cover-play" : "image://theme/icon-cover-cancel"
+            onTriggered: waiting ? cover.cycle.confirm() : cover.cycle.stop()
         }
     }
 }
