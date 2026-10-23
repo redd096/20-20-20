@@ -41,10 +41,10 @@ Device: Jolla, Sailfish OS 5.1.0.11, release 21. Date: 2026-10-14.
 | A21 | Units change | Units "Minutes and seconds", work 30 min, choose "Minutes and minutes" | Sliders show at once work 25 min and break 5 min | OK |
 | A22 | Same units again | Units "Minutes and seconds", work 30 min, choose "Minutes and seconds" again | Work still 30 min | OK |
 | A23 | Units change during a phase | Work running, choose "Seconds and seconds" | Current phase ends at its old time; the next work lasts 20 s | OK |
-| A24 | Start work from the cover | "Waiting for work", minimize, tap the play action on the cover | Work starts, the cover shows the remaining time | - |
-| A25 | Start break from the cover | "Waiting for break", minimize, tap the play action on the cover | The break starts, the cover shows the remaining time | - |
-| A26 | Stop from the cover during the alert | "Loop until stopped", "Bring app to front" off, minimize, work ends, tap the cancel action on the cover | The alert stops, the state becomes "Waiting for break", the app stays minimized | - |
-| A27 | Stop from the cover during the break | Break running, minimize, tap the cancel action on the cover | The break ends, the state becomes "Waiting for work" | - |
+| A24 | Start work from the cover | "Waiting for work", minimize, tap the play action on the cover | Work starts, the cover shows the remaining time | OK |
+| A25 | Start break from the cover | "Waiting for break", minimize, tap the play action on the cover | The break starts, the cover shows the remaining time | OK |
+| A26 | Stop from the cover during the alert | "Loop until stopped", "Bring app to front" off, minimize, work ends, tap the cancel action on the cover | The alert stops, the state becomes "Waiting for break", the app stays minimized | OK |
+| A27 | Stop from the cover during the break | Break running, minimize, tap the cancel action on the cover | The break ends, the state becomes "Waiting for work" | OK |
 
 ## B. Break alerts (`break-alerts`)
 
@@ -95,5 +95,6 @@ Device: Jolla, Sailfish OS 5.1.0.11, release 21. Date: 2026-10-14.
 - Release 25 (2026-10-16): A14, B3, B4, B5, B10, B11 and B12-B20 passed, in Italian, after `dconf reset -f`. B15: with do not disturb the "Sound" type is silent, so the sandbox can read `/lipstick/do_not_disturb`.
 - Release 26 (`vibration-loop`, 2026-10-16): B21-B25 passed, in Italian.
 - Release 27 (`foreground-toggle`, 2026-10-23): B26-B29 passed, in Italian. B28: the dragged value is not saved, the previous duration stays.
+- Release 28 (`cover-actions`, 2026-10-23): A24-A27 passed, in Italian.
 - A17: `ps aux | grep harbour-202020` listed only the ssh shell and the `grep` itself, so no app process was left.
 - C1: the Italian label of "Restart work" was "Riprendi lavoro" ("resume"), misleading because the work timer restarts from the full duration. Changed to "Riavvia lavoro" in release 22.
