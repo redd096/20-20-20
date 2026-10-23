@@ -99,6 +99,11 @@
         <source>Stop</source>
         <translation>Stop</translation>
     </message>
+    <message>
+        <location filename="../qml/pages/MainPage.qml" line="120"/>
+        <source>Works done: %1/%2</source>
+        <translation>Lavori fatti: %1/%2</translation>
+    </message>
 </context>
 <context>
     <name>SettingsPage</name>

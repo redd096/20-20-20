@@ -94,15 +94,16 @@ Short durations: units "Seconds and seconds", "Pomodoro timer" on, long break af
 
 | # | Scenario | Steps | Expected | Result |
 | --- | --- | --- | --- | --- |
-| D1 | Mode off | "Pomodoro timer" off | No long-break sliders in the settings, no counter on the main page, no "Reset counter"; every break lasts the normal break | - |
-| D2 | Values kept | Turn the mode on, long break after 4 works, close and reopen the app | The switch is on, long break after 4 works | - |
-| D3 | Work ended with Stop | Counter 0/3, start work, press "Stop" during work | Counter 1/3 | - |
-| D4 | Restart work | Counter 1/3, "Waiting for break", press "Restart work" | Counter stays 1/3 until the new work ends | - |
-| D5 | Reset counter | Counter 2/3, pull-down "Reset counter" | Counter 0/3 | - |
-| D6 | Reopening the app | Counter 2/3, close and reopen the app | Counter 0/3 | - |
-| D7 | Long break after three works | Long break 60 s, counter 3/3, press "Start break" | State "Long break" with 1:00, counter 0/3 | - |
-| D8 | Normal break before the number | Counter 2/3, press "Start break" | Break of 20 s, counter stays 2/3 | - |
-| D9 | Long break on units change | Units "Minutes and seconds", long break 90 s, choose "Minutes and minutes" | Long break slider shows 15 min | - |
+| D1 | Mode off | "Pomodoro timer" off | No long-break sliders in the settings, no counter on the main page, no "Reset counter"; every break lasts the normal break | OK |
+| D2 | Values kept | Turn the mode on, long break after 4 works, close and reopen the app | The switch is on, long break after 4 works | OK |
+| D3 | Work ended with Stop | Counter 0/3, start work, press "Stop" during work | Counter 1/3 | OK |
+| D4 | Restart work | Counter 1/3, "Waiting for break", press "Restart work" | Counter stays 1/3 until the new work ends | OK |
+| D5 | Reset counter | Counter 2/3, pull-down "Reset counter" | Counter 0/3 | OK |
+| D6 | Reopening the app | Counter 2/3, close and reopen the app | Counter 0/3 | OK |
+| D7 | Long break after three works | Long break 60 s, counter 3/3, press "Start break" | State "Long break" with 1:00, counter 0/3 | OK |
+| D8 | Normal break before the number | Counter 2/3, press "Start break" | Break of 20 s, counter stays 2/3 | OK |
+| D9 | Long break on units change | Units "Minutes and seconds", long break 90 s, choose "Minutes and minutes" | Long break slider shows 15 min | OK |
+| D10 | Counter label | Mode on, look at the bottom of the main page | "Works done: 0/3" | - |
 
 ## C. Language
 
