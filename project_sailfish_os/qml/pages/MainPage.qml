@@ -117,7 +117,7 @@ Page {
     Label {
         anchors { bottom: parent.bottom; bottomMargin: Theme.paddingLarge * 2; horizontalCenter: parent.horizontalCenter }
         visible: page.settings.pomodoro
-        text: page.cycle.worksDone + "/" + page.cycle.longBreakAfter
+        text: qsTr("Works done: %1/%2").arg(page.cycle.worksDone).arg(page.cycle.longBreakAfter)
         color: Theme.secondaryHighlightColor
         font.pixelSize: Theme.fontSizeLarge
     }

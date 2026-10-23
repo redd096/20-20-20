@@ -20,7 +20,7 @@ Le impostazioni SHALL avere, dopo tutte le altre sezioni, una sezione «Pomodoro
 
 ### Requirement: Contatore dei lavori
 
-L'app SHALL contare ogni lavoro finito, sia arrivato a zero sia chiuso con «Stop». «Riavvia lavoro» MUST NOT aggiungere lavori oltre a quello già contato. Con la modalità Pomodoro accesa, la pagina principale SHALL mostrare in basso il contatore nel formato «lavori fatti/N» e il menu a tendina SHALL offrire «Azzera contatore». Il contatore MUST NOT essere salvato: riparte da zero a ogni apertura dell'app.
+L'app SHALL contare ogni lavoro finito, sia arrivato a zero sia chiuso con «Stop». «Riavvia lavoro» MUST NOT aggiungere lavori oltre a quello già contato. Con la modalità Pomodoro accesa, la pagina principale SHALL mostrare in basso il contatore con la sua etichetta, nel formato «Lavori fatti: n/N» e il menu a tendina SHALL offrire «Azzera contatore». Il contatore MUST NOT essere salvato: riparte da zero a ogni apertura dell'app.
 
 #### Scenario: Lavoro chiuso con Stop
 - **WHEN** la pausa lunga è dopo 3 lavori, il contatore è 0/3 e l'utente preme «Stop» durante il lavoro
