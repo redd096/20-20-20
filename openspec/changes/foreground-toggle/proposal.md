@@ -7,16 +7,14 @@ Oggi, alla fine di ogni fase, l'app chiude le impostazioni e si porta in primo p
 ## What Changes
 
 - Nuovo interruttore nelle impostazioni, sezione «Alert»: «Bring app to front» / «Porta l'app in primo piano». Acceso per impostazione predefinita, cioè il comportamento attuale.
-- Spento: alla fine della fase parte solo l'avviso; l'app resta ridotta a icona e non chiude le impostazioni.
-- **Da decidere nella design: come si ferma l'avviso in loop senza aprire l'app.** Oggi la notifica non ha azioni. Opzioni:
-  - aprire l'app a mano (scomodo, soprattutto con «In loop»);
-  - toccare la notifica apre l'app (azione predefinita con `remoteActions`, che richiede un servizio D-Bus dell'app);
-  - un'azione «Stop» sulla cover (già tra le idee rimandate);
-  - un pulsante «Stop» nella notifica.
-- Da verificare con un mini-spike: cosa succede oggi toccando la notifica; se `remoteActions` passa la validazione Harbour e le regole di Sailjail.
-- Combinazione da considerare: con questo interruttore spento e «Mostra negli Eventi» spento (change `events-toggle`) resta solo il banner; serve un modo affidabile per fermare l'avviso.
+- Acceso: nessun cambiamento (chiude le impostazioni e porta l'app in primo piano).
+- Spento: alla fine della fase parte l'avviso e l'app chiude comunque le impostazioni (torna alla pagina principale), ma **non** si porta in primo piano. Quando l'utente apre l'app dalla Home trova subito «Stop».
+- Per fermare un avviso in loop con l'interruttore spento, l'utente apre l'app a mano (Home, cover). È una scelta consapevole di chi spegne l'interruttore.
+- Checklist: nuova riga per il caso già esistente oggi, cioè le impostazioni chiuse mentre l'utente trascina uno slider. Con durate brevi, trascinare uno slider mentre la fase finisce: l'app non si blocca e resta salvato il valore precedente, perché `StepSlider` salva solo al rilascio.
 
-Fuori scope: azioni diverse da «Stop» o «apri l'app».
+Fuori scope (idee rimandate):
+- toccare la notifica per aprire l'app. Oggi il tocco la chiude soltanto. Servirebbero `remoteActions` e un `DBusAdaptor`, più uno spike su Sailjail e Harbour;
+- un'azione «Stop» sulla cover o nella notifica.
 
 ## Capabilities
 
@@ -24,11 +22,10 @@ Fuori scope: azioni diverse da «Stop» o «apri l'app».
 <!-- Nessuna. -->
 
 ### Modified Capabilities
-- `break-alerts`: nuovo requisito sul portare l'app in primo piano a fine fase, configurabile, e su come fermare l'avviso dall'esterno dell'app.
+- `break-alerts`: portare l'app in primo piano a fine fase diventa configurabile; la pagina principale viene mostrata in entrambi i casi.
 
 ## Impact
 
-- `project_sailfish_os/qml/harbour-202020.qml`: condizione attorno a `showMainPage()`, nuova chiave dconf (per esempio `bringToFront`, predefinita `true`).
+- `project_sailfish_os/qml/harbour-202020.qml`: nuova chiave dconf `bringToFront` (predefinita `true`); `activate()` dentro `showMainPage()` solo se è attiva.
 - `qml/pages/SettingsPage.qml`: `TextSwitch` nella sezione «Alert».
-- In base alla scelta per fermare l'avviso: `AlertPlayer.qml` (azioni della notifica), `qml/cover/CoverPage.qml` (azione della cover), eventuale file di servizio D-Bus nel pacchetto.
-- Traduzioni, `docs/sailfish.md`, checklist di accettazione.
+- Traduzioni (italiano), `docs/sailfish.md`, `docs/acceptance-checklist.md` (interruttore acceso/spento + riga del trascinamento).
