@@ -60,6 +60,7 @@ The app stores its settings in dconf under `/apps/harbour-202020/`. A missing ke
 | `alertType` | `sound` (played by the app on the media volume, muted in silent mode and do not disturb), `notification` (a system notification on the ringtone volume, muted in silent mode and do not disturb; the loop shows the banner again at every repeat), or `alarm` (the system alarm: your alarm tone and volume, rings even in silent mode) | `sound` |
 | `loopVibration` | with the `loop` repeat and the `sound` or `notification` type, vibrate at every repeat (`true`) or only at the start (`false`); the vibration ignores silent mode and do not disturb | `false` |
 | `alarmOnceSeconds` | how long the `alarm` type rings with the `once` repeat, seconds from 5 to 60 | 30 |
+| `bringToFront` | at the end of each phase, bring the app to the foreground (`true`) or only show the alert (`false`); the settings page is closed in both cases | `true` |
 
 To read them, or reset them to the defaults, without root:
 

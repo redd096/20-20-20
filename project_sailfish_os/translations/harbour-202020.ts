@@ -220,5 +220,15 @@
         <source>Alarm length</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <location filename="../qml/pages/SettingsPage.qml" line="185"/>
+        <source>Bring app to front</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../qml/pages/SettingsPage.qml" line="186"/>
+        <source>At the end of each phase. When off, open the app to press Stop.</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 </TS>

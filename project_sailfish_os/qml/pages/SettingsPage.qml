@@ -178,6 +178,16 @@ Page {
                 label: qsTr("Alarm length")
                 onEdited: page.settings.alarmOnceSeconds = newValue
             }
+
+            // Off: only the alert, the user stays in the current app. Same
+            // click handling as "Vibrate at every repeat".
+            TextSwitch {
+                text: qsTr("Bring app to front")
+                description: qsTr("At the end of each phase. When off, open the app to press Stop.")
+                automaticCheck: false
+                checked: page.settings.bringToFront
+                onClicked: page.settings.bringToFront = !checked
+            }
         }
         VerticalScrollDecorator {}
     }

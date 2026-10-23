@@ -9,13 +9,15 @@ import "cover"
 ApplicationWindow {
     id: app
 
-    // Brings the app to the foreground on the main page, so the phase and the
-    // main button are visible as soon as the alert starts. With the device
-    // locked, the app is shown right after unlocking.
+    // Goes back to the main page, so the phase and the main button are
+    // visible as soon as the alert starts or the user opens the app. With
+    // "bringToFront" on, also brings the app to the foreground; with the
+    // device locked, it is shown right after unlocking.
     function showMainPage() {
         if (pageStack.depth > 1)
             pageStack.pop(null, PageStackAction.Immediate)
-        activate()
+        if (appSettings.bringToFront)
+            activate()
     }
 
     // Settings stored in dconf under /apps/harbour-202020.
@@ -34,6 +36,8 @@ ApplicationWindow {
         property bool loopVibration: false
         property string alertType: "sound"          // "sound" | "notification" | "alarm"
         property int alarmOnceSeconds: 30           // seconds, 5-60
+        // At the end of a phase, bring the app to the foreground.
+        property bool bringToFront: true
     }
 
     // Keeps a stored duration inside the range of its unit, in case dconf
