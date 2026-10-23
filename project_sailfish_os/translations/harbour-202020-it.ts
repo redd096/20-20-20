@@ -220,5 +220,15 @@
         <source>Alarm length</source>
         <translation>Durata sveglia</translation>
     </message>
+    <message>
+        <location filename="../qml/pages/SettingsPage.qml" line="185"/>
+        <source>Bring app to front</source>
+        <translation>Porta l&apos;app in primo piano</translation>
+    </message>
+    <message>
+        <location filename="../qml/pages/SettingsPage.qml" line="186"/>
+        <source>At the end of each phase. When off, open the app to press Stop.</source>
+        <translation>Alla fine di ogni fase. Se spento, apri l&apos;app per premere Stop.</translation>
+    </message>
 </context>
 </TS>

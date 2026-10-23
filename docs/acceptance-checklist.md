@@ -71,6 +71,10 @@ Device: Jolla, Sailfish OS 5.1.0.11, release 21. Date: 2026-10-14.
 | B23 | Vibration only, silent profile | "Vibrate at every repeat" on, type "Sound", "Loop until stopped", silent profile, work ends | No sound, vibrates at every repeat until "Stop" | OK |
 | B24 | Switch kept | Turn "Vibrate at every repeat" on, close and reopen the app | The switch is on | OK |
 | B25 | Switch visibility | Choose repeat "Once", then type "Alarm" | The switch is shown only with "Loop until stopped" and type "Sound" or "Notification" | OK |
+| B26 | Brought to front | "Bring app to front" on, open another app, work ends | The app comes to the foreground on the main page, with "Stop" | - |
+| B27 | Alert only | "Bring app to front" off, settings open, open another app, work ends, then open the app from Home | The alert starts and you stay in the other app; the app opens on the main page, with "Stop" | - |
+| B28 | Settings closed while dragging | Short durations, settings open, hold a duration slider while the phase ends | The settings close without errors; reopened, the duration is the one saved before dragging | - |
+| B29 | Front switch kept | Turn "Bring app to front" off, close and reopen the app | The switch is off | - |
 
 ## C. Language
 
