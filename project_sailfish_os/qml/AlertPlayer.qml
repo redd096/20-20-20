@@ -54,10 +54,9 @@ Item {
     function start(phase) {
         stop()
         _phase = phase
-        // Start from a fresh notification: remove the previous one and forget
-        // its id. Reusing the id of a notification the user has already
-        // dismissed shows the banner but no new entry in Events.
-        notification.close()
+        // Start from a fresh notification: stop() above removed the previous
+        // one, now forget its id. Reusing the id of a notification the user
+        // has already dismissed shows the banner but no new entry in Events.
         notification.replacesId = 0
         if (type === "alarm") {
             // The sound comes from ngfd; the notification is only visual.
@@ -121,8 +120,9 @@ Item {
         })
     }
 
-    // Stops any sound. The notification stays in the Events view, like for
-    // every other app, until the user removes it or the next alert replaces it.
+    // Stops any sound and closes the notification: once handled in the app
+    // (Stop), the alert does not stay in the Events view or keep the LED on.
+    // An alert the user has not handled yet stays in Events.
     function stop() {
         _phase = ""
         _alarmRequest++
@@ -134,6 +134,7 @@ Item {
         notificationLoop.stop()
         appSound.stop()
         vibra.stop()
+        notification.close()
     }
 
     readonly property string notificationSoundFile: "/usr/share/sounds/jolla-ringtones/stereo/jolla-messagetone.ogg"
@@ -146,7 +147,7 @@ Item {
         urgency: Notification.Critical
         // System category whose only effect is the "communication_led"
         // feedback: the notification LED blinks while the screen is off,
-        // until the Events view is opened. No extra sound or vibration.
+        // until the phone is unlocked. No extra sound or vibration.
         category: "im.received"
         // Tapping the banner or the Events entry opens the app on the main
         // page (DBusAdaptor in harbour-202020.qml).

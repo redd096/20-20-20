@@ -84,6 +84,9 @@ Device: Jolla, Sailfish OS 5.1.0.11, release 21. Date: 2026-10-14.
 | B32 | LED with screen off | Screen off, work ends, let the screen turn off again without unlocking | The notification LED blinks | OK |
 | B33 | LED off after unlocking | LED blinking, unlock the phone | The LED stops | OK |
 | B34 | LED after Stop | LED blinking, unlock, open the app from Home, press "Stop", turn the screen off | The LED does not blink (it already stopped on unlock) | OK |
+| B35 | Notification closed on Stop | Work ends, press "Stop" in the app, open Events | No notification of the app in Events | - |
+| B36 | Closed on Stop from the cover | Minimize, work ends, tap the cancel action on the cover, open Events | No notification of the app in Events | - |
+| B37 | Unhandled alert | Minimize, work ends, open Events without pressing "Stop", tap the notification | The notification is in Events; the tap opens the app on the main page | - |
 
 ## C. Language
 
