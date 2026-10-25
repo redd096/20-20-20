@@ -1,2 +1,10 @@
+* Sun Oct 25 2026 redd096 <36136815+redd096@users.noreply.github.com> - 0.2.0-1
+- Duration units: minutes and seconds, minutes only, or seconds only.
+- Alert types: sound on media volume, notification, or alarm; optional looping vibration.
+- Tapping the alert notification opens the app; Stop closes the notification.
+- Option to not bring the app to the front when a phase ends.
+- Cover buttons to start a phase or stop it.
+- Optional Pomodoro mode: long break after N works, with a work counter.
+
 * Mon Oct 12 2026 redd096 <36136815+redd096@users.noreply.github.com> - 0.1.0-1
 - First version: work/break cycle for the 20-20-20 rule.

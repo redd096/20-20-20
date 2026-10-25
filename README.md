@@ -4,7 +4,7 @@ A minimal app for the 20-20-20 rule: every 20 minutes in front of a screen, look
 
 ## Status
 
-- **Sailfish OS** (`project_sailfish_os/`, package `harbour-202020`): version 0.1.0 (tag `sailfish-v0.1.0`). Behaviour in [`openspec/specs/`](openspec/specs/), history in the archived change [`sailfish-mvp`](openspec/changes/archive/2026-10-14-sailfish-mvp/proposal.md).
+- **Sailfish OS** (`project_sailfish_os/`, package `harbour-202020`): version 0.2.0 (tag `sailfish-v0.2.0`). Behaviour in [`openspec/specs/`](openspec/specs/), history in the archived change [`sailfish-mvp`](openspec/changes/archive/2026-10-14-sailfish-mvp/proposal.md).
 - **Android** (`project_android/`, for F-Droid): planned in a later change, on the same behavior spec.
 
 ## Layout

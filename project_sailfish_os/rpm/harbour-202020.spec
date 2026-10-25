@@ -1,8 +1,9 @@
 Name:       harbour-202020
 Summary:    20-20-20 eye break timer
-Version:    0.1.0
-Release:    32
+Version:    0.2.0
+Release:    1
 License:    GPLv3
+URL:        https://github.com/redd096/20-20-20
 Source0:    %{name}-%{version}.tar.bz2
 Requires:   sailfishsilica-qt5 >= 0.10.9
 BuildRequires:  pkgconfig(sailfishapp) >= 1.0.2
