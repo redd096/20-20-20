@@ -29,9 +29,9 @@ sudo systemctl stop docker
 
 ## Publishing
 
-Checked on 2026-10-14 with `sfdk check` on `harbour-202020-0.1.0-22.aarch64.rpm`: `Validation succeeded`, so the package can go to both stores.
+Checked on 2026-10-25 with `sfdk check` on `harbour-202020-0.2.0-1.aarch64.rpm`: `Validation succeeded` (Sandboxing included, with the Audio permission and the D-Bus name), so the package can go to both stores.
 
-- **Jolla Store (Harbour)**: allowed, the validation has no errors. It has 3 rpmlint warnings, none blocking: unstripped binary, no `URL:` tag, changelog version (`0.1.0-1`) different from the package release.
+- **Jolla Store (Harbour)**: allowed by the automatic validation, which has 1 rpmlint warning, not blocking: unstripped binary. The manual review by Jolla may still object to the D-Bus name used by the notification tap (Store limits on D-Bus were discussed in the Sailfish OS meeting of 2026-01-15).
 - **OpenRepos**: allowed, it does not require the Harbour rules.
 
 ## Install
