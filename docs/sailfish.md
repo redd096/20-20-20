@@ -4,7 +4,7 @@ Sources are in `project_sailfish_os/`, package `harbour-202020`. Build output go
 
 ## Requirements
 
-- Sailfish SDK in `~/SailfishOS/` with the `SailfishOS-5.1.0.11-aarch64` target.
+- Sailfish SDK in `~/SailfishOS/` with the `SailfishOS-5.1.0.11-aarch64` and `SailfishOS-5.1.0.11-armv7hl` targets.
 - Docker, started only for the build.
 - SSH access to the phone. The commands below use an ssh config file with a host called `jolla`; replace `-F ../keyboard_jolla/ssh/jolla.conf jolla` with your own host. Keep that config out of this repository.
 
@@ -27,9 +27,21 @@ sudo systemctl stop docker
 - `sfdk build` compiles into `build/sailfish/` and writes the RPM to `build/sailfish/RPMS/`.
 - `sfdk check` runs the Jolla Store (Harbour) validation. It must end with `Validation succeeded`.
 
+The 32-bit package (armv7hl, for phones such as the Xperia XA2) is built the same way in its own folder, so the two targets do not mix build files:
+
+```sh
+mkdir -p build/sailfish-armv7hl && cd build/sailfish-armv7hl
+sg docker -c "~/SailfishOS/bin/sfdk -c target=SailfishOS-5.1.0.11-armv7hl -c no-fix-version build ../../project_sailfish_os"
+sg docker -c "~/SailfishOS/bin/sfdk -c target=SailfishOS-5.1.0.11-armv7hl check RPMS/harbour-202020-[0-9]*.armv7hl.rpm"
+cd ../..
+sg docker -c "~/SailfishOS/bin/sfdk engine stop"
+```
+
+- `sfdk engine stop` stops the SDK build engine started by `sfdk build`; run it before stopping Docker.
+
 ## Publishing
 
-Checked on 2026-10-25 with `sfdk check` on `harbour-202020-0.2.0-1.aarch64.rpm`: `Validation succeeded` (Sandboxing included, with the Audio permission and the D-Bus name), so the package can go to both stores.
+Checked on 2026-10-25 with `sfdk check` on `harbour-202020-0.2.0-1.aarch64.rpm`: `Validation succeeded` (Sandboxing included, with the Audio permission and the D-Bus name), so the package can go to both stores. Checked again on 2026-10-29 on `harbour-202020-0.2.0-1.armv7hl.rpm`: `Validation succeeded`, same single warning. The armv7hl package is not tested on a device (the test phone is aarch64).
 
 - **Jolla Store (Harbour)**: allowed by the automatic validation, which has 1 rpmlint warning, not blocking: unstripped binary. The manual review by Jolla may still object to the D-Bus name used by the notification tap (Store limits on D-Bus were discussed in the Sailfish OS meeting of 2026-01-15).
 - **OpenRepos**: allowed, it does not require the Harbour rules.
