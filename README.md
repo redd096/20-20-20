@@ -22,6 +22,10 @@ The app works only while it is open (minimized is fine): nothing runs in the bac
 
 Tested on device only on aarch64 (Jolla Phone 2026); the armv7hl package passes the Harbour validation but has not been tested on a real device.
 
+## Privacy
+
+The app collects no data and sends nothing anywhere: it has no network access, because its Sailfish sandbox grants only the Audio permission. The settings are stored only on the phone, and the alerts are shown with the system notifications. There are no accounts, ads, analytics or trackers.
+
 ## Status
 
 - **Sailfish OS** (`project_sailfish_os/`, package `harbour-202020`): version 0.2.0 (tag `sailfish-v0.2.0`). Behaviour in [`openspec/specs/`](openspec/specs/), history in the archived change [`sailfish-mvp`](openspec/changes/archive/2026-10-14-sailfish-mvp/proposal.md).
