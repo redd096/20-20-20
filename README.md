@@ -18,7 +18,9 @@ The app works only while it is open (minimized is fine): nothing runs in the bac
 
 ## Install
 
-**Sailfish OS** (aarch64): download the RPM from the [0.2.0 release](https://github.com/redd096/20-20-20/releases/tag/sailfish-v0.2.0) on the phone and open it from the file manager or the Downloads app (requires "Allow untrusted software" in Settings > Security).
+**Sailfish OS**: download the RPM for your phone from the [0.2.0 release](https://github.com/redd096/20-20-20/releases/tag/sailfish-v0.2.0) (aarch64 for 64-bit devices, armv7hl for 32-bit ones such as the Xperia XA2) on the phone and open it from the file manager or the Downloads app (requires "Allow untrusted software" in Settings > Security).
+
+Tested on device only on aarch64 (Jolla Phone 2026); the armv7hl package passes the Harbour validation but has not been tested on a real device.
 
 ## Status
 
