@@ -100,11 +100,14 @@ The alert notification uses the system category `im.received`, whose only effect
 ## Removal
 
 ```sh
-ssh -t -F ../keyboard_jolla/ssh/jolla.conf jolla "devel-su rpm -e harbour-202020; rm -f /home/defaultuser/harbour-202020-[0-9]*.rpm; dconf reset -f /apps/harbour-202020/"
+ssh -t -F ../keyboard_jolla/ssh/jolla.conf jolla 'devel-su rpm -e harbour-202020; rm -f /home/defaultuser/harbour-202020-[0-9]*.rpm; dconf reset -f /apps/harbour-202020/; cd /home/defaultuser; for d in .config .cache .local/share; do rmdir "$d/org.redd096/harbour-202020"; rmdir "$d/org.redd096" 2>/dev/null; done'
 ```
 
 - `rpm -e` uninstalls the package: program, QML files, icons and launcher entry.
 - `rm -f` deletes the RPM copied earlier.
 - `dconf reset -f` deletes the settings stored by the app.
+- The `for` loop removes the empty folders that Sailjail creates for the app. `rmdir` only removes empty folders, so `org.redd096` stays if another app of the same organization still uses it.
+
+Cleaners such as Mashka do not find any of this: they scan only top-level `harbour-*` folders, not dconf or folders under `org.redd096`.
 
 After these commands nothing of the app is left on the phone. The app installs no services and nothing that starts automatically. A notification may remain in the Events view until you dismiss it, as with any app.

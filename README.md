@@ -22,6 +22,17 @@ The app works only while it is open (minimized is fine): nothing runs in the bac
 
 Tested on device only on aarch64 (Jolla Phone 2026); the armv7hl package passes the Harbour validation but has not been tested on a real device.
 
+## Uninstall
+
+**Sailfish OS**: uninstalling leaves the settings and a few empty folders on the phone, and cleaners such as Mashka do not find them. To remove them, run this in a terminal on the phone after uninstalling:
+
+```sh
+dconf reset -f /apps/harbour-202020/
+for d in .config .cache .local/share; do rmdir ~/$d/org.redd096/harbour-202020; rmdir ~/$d/org.redd096 2>/dev/null; done
+```
+
+`dconf reset -f` deletes the settings. `rmdir` deletes only empty folders, so `org.redd096` stays if another app of the same organization still uses it.
+
 ## Privacy
 
 The app collects no data and sends nothing anywhere: it has no network access, because its Sailfish sandbox grants only the Audio permission. The settings are stored only on the phone, and the alerts are shown with the system notifications. There are no accounts, ads, analytics or trackers.
